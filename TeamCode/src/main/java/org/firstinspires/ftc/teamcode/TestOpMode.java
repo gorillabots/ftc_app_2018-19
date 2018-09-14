@@ -11,5 +11,7 @@ public class TestOpMode extends LinearOpMode
         telemetry.addData("Status", "Initialized");
         waitForStart();
         telemetry.addData("Status", "Started");
+        sleep(1000);
+        telemetry.addData("Status", "Done");
     }
 }
