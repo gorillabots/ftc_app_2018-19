@@ -26,3 +26,5 @@ build/
 
 *ASUS_PC_01*
 
+#Vuforia key, don't leak to public
+TeamCode/src/main/assets/vuforiakey.txt
