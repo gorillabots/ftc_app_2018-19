@@ -40,7 +40,7 @@ public class VuforiaImageTest extends LinearOpMode
         vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         telemetry.addData("Status", "Initialized");
-        
+
 
         waitForStart();
 
