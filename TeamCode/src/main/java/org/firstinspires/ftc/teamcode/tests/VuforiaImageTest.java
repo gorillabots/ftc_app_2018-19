@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.BlockingQueue;
 
-@Autonomous(group="test", name="Vuforia Image Test")
+@Autonomous(group="test", name="Image Test")
 public class VuforiaImageTest extends LinearOpMode
 {
     VuforiaLocalizer vuforia;
@@ -48,7 +48,7 @@ public class VuforiaImageTest extends LinearOpMode
         Frame frame;
         Image img;
 
-        while(opModeIsActive())
+        while(opModeIsActive()) //Getting hung up somewhere
         {
             try
             {
@@ -65,6 +65,8 @@ public class VuforiaImageTest extends LinearOpMode
 
             telemetry.addData("Color", pxls[0] + "," + pxls[1] + "," + pxls[2]);
             telemetry.update();
+
+            sleep(50);
         }
     }
 
