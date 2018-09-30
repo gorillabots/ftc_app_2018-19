@@ -27,7 +27,8 @@ public class VuforiaImageTest extends LinearOpMode
 
     public void runOpMode()
     {
-        Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
+        Vuforia.setFrameFormat(PIXEL_FORMAT.RGBA8888, true);
+
 
         Context ctx = hardwareMap.appContext;
         Resources resources = ctx.getResources();
@@ -40,7 +41,6 @@ public class VuforiaImageTest extends LinearOpMode
         vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         telemetry.addData("Status", "Initialized");
-
 
         waitForStart();
 
@@ -70,7 +70,7 @@ public class VuforiaImageTest extends LinearOpMode
         }
     }
 
-    String getVuforiaKey()
+    private String getVuforiaKey()
     {
         try
         {
