@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tests;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.BlockingQueue;
 
-@Autonomous(group="Test", name="Vuforia Image Test")
+@Autonomous(group="test", name="Vuforia Image Test")
 public class VuforiaImageTest extends LinearOpMode
 {
     VuforiaLocalizer vuforia;

@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tests;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -98,8 +98,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * is explained below.
  */
 
-@TeleOp(name="Concept: Vuforia Rover Nav", group ="Concept")
-//@Disabled
+@TeleOp(name="test", group ="VuforiaRoverRuckus")
 public class ConceptVuforiaNavRoverRuckus extends LinearOpMode
 {
 
