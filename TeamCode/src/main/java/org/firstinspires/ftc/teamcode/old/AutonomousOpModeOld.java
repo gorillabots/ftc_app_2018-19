@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static java.lang.Math.abs;
 
-public abstract class AutonomousOpMode extends LinearOpMode {
+public abstract class AutonomousOpModeOld extends LinearOpMode {
 
     public DriveTrain motors;
     public Gyro gyro;
