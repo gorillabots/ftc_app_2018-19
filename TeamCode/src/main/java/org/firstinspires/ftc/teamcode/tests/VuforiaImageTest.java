@@ -20,13 +20,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
-import java.util.concurrent.BlockingQueue;
 
 @Autonomous(group="test", name="Image Test")
 public class VuforiaImageTest extends LinearOpMode implements Vuforia.UpdateCallbackInterface
 {
     private VuforiaLocalizer vuforia;
     private static byte[] image;
+
+    private static final boolean ENABLE_VUFORIA_SCREEN = false;
 
     @Override
     public void Vuforia_onUpdate(State state)
@@ -61,11 +62,20 @@ public class VuforiaImageTest extends LinearOpMode implements Vuforia.UpdateCall
 
     public void runOpMode()
     {
-        Context ctx = hardwareMap.appContext;
-        Resources resources = ctx.getResources();
-        int camera = resources.getIdentifier("cameraMonitorViewId", "id", ctx.getPackageName());
+        VuforiaLocalizer.Parameters parameters;
 
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(camera);
+        if(ENABLE_VUFORIA_SCREEN)
+        {
+            Context ctx = hardwareMap.appContext;
+            Resources resources = ctx.getResources();
+            int camera = resources.getIdentifier("cameraMonitorViewId", "id", ctx.getPackageName());
+            parameters = new VuforiaLocalizer.Parameters(camera);
+        }
+        else
+        {
+            parameters = new VuforiaLocalizer.Parameters();
+        }
+
         parameters.vuforiaLicenseKey = getVuforiaKey();
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
 
