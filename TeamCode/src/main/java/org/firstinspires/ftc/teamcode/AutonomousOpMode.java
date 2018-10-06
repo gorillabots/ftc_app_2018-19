@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import org.firstinspires.ftc.teamcode.old.AutonomousOpModeOld;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
-public abstract class AutonomousOpMode extends AutonomousOpModeOld{
+import org.firstinspires.ftc.teamcode.old.OldAutonomousOpMode;
+
+public abstract class AutonomousOpMode extends OldAutonomousOpMode {
 
     public void initializeAutonomous(){
 

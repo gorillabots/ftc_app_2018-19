@@ -9,12 +9,12 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static java.lang.Math.abs;
 
-public abstract class AutonomousOpModeOld extends LinearOpMode {
+public abstract class OldAutonomousOpMode extends LinearOpMode {
 
-    public DriveTrain motors;
-    public Gyro gyro;
+    public OldDriveTrain motors;
+    public OldGyro gyro;
   //  public Jewel jewel;
-    public Servos servos;
+    public OldServos servos;
   //  public VuMarkRecognition vuMark;
     public ModernRoboticsI2cRangeSensor snsRange;
     public DigitalChannel snsLimitSwitch; //port 1
@@ -63,10 +63,10 @@ public abstract class AutonomousOpModeOld extends LinearOpMode {
         mtrBR.setDirection(DcMotor.Direction.REVERSE);
         mtrBL.setDirection(DcMotor.Direction.FORWARD);
 
-        motors = new DriveTrain(hardwareMap, telemetry);
-        gyro = new Gyro(hardwareMap, telemetry);
+        motors = new OldDriveTrain(hardwareMap, telemetry);
+        gyro = new OldGyro(hardwareMap, telemetry);
         //jewel = new Jewel(hardwareMap, telemetry);
-        servos = new Servos(hardwareMap);
+        servos = new OldServos(hardwareMap);
 
         snsRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "snsRange");
         snsLimitSwitch = hardwareMap.get(DigitalChannel.class, "snsLimitSwitch");
@@ -75,7 +75,7 @@ public abstract class AutonomousOpModeOld extends LinearOpMode {
 
         servos.autoInit();
 
-        telemetry.addData("Status", "DriveTrain Initialized");
+        telemetry.addData("Status", "OldDriveTrain Initialized");
         telemetry.update();
     }
 
@@ -194,7 +194,7 @@ public abstract class AutonomousOpModeOld extends LinearOpMode {
 
     }
 
-    public void Turn(double TurnDegree, Gyro gyro) {
+    public void Turn(double TurnDegree, OldGyro gyro) {
         // clock is negative; anti-clock positive degree
         // Maximum degree is 180
 

@@ -9,13 +9,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-public class Gyro {HardwareMap hardMap;
+public class OldGyro {HardwareMap hardMap;
     Telemetry tele;
 
     public BNO055IMU imu;
     BNO055IMU.Parameters parameters;
 
-    public Gyro(HardwareMap hMap, Telemetry telemetry) {
+    public OldGyro(HardwareMap hMap, Telemetry telemetry) {
 
         tele = telemetry;
         hardMap = hMap;

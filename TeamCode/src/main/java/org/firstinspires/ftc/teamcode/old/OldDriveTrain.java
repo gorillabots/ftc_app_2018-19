@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 //port 1 switch sensor
-public class DriveTrain {
+public class OldDriveTrain {
     HardwareMap hardMap;
     Telemetry tele;
 
@@ -25,7 +25,7 @@ public class DriveTrain {
     static final double TURN_SPEED = 0.5;
 
 
-    public DriveTrain(HardwareMap hMap, Telemetry telemetry) {
+    public OldDriveTrain(HardwareMap hMap, Telemetry telemetry) {
         tele = telemetry;
         hardMap = hMap;
 
@@ -130,7 +130,7 @@ public class DriveTrain {
         stopMotors();
     }
 
-    public void Turn(double TurnDegree, Gyro gyro) {
+    public void Turn(double TurnDegree, OldGyro gyro) {
         // clock is negative; anti-clock positive degree
         // Maximum degree is 180
 
@@ -286,7 +286,7 @@ public class DriveTrain {
         mtrBL.setPower(0);
     }
 
-    /*public void Turn_old(double TurnDegree, Gyro gyro) {
+    /*public void Turn_old(double TurnDegree, OldGyro gyro) {
         // clock is negative; anti-clock positive degree
         // Maximum degree is 180
         if (TurnDegree > 180){

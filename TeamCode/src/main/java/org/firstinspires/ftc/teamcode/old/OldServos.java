@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.old;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Servos {
+public class OldServos {
     /*
 
 back0: lift
@@ -67,7 +67,7 @@ front5: jeweldown 0.23
 
 
 
-    public Servos(HardwareMap hardwareMap) {
+    public OldServos(HardwareMap hardwareMap) {
         svoAutoAlign = hardwareMap.servo.get("svoAutoAlign");
 
         svoJewelLift = hardwareMap.servo.get("svoJewelLift");
