@@ -6,12 +6,17 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode
 {
     protected ColorModule colors;
 
+    interface EndInterface
+    {
+        boolean fn();
+    }
+
     public void initializeAutonomous()
     {
         colors =  new ColorModule(hardwareMap);
     }
 
-    public void moveUntil(ColorModule.EndInterface end, double direction, double power)
+    public void moveUntil(EndInterface end, double direction, double power)
     {
         while (!end.fn() && opModeIsActive())
         {

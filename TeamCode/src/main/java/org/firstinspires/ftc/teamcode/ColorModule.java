@@ -12,12 +12,7 @@ public class ColorModule
         color = hardwareMap.get(ColorSensor.class, "color");
     }
 
-    interface EndInterface
-    {
-        boolean fn();
-    }
-
-    public EndInterface goUntilRed = new EndInterface()
+    public AutonomousOpMode.EndInterface goUntilRed = new AutonomousOpMode.EndInterface()
     {
         @Override
         public boolean fn()
@@ -26,7 +21,7 @@ public class ColorModule
         }
     };
 
-    public EndInterface goUntilBlue = new EndInterface()
+    public AutonomousOpMode.EndInterface goUntilBlue = new AutonomousOpMode.EndInterface()
     {
         @Override
         public boolean fn()

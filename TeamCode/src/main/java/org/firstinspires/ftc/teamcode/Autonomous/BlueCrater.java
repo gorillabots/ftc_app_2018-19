@@ -10,7 +10,8 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
  */
 
 @Autonomous(name = "Blue Crater", group = "Autonomous")
-public class BlueCrater extends AutonomousOpMode {
+public class BlueCrater extends AutonomousOpMode
+{
 
     @Override
     public void runOpMode() {
