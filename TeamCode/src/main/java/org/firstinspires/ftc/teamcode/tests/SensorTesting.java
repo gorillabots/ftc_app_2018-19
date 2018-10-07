@@ -20,13 +20,13 @@ public class SensorTesting extends AutonomousOpMode
         while(opModeIsActive())
         {
          // telemetry.addData("D", distance.getDistance(DistanceUnit.INCH));
-            telemetry.addData("B", color.blue());
-            telemetry.addData("R", color.red());
-            telemetry.addData("G", color.green());
-            telemetry.addData("alpha", color.alpha());
-            telemetry.addData("ARGB", color.argb());
-            telemetry.addData("isRedGround" , isRedGround());
-            telemetry.addData("isBlueGround", isBlueGround());
+            telemetry.addData("B", sensor.color.blue());
+            telemetry.addData("R", sensor.color.red());
+            telemetry.addData("G", sensor.color.green());
+            telemetry.addData("alpha", sensor.color.alpha());
+            telemetry.addData("ARGB", sensor.color.argb());
+            telemetry.addData("isRedGround" , sensor.isRedGround());
+            telemetry.addData("isBlueGround", sensor.isBlueGround());
             telemetry.update();
 
         }
