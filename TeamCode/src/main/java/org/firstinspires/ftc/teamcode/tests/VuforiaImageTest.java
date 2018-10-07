@@ -106,6 +106,8 @@ public class VuforiaImageTest extends LinearOpMode implements Vuforia.UpdateCall
         }
     }
 
+    //Note: put vuforia key in plain text document in Teamcode/src/main/assets/vuforiakey.txt
+    //or you will get a nice cryptic error at runtime
     private String getVuforiaKey()
     {
         try

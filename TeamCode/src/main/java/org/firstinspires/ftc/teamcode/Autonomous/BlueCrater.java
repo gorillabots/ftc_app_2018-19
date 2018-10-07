@@ -19,6 +19,6 @@ public class BlueCrater extends AutonomousOpMode {
 
         waitForStart();
 
-
+        moveUntil(colors.goUntilRed, 0, 1);
     }
 }
