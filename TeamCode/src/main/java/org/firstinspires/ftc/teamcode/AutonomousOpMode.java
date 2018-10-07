@@ -9,11 +9,25 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
     public Sensors sensor;
 
     public void initializeAutonomous() {
-        sensor = new Sensors(hardwareMap,telemetry);
+        sensor = new Sensors(hardwareMap, telemetry);
     }
 
     public void unhang() {
         //THIRTY POINTS!!!!!!!!!!!!!
+    }
+
+    public int getYellowPosition() {
+        return 1;
+    }
+
+    public void completeSampling(int sample) {
+        if (sample == 1) {
+
+        } else if (sample == 3) {
+
+        } else {
+
+        }
     }
 
     public void MoveUntilRed(double direction, double power) {
@@ -22,6 +36,7 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
         }
         motors.stopMotors();
     }
+
     public void MoveUntilBlue(double direction, double power) {
         while (!sensor.isBlueGround() && opModeIsActive()) {
             motors.MoveTo(direction, power);
