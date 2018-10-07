@@ -34,7 +34,7 @@ public class VuforiaImageTest extends LinearOpMode implements Vuforia.UpdateCall
     {
         Frame frame = state.getFrame();
 
-        //i = 0, format = 4, grayscale
+        //i = 0, format = 4, greyscale
         //i = 1, format = 2, RGB888
 
         /*telemetry.addData("Number of images", frame.getNumImages());
