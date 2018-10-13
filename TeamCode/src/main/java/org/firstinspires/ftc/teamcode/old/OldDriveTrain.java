@@ -29,10 +29,10 @@ public class OldDriveTrain {
         tele = telemetry;
         hardMap = hMap;
 
-        mtrFR = hardMap.get(DcMotor.class, "m2");
-        mtrFL = hardMap.get(DcMotor.class, "m1");
-        mtrBR = hardMap.get(DcMotor.class, "m3");
-        mtrBL = hardMap.get(DcMotor.class, "m4");
+        mtrFR = hardMap.get(DcMotor.class, "frontRight");
+        mtrFL = hardMap.get(DcMotor.class, "frontLeft");
+        mtrBR = hardMap.get(DcMotor.class, "backRight");
+        mtrBL = hardMap.get(DcMotor.class, "backLeft");
 
         mtrFR.setDirection(DcMotor.Direction.REVERSE);
         mtrFL.setDirection(DcMotor.Direction.FORWARD);

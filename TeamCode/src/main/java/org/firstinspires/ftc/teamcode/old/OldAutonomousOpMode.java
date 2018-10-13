@@ -51,10 +51,10 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
 
     public void initit() {
 
-        mtrFR = hardwareMap.get(DcMotor.class, "m2");
-        mtrFL = hardwareMap.get(DcMotor.class, "m1");
-        mtrBR = hardwareMap.get(DcMotor.class, "m3");
-        mtrBL = hardwareMap.get(DcMotor.class, "m4");
+        mtrFR = hardwareMap.get(DcMotor.class, "frontRight");
+        mtrFL = hardwareMap.get(DcMotor.class, "frontLeft");
+        mtrBR = hardwareMap.get(DcMotor.class, "backRight");
+        mtrBL = hardwareMap.get(DcMotor.class, "backLeft");
 
         mtrRelic = hardwareMap.dcMotor.get("mtrRelic");
 
