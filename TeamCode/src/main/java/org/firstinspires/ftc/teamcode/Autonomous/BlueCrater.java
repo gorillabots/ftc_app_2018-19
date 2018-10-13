@@ -12,14 +12,13 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 @Autonomous(name = "Blue Crater", group = "Autonomous")
 public class BlueCrater extends AutonomousOpMode
 {
+    public void initialize()
+    {
 
-    @Override
-    public void runOpMode() {
+    }
 
-        initializeAutonomous();
-
-        waitForStart();
-
-        moveUntil(colors.goUntilRed, 0, 1);
+    public void run()
+    {
+        moveUntil(colors.goUntilBlue, 0);
     }
 }

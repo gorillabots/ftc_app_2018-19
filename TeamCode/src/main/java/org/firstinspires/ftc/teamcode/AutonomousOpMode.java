@@ -1,28 +1,63 @@
 package org.firstinspires.ftc.teamcode;
 
-import org.firstinspires.ftc.teamcode.old.OldAutonomousOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public abstract class AutonomousOpMode extends OldAutonomousOpMode
+import org.firstinspires.ftc.teamcode.modules.Abstractions;
+import org.firstinspires.ftc.teamcode.modules.ColorModule;
+import org.firstinspires.ftc.teamcode.modules.MecanumDrive;
+
+public abstract class AutonomousOpMode extends LinearOpMode
 {
+    private MecanumDrive drive;
     protected ColorModule colors;
 
-    interface EndInterface
+    public abstract void initialize();
+    public abstract void run();
+
+    public void runOpMode()
     {
-        boolean fn();
+        initialize();
+        waitForStart();
+        initializeAutonomous();
+        run();
     }
 
-    public void initializeAutonomous()
+    private void initializeAutonomous()
     {
+        drive = new MecanumDrive(hardwareMap);
         colors =  new ColorModule(hardwareMap);
     }
 
-    public void moveUntil(EndInterface end, double direction, double power)
+    protected void moveUntil(Abstractions.ControlInterface control, double direction)
     {
-        while (!end.fn() && opModeIsActive())
+        double rads = Math.toRadians(direction);
+
+        double power = control.fn(null);
+
+        while (power != 0 && opModeIsActive())
         {
-            motors.MoveTo(direction, power);
+            double[] cartesian = toCartesian(rads, power);
+
+            drive.mov(cartesian[0], cartesian[1], 0);
+            //MoveTo(direction, power);
+
+            sleep(50);
+
+            power = control.fn(null);
         }
-        motors.stopMotors();
+        drive.stop();
     }
 
+    private double[] toCartesian(double dir, double pow)
+    {
+        double[] output = new double[2];
+
+        double sin = Math.sin(dir);
+        double cos = Math.cos(dir);
+
+        output[0] = pow * sin;
+        output[1] = pow * cos;
+
+        return output;
+    }
 }
