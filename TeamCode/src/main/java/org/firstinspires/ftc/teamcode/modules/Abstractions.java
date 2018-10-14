@@ -9,7 +9,7 @@ public class Abstractions
 
     public interface DriveInterface
     {
-        void mov(double fb, double rl, double rot);
+        void move(double fb, double rl, double rot);
         void stop();
     }
 }

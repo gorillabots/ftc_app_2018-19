@@ -38,7 +38,7 @@ public abstract class AutonomousOpMode extends LinearOpMode
         {
             double[] cartesian = toCartesian(rads, power);
 
-            drive.mov(cartesian[0], cartesian[1], 0);
+            drive.move(cartesian[0], cartesian[1], 0);
             //MoveTo(direction, power);
 
             sleep(50);

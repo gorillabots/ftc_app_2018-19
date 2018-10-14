@@ -13,12 +13,13 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 public class RedDepot extends AutonomousOpMode {
 
     @Override
-    public void runOpMode() {
+    public void initialize()
+    {
 
-        initializeAutonomous();
+    }
 
-        waitForStart();
-
-
+    public void run()
+    {
+        moveUntil(colors.goUntilBlue, 0);
     }
 }

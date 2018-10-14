@@ -12,13 +12,13 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 @Autonomous(name = "Blue Depot", group = "Autonomous")
 public class BlueDepot extends AutonomousOpMode {
 
-    @Override
-    public void runOpMode() {
+    public void initialize()
+    {
 
-        initializeAutonomous();
+    }
 
-        waitForStart();
-
-
+    public void run()
+    {
+        moveUntil(colors.goUntilBlue, 0);
     }
 }
