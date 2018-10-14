@@ -17,12 +17,7 @@ public class BlueDepot extends AutonomousOpMode {
 
         initializeAutonomous();
 
-        int sample = getYellowPosition();
-
         waitForStart();
 
-        unhang();
-
-        completeSampling(sample);
     }
 }
