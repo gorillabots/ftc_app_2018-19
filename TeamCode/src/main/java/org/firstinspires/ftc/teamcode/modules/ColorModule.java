@@ -17,6 +17,12 @@ public class ColorModule
     public Abstractions.ControlInterface goUntilRed = new Abstractions.ControlInterface()
     {
         @Override
+        public void init()
+        {
+
+        }
+
+        @Override
         public double fn(Object[] args)
         {
             double power = (double) args[0];
@@ -34,6 +40,12 @@ public class ColorModule
 
     public Abstractions.ControlInterface goUntilBlue = new Abstractions.ControlInterface()
     {
+        @Override
+        public void init()
+        {
+
+        }
+
         @Override
         public double fn(Object[] args)
         {

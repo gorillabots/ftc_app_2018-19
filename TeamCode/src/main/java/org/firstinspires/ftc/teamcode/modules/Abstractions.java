@@ -4,6 +4,7 @@ public class Abstractions
 {
     public interface ControlInterface
     {
+        void init();
         double fn(Object[] args);
     }
 

@@ -32,6 +32,7 @@ public abstract class AutonomousOpMode extends LinearOpMode
     {
         double rads = Math.toRadians(direction);
 
+        control.init();
         double power = control.fn(null);
 
         while (power != 0 && opModeIsActive())
