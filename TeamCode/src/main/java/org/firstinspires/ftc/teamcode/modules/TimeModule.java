@@ -3,11 +3,13 @@ package org.firstinspires.ftc.teamcode.modules;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class TimeModule
 {
     ElapsedTime timer;
 
-    public TimeModule(HardwareMap hardwareMap)
+    public TimeModule(HardwareMap hardwareMap, Telemetry telemetry)
     {
         timer = new ElapsedTime();
     }

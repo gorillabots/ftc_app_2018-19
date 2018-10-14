@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.modules;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 
 public class ColorModule
 {
     ColorSensor color;
 
-    public ColorModule(HardwareMap hardwareMap)
+    public ColorModule(HardwareMap hardwareMap , Telemetry telemetry)
     {
         color = hardwareMap.get(ColorSensor.class, "color");
     }

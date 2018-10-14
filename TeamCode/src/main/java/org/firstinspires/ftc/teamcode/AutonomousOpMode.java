@@ -5,15 +5,20 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.modules.Abstractions;
 import org.firstinspires.ftc.teamcode.modules.ColorModule;
 import org.firstinspires.ftc.teamcode.modules.MecanumDrive;
+import org.firstinspires.ftc.teamcode.modules.TimeModule;
+
+import java.sql.Time;
 
 public abstract class AutonomousOpMode extends LinearOpMode
 {
     private MecanumDrive drive;
     protected ColorModule colors;
+    protected TimeModule time;
 
     public abstract void initialize();
     public abstract void run();
 
+    @Override
     public void runOpMode()
     {
         initialize();
@@ -24,16 +29,18 @@ public abstract class AutonomousOpMode extends LinearOpMode
 
     private void initializeAutonomous()
     {
-        drive = new MecanumDrive(hardwareMap);
-        colors =  new ColorModule(hardwareMap);
+        drive = new MecanumDrive(hardwareMap, telemetry);
+        colors =  new ColorModule(hardwareMap , telemetry);
+        time = new TimeModule(hardwareMap,telemetry);
     }
 
-    protected void moveUntil(Abstractions.ControlInterface control, double direction)
+    protected void moveUntil(Abstractions.ControlInterface control, double direction, Object... args)
     {
         double rads = Math.toRadians(direction);
 
         control.init();
-        double power = control.fn(null);
+
+        double power = control.fn(args);
 
         while (power != 0 && opModeIsActive())
         {
@@ -44,7 +51,7 @@ public abstract class AutonomousOpMode extends LinearOpMode
 
             sleep(50);
 
-            power = control.fn(null);
+            power = control.fn(args);
         }
         drive.stop();
     }
