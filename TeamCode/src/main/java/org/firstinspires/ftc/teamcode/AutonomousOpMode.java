@@ -7,8 +7,6 @@ import org.firstinspires.ftc.teamcode.modules.ColorModule;
 import org.firstinspires.ftc.teamcode.modules.MecanumDrive;
 import org.firstinspires.ftc.teamcode.modules.TimeModule;
 
-import java.sql.Time;
-
 public abstract class AutonomousOpMode extends LinearOpMode
 {
     private MecanumDrive drive;
@@ -31,7 +29,7 @@ public abstract class AutonomousOpMode extends LinearOpMode
     {
         drive = new MecanumDrive(hardwareMap, telemetry);
         colors =  new ColorModule(hardwareMap , telemetry);
-        time = new TimeModule(hardwareMap,telemetry);
+        time = new TimeModule(hardwareMap, telemetry);
     }
 
     protected void moveUntil(Abstractions.ControlInterface control, double direction, Object... args)
@@ -53,6 +51,7 @@ public abstract class AutonomousOpMode extends LinearOpMode
 
             power = control.fn(args);
         }
+
         drive.stop();
     }
 
