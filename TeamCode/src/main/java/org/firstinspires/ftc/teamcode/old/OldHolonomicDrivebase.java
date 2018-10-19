@@ -17,10 +17,10 @@ public class OldHolonomicDrivebase {
     Telemetry telemetry;
 
     public OldHolonomicDrivebase(HardwareMap hardwareMap , Telemetry telemetry) {
-        mtrFL = hardwareMap.dcMotor.get("frontLeft");
-        mtrFR = hardwareMap.dcMotor.get("frontRight");
-        mtrBL = hardwareMap.dcMotor.get("backLeft");
-        mtrBR = hardwareMap.dcMotor.get("backRight");
+        mtrFL = hardwareMap.dcMotor.get("mfl");
+        mtrFR = hardwareMap.dcMotor.get("mfr");
+        mtrBL = hardwareMap.dcMotor.get("mbl");
+        mtrBR = hardwareMap.dcMotor.get("mbr");
 
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
