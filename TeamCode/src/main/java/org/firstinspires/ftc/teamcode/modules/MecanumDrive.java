@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 
 public class MecanumDrive implements Abstractions.DriveInterface
 {
@@ -15,10 +14,10 @@ public class MecanumDrive implements Abstractions.DriveInterface
 
     public MecanumDrive(HardwareMap hardwareMap, Telemetry telemetry)
     {
-        mFR = hardwareMap.dcMotor.get("mfr");
-        mFL = hardwareMap.dcMotor.get("mfl");
-        mBR = hardwareMap.dcMotor.get("mbr");
-        mBL = hardwareMap.dcMotor.get("mbl");
+        mFR = hardwareMap.dcMotor.get("mFR");
+        mFL = hardwareMap.dcMotor.get("mFL");
+        mBR = hardwareMap.dcMotor.get("mBR");
+        mBL = hardwareMap.dcMotor.get("mBL");
     }
 
     @Override

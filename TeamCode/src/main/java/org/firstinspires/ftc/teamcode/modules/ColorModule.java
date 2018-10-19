@@ -12,7 +12,7 @@ public class ColorModule
 
     public ColorModule(HardwareMap hardwareMap , Telemetry telemetry)
     {
-        color = hardwareMap.get(ColorSensor.class, "color");
+        //color = hardwareMap.get(ColorSensor.class, "color");
     }
 
     public Abstractions.ControlInterface goUntilRed = new Abstractions.ControlInterface()

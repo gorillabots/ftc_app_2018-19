@@ -32,6 +32,18 @@ public abstract class AutonomousOpMode extends LinearOpMode
         time = new TimeModule(hardwareMap, telemetry);
     }
 
+    protected void moveTest()
+    {
+        long millis = System.currentTimeMillis() + 500;
+
+        while(System.currentTimeMillis() < millis)
+        {
+            drive.move(1, 0, 0);
+        }
+
+        drive.stop();
+    }
+
     protected void moveUntil(Abstractions.ControlInterface control, double direction, Object... args)
     {
         double rads = Math.toRadians(direction);
