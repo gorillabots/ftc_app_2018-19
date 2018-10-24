@@ -23,10 +23,10 @@ public class MecanumDrive implements Abstractions.DriveInterface
     @Override
     public void move(double fb, double rl, double rot)
     {
-        mFR.setPower(fb - rl - rot); //Assuming + -> Clockwise looking into motor from axle
-        mFL.setPower(-fb - rl - rot);
-        mBR.setPower(fb + rl - rot);
-        mBL.setPower(-fb + rl - rot);
+        mFR.setPower(-fb - rl - rot); //Assuming + -> Clockwise looking into motor from axle
+        mFL.setPower(fb - rl - rot);  //^^^ FAKE NEWS ^^^
+        mBR.setPower(-fb + rl - rot);
+        mBL.setPower(fb + rl - rot);
     }
 
     @Override
