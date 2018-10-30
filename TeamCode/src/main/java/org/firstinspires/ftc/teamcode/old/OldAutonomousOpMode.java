@@ -6,16 +6,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 import static java.lang.Math.abs;
 
 public abstract class OldAutonomousOpMode extends LinearOpMode {
 
     public OldDriveTrain motors;
     public OldGyro gyro;
-  //  public Jewel jewel;
+    //  public Jewel jewel;
     public OldServos servos;
-  //  public VuMarkRecognition vuMark;
+    //  public VuMarkRecognition vuMark;
     public ModernRoboticsI2cRangeSensor snsRange;
     public DigitalChannel snsLimitSwitch; //port 1
     public DcMotor mtrRelic;
@@ -51,10 +53,11 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
 
     public void initit() {
 
-        mtrFR = hardwareMap.get(DcMotor.class, "frontRight");
-        mtrFL = hardwareMap.get(DcMotor.class, "frontLeft");
-        mtrBR = hardwareMap.get(DcMotor.class, "backRight");
-        mtrBL = hardwareMap.get(DcMotor.class, "backLeft");
+
+        mtrFR = hardwareMap.get(DcMotor.class, "mfr");
+        mtrFL = hardwareMap.get(DcMotor.class, "mfl");
+        mtrBR = hardwareMap.get(DcMotor.class, "mbr");
+        mtrBL = hardwareMap.get(DcMotor.class, "mbl");
 
         mtrRelic = hardwareMap.dcMotor.get("mtrRelic");
 
@@ -63,15 +66,15 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
         mtrBR.setDirection(DcMotor.Direction.REVERSE);
         mtrBL.setDirection(DcMotor.Direction.FORWARD);
 
-        motors = new OldDriveTrain(hardwareMap, telemetry);
-        gyro = new OldGyro(hardwareMap, telemetry);
+     //   motors = new OldDriveTrain(hardwareMap, telemetry);
+//        gyro = new OldGyro(hardwareMap, telemetry);
         //jewel = new Jewel(hardwareMap, telemetry);
-        servos = new OldServos(hardwareMap);
+      //  servos = new OldServos(hardwareMap);
 
         snsRange = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "snsRange");
         snsLimitSwitch = hardwareMap.get(DigitalChannel.class, "snsLimitSwitch");
 
-       // vuMark = new VuMarkRecognition(this.hardwareMap, this.telemetry);
+        // vuMark = new VuMarkRecognition(this.hardwareMap, this.telemetry);
 
         servos.autoInit();
 
@@ -194,7 +197,7 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
 
     }
 
-    public void Turn(double TurnDegree, OldGyro gyro) {
+    public void Turn(double TurnDegree) {
         // clock is negative; anti-clock positive degree
         // Maximum degree is 180
 

@@ -23,7 +23,7 @@ public class DriveTest extends AutonomousOpMode {
 
         drive = new OldHolonomicDrivebase(hardwareMap,telemetry);
 
-//        hang = new Hanging(hardwareMap,telemetry);
+       hang = new Hanging(hardwareMap,telemetry);
 
         waitForStart();
 
@@ -44,7 +44,7 @@ public class DriveTest extends AutonomousOpMode {
             }
             slowWatch = gamepad1.a;
 
-/*           if (gamepad1.dpad_up && isSlow){
+           if (gamepad1.dpad_up && isSlow){
                 hang.setHangingPower(.3);
             }
             else if (gamepad1.dpad_down && isSlow){
@@ -59,7 +59,7 @@ public class DriveTest extends AutonomousOpMode {
             else{
                 hang.setHangingPower(0);
             }
-*/
+
         }
     }
 }
