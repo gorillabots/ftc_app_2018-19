@@ -40,6 +40,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.Camera;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
@@ -55,6 +56,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -99,11 +101,11 @@ import com.qualcomm.robotcore.wifi.NetworkType;
 import org.firstinspires.ftc.ftccommon.external.SoundPlayingRobotMonitor;
 import org.firstinspires.ftc.ftccommon.internal.FtcRobotControllerWatchdogService;
 import org.firstinspires.ftc.ftccommon.internal.ProgramAndManageActivity;
+import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.CameraPreview;
+import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCamera;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.robotcore.internal.hardware.DragonboardLynxDragonboardIsPresentPin;
-import org.firstinspires.ftc.robotcore.internal.network.DeviceNameManager;
 import org.firstinspires.ftc.robotcore.internal.network.DeviceNameManagerFactory;
-import org.firstinspires.ftc.robotcore.internal.network.WifiDirectDeviceNameManager;
 import org.firstinspires.ftc.robotcore.internal.network.PreferenceRemoterRC;
 import org.firstinspires.ftc.robotcore.internal.network.StartResult;
 import org.firstinspires.ftc.robotcore.internal.network.WifiMuteEvent;
@@ -713,4 +715,32 @@ public class FtcRobotControllerActivity extends Activity
       wifiMuteStateMachine.consumeEvent(WifiMuteEvent.USER_ACTIVITY);
     }
   }
+
+    /////////////////////////////////////////////////////////
+    // ADDED FOR CAMERA!!!
+
+    // poor coding style here.  Shouldn't have to duplicate these routines for regular and linear OpModes.
+    public void initPreviewLinear(final Camera camera, final LinearOpModeCamera context, final Camera.PreviewCallback previewCallback) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
+          //FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          previewLayout.addView(context.preview);
+        }
+      });
+    }
+
+    public void removePreviewLinear(final LinearOpModeCamera context) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
+          previewLayout.removeAllViews();
+        }
+      });
+    }
+
+    // END CAMERA ADD!!!
 }

@@ -17,8 +17,18 @@ public class BlueCrater extends AutonomousOpMode {
 
         initializeAutonomous();
 
+        int yellowposition = detectYellow(true);
+
         waitForStart();
 
+        unHangWithEncoder();
 
+        if (yellowposition == 1) {
+
+        } else if (yellowposition == 2) {
+
+        } else if (yellowposition == 3) {
+
+        }
     }
 }

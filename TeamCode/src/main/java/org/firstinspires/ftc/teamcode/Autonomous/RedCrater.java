@@ -16,7 +16,7 @@ public class RedCrater extends AutonomousOpMode {
     public void runOpMode() {
 
         initializeAutonomous();
-
+        detectYellow(true);
         waitForStart();
 
 

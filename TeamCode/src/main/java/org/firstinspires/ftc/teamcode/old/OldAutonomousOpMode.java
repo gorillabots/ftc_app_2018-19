@@ -7,11 +7,12 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCamera;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static java.lang.Math.abs;
 
-public abstract class OldAutonomousOpMode extends LinearOpMode {
+public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
 
     public OldDriveTrain motors;
     public OldGyro gyro;
@@ -51,7 +52,7 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
 
     public boolean isOverTime = false;
 
-    public void initit() {
+  /* public void initit() {
 
 
         mtrFR = hardwareMap.get(DcMotor.class, "mfr");
@@ -80,7 +81,7 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
 
         telemetry.addData("Status", "OldDriveTrain Initialized");
         telemetry.update();
-    }
+    }*/
 
     /*
     public void moveBySensor(double arg1, double arg2) {
@@ -285,37 +286,6 @@ public abstract class OldAutonomousOpMode extends LinearOpMode {
 
         telemetry.addData("Loop Done-Angle", gyro.getZDegree());
         telemetry.update();
-    }
-
-    public void alignCryptoSequence() {
-        MoveToByTime(2500, 180, .2);
-        sleep(500);
-        MoveToByEncoder(4, 0, .3);
-    }
-
-    public void depositGlyphNormal() {
-
-        servos.setAutoAlign(true);//raise alignment
-
-        MoveToBySwitch(90, .3);//strafe until alignment hit -----  need to fix ----- on time
-
-        sleep(50);
-
-        servos.setAutoAlign(false); //lower alignment
-
-        servos.setFlipperUp(true);//deposit
-
-        sleep(1000);
-
-        servos.setFlipperGrab(false);
-        sleep(50);
-        // if (true) return;
-        MoveToByTime(700, 0, .3); //little nudge for block
-        MoveToByTime(1100, 180, .5);
-
-        MoveToByEncoder(5, 0, .5); //back out - maybe for more? - park in box
-        servos.setFlipperUp(false);
-
     }
 
 }

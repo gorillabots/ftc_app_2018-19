@@ -20,28 +20,9 @@ public class BlueDepot extends AutonomousOpMode {
     public void runOpMode() {
 
         initializeAutonomous();
+        detectYellow(false);
+        waitForStart();
 
-        random = new Random();
-
-        waitForStart(); //detect yellow loop
-
-        int a = random.nextInt(2);
-
-        telemetry.addData("random",a);
-        telemetry.update();
-
-        MoveToByEncoder(5, 180, .5);
-
-        if (a == 0)
-            Turn(15);
-        else if (a == 1)
-            Turn(0);
-        else if (a == 2)
-            Turn(-15);
-        else
-            Turn(0);
-
-        MoveToByTime(6, 180, .75);
 
     }
 }

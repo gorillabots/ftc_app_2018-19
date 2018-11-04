@@ -16,7 +16,7 @@ public class RedDepot extends AutonomousOpMode {
     public void runOpMode() {
 
         initializeAutonomous();
-
+        detectYellow(false);
         waitForStart();
 
 
