@@ -42,7 +42,7 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
         boolean notSeen = true;
         int cycles = 0;
 
-        while (/*opModeIsActive() &&*/ notSeen && cycles < 5) {
+        while (/*opModeIsActive() && notSeen && */!isStarted()) {
 
             tempPosition = detector.computeYellowCubePosition(isCrater);
 
@@ -67,7 +67,6 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
             } else {
                 telemetry.addData("Camera", "not visible");
                 telemetry.update();
-                cycles = cycles + 1;
                 sleep(200);
             }
         }
