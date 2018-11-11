@@ -43,11 +43,11 @@ public class OldDriveTrain {
     }
 
     public void SetEncoderOff() {
-        //mtrFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //mfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mtrFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         mtrBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        // mtrFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        // mfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mtrFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         mtrBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
@@ -101,10 +101,10 @@ public class OldDriveTrain {
         SetEncoderMode();
         double targetCounts = (int) (distance * COUNTS_PER_INCH);
 
-        int rightFrontStartPos = mtrFR.getCurrentPosition();
-        int rightRearStartPos = mtrBR.getCurrentPosition();
-        int leftFrontStartPos = mtrFL.getCurrentPosition();
-        int leftRearStartPos = mtrBL.getCurrentPosition();
+        int rightFrontStartPos = mfr.getCurrentPosition();
+        int rightRearStartPos = mbr.getCurrentPosition();
+        int leftFrontStartPos = mfl.getCurrentPosition();
+        int leftRearStartPos = mbl.getCurrentPosition();
 
         int target = (int) (distance * COUNTS_PER_INCH);
 
@@ -113,17 +113,17 @@ public class OldDriveTrain {
         int rightRearEndPos = rightRearStartPos + (int) (target * (sn + cs));
         int leftRearEndPos = leftRearStartPos + (int) (target * (-sn + cs));
 
-        mtrFR.setPower(rightFrontPower);
-        mtrFL.setPower(leftFrontPower);
-        mtrBR.setPower(rightRearPower);
-        mtrBL.setPower(leftRearPower);
+        mfr.setPower(rightFrontPower);
+        mfl.setPower(leftFrontPower);
+        mbr.setPower(rightRearPower);
+        mbl.setPower(leftRearPower);
 
-        mtrFR.setTargetPosition(rightFrontEndPos);
-        mtrFL.setTargetPosition(leftFrontEndPos);
-        mtrBR.setTargetPosition(rightRearEndPos);
-        mtrBL.setTargetPosition(leftRearEndPos);
+        mfr.setTargetPosition(rightFrontEndPos);
+        mfl.setTargetPosition(leftFrontEndPos);
+        mbr.setTargetPosition(rightRearEndPos);
+        mbl.setTargetPosition(leftRearEndPos);
         // run until the end of the match (driver presses STOP)
-        while (mtrFR.isBusy() || mtrFL.isBusy() || mtrBR.isBusy() || mtrBL.isBusy()) {
+        while (mfr.isBusy() || mfl.isBusy() || mbr.isBusy() || mbl.isBusy()) {
             //keep running
 
         }
@@ -200,10 +200,10 @@ public class OldDriveTrain {
 
             leftPower = Range.clip(drive, -1.0, 1.0);
             rightPower = Range.clip(-drive, -1.0, 1.0);
-            mtrFL.setPower(leftPower);
-            mtrBL.setPower(leftPower);
-            mtrFR.setPower(rightPower);
-            mtrBR.setPower(rightPower);
+            mfl.setPower(leftPower);
+            mbl.setPower(leftPower);
+            mfr.setPower(rightPower);
+            mbr.setPower(rightPower);
 
             tele.addData("Left Power", leftPower);
             tele.addData("right Power", rightPower);
@@ -228,10 +228,10 @@ public class OldDriveTrain {
         double br = power * (sn + cs);
         double bl = power * (-sn + cs);
 
-        mtrFL.setPower(fl);
-        mtrFR.setPower(fr);
-        mtrBL.setPower(bl);
-        mtrBR.setPower(br);
+        mfl.setPower(fl);
+        mfr.setPower(fr);
+        mbl.setPower(bl);
+        mbr.setPower(br);
 
         sleep(time);
 
@@ -248,10 +248,10 @@ public class OldDriveTrain {
         double br = power * (sn + cs);
         double bl = power * (-sn + cs);
 
-        mtrFL.setPower(fl);
-        mtrFR.setPower(fr);
-        mtrBL.setPower(bl);
-        mtrBR.setPower(br);
+        mfl.setPower(fl);
+        mfr.setPower(fr);
+        mbl.setPower(bl);
+        mbr.setPower(br);
 
         while (ssRange.cmUltrasonic() > distance) {
         }
@@ -270,10 +270,10 @@ public class OldDriveTrain {
         double bl = power * (-sn + cs);
 
         while (!ssLimitSwitch.getState()){
-            mtrFL.setPower(fl);
-            mtrFR.setPower(fr);
-            mtrBL.setPower(bl);
-            mtrBR.setPower(br);
+            mfl.setPower(fl);
+            mfr.setPower(fr);
+            mbl.setPower(bl);
+            mbr.setPower(br);
         }
 
         stopMotors();
@@ -328,10 +328,10 @@ public class OldDriveTrain {
 
             leftPower    = Range.clip(drive, -1.0, 1.0) ;
             rightPower   = Range.clip(-drive, -1.0, 1.0) ;
-            mtrFL.setPower(leftPower);
-            mtrBL.setPower(leftPower);
-            mtrFR.setPower(rightPower);
-            mtrBR.setPower(rightPower);
+            mfl.setPower(leftPower);
+            mbl.setPower(leftPower);
+            mfr.setPower(rightPower);
+            mbr.setPower(rightPower);
 
             tele.addData("Left Power",  leftPower);
             tele.addData("right Power",  rightPower);

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.old;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -23,10 +22,10 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
     public DigitalChannel snsLimitSwitch; //port 1
     public DcMotor mtrRelic;
 
-    public DcMotor mtrFR;
-    public DcMotor mtrFL;
-    public DcMotor mtrBR;
-    public DcMotor mtrBL;
+    public DcMotor mfr;
+    public DcMotor mfl;
+    public DcMotor mbr;
+    public DcMotor mbl;
 
     public static final double COUNTS_PER_MOTOR_REV = 498;
     public static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
@@ -55,17 +54,17 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
   /* public void initit() {
 
 
-        mtrFR = hardwareMap.get(DcMotor.class, "mfr");
-        mtrFL = hardwareMap.get(DcMotor.class, "mfl");
-        mtrBR = hardwareMap.get(DcMotor.class, "mbr");
-        mtrBL = hardwareMap.get(DcMotor.class, "mbl");
+        mfr = hardwareMap.get(DcMotor.class, "mfr");
+        mfl = hardwareMap.get(DcMotor.class, "mfl");
+        mbr = hardwareMap.get(DcMotor.class, "mbr");
+        mbl = hardwareMap.get(DcMotor.class, "mbl");
 
         mtrRelic = hardwareMap.dcMotor.get("mtrRelic");
 
-        mtrFR.setDirection(DcMotor.Direction.REVERSE);
-        mtrFL.setDirection(DcMotor.Direction.FORWARD);
-        mtrBR.setDirection(DcMotor.Direction.REVERSE);
-        mtrBL.setDirection(DcMotor.Direction.FORWARD);
+        mfr.setDirection(DcMotor.Direction.REVERSE);
+        mfl.setDirection(DcMotor.Direction.FORWARD);
+        mbr.setDirection(DcMotor.Direction.REVERSE);
+        mbl.setDirection(DcMotor.Direction.FORWARD);
 
      //   motors = new OldDriveTrain(hardwareMap, telemetry);
 //        gyro = new OldGyro(hardwareMap, telemetry);
@@ -91,31 +90,31 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
     }
      */
     public void SetEncoderOff() {
-        //mtrFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mtrFR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        mtrBR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //mfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mfr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        mbr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        // mtrFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mtrFL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        mtrBL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // mfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mfl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        mbl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void SetEncoderMode() {
-        mtrFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mtrFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrFR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        mfr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mfr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mfr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        mtrBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mtrBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        mbr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mbr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mbr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        mtrFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mtrFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrFL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        mfl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mfl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mfl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        mtrBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mtrBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        mtrBL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        mbl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        mbl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        mbl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void MoveToByTime(long time, double direction, double power) {
@@ -162,10 +161,10 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
         SetEncoderMode();
         double targetCounts = (int) (distance * COUNTS_PER_INCH);
 
-        int rightFrontStartPos = mtrFR.getCurrentPosition();
-        int rightRearStartPos = mtrBR.getCurrentPosition();
-        int leftFrontStartPos = mtrFL.getCurrentPosition();
-        int leftRearStartPos = mtrBL.getCurrentPosition();
+        int rightFrontStartPos = mfr.getCurrentPosition();
+        int rightRearStartPos = mbr.getCurrentPosition();
+        int leftFrontStartPos = mfl.getCurrentPosition();
+        int leftRearStartPos = mbl.getCurrentPosition();
 
         int target = (int) (distance * COUNTS_PER_INCH);
 
@@ -180,20 +179,20 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
         double rightRearPower = pwr * (sn + cs);
         double leftRearPower = pwr * (-sn + cs);
 
-        mtrFR.setPower(rightFrontPower);
-        mtrFL.setPower(leftFrontPower);
-        mtrBR.setPower(rightRearPower);
-        mtrBL.setPower(leftRearPower);
+        mfr.setPower(rightFrontPower);
+        mfl.setPower(leftFrontPower);
+        mbr.setPower(rightRearPower);
+        mbl.setPower(leftRearPower);
 
-        mtrFR.setTargetPosition(rightFrontEndPos);
-        mtrFL.setTargetPosition(leftFrontEndPos);
-        mtrBR.setTargetPosition(rightRearEndPos);
-        mtrBL.setTargetPosition(leftRearEndPos);
+        mfr.setTargetPosition(rightFrontEndPos);
+        mfl.setTargetPosition(leftFrontEndPos);
+        mbr.setTargetPosition(rightRearEndPos);
+        mbl.setTargetPosition(leftRearEndPos);
         // run until the end of the match (driver presses STOP)
-        //while ((Math.abs(mtrFL.getCurrentPosition() - end) > 100 )&& opModeIsActive()) {}
-        while (mtrFL.isBusy() && opModeIsActive()) {
+        //while ((Math.abs(mfl.getCurrentPosition() - end) > 100 )&& opModeIsActive()) {}
+        while (mfl.isBusy() && opModeIsActive()) {
         }
-        /*|| mtrFL.isBusy() || mtrBR.isBusy() || mtrBL.isBusy())*/
+        /*|| mfl.isBusy() || mbr.isBusy() || mbl.isBusy())*/
         motors.stopMotors();
 
     }
@@ -270,10 +269,10 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
 
             leftPower = Range.clip(drive, -1.0, 1.0);
             rightPower = Range.clip(-drive, -1.0, 1.0);
-            mtrFL.setPower(leftPower);
-            mtrBL.setPower(leftPower);
-            mtrFR.setPower(rightPower);
-            mtrBR.setPower(rightPower);
+            mfl.setPower(leftPower);
+            mbl.setPower(leftPower);
+            mfr.setPower(rightPower);
+            mbr.setPower(rightPower);
 
             telemetry.addData("Left Power", leftPower);
             telemetry.addData("right Power", rightPower);

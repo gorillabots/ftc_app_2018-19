@@ -22,11 +22,13 @@ public class BlueCrater extends AutonomousOpMode {
         unHangWithEncoder();
 
         if (yellowposition == 1) {
-
+            Turn(-15);
         } else if (yellowposition == 2) {
 
         } else if (yellowposition == 3) {
-
+            Turn(15);
         }
+
+        MoveToByEncoder(10,180,1);
     }
 }
