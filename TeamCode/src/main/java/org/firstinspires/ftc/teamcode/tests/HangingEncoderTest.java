@@ -29,9 +29,9 @@ public class HangingEncoderTest extends AutonomousOpMode {
 
                 int original = hang.mHang.getCurrentPosition();
                 int start = hang.mHang.getCurrentPosition();
-                int end = start + 25;
+                int end = start - 25;
 
-                hang.setHangingPower(.5);
+                hang.setHangingPower(-.5);
 
                 hang.mHang.setTargetPosition(end);
 
@@ -47,9 +47,9 @@ public class HangingEncoderTest extends AutonomousOpMode {
 
                 int original = hang.mHang.getCurrentPosition();
                 int start = hang.mHang.getCurrentPosition();
-                int end = start + 1;
+                int end = start - 1;
 
-                hang.setHangingPower(.5);
+                hang.setHangingPower(-.5);
 
                 hang.mHang.setTargetPosition(end);
 

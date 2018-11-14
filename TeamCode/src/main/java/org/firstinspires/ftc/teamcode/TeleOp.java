@@ -1,20 +1,15 @@
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.old.OldHolonomicDrivebase;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 
 /**
  * Created by xiax on 4/23/2018.
  */
-@Disabled
-@TeleOp(name = "Drive Test", group = "test")
-public class DriveTest extends AutonomousOpMode {
+
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Teleop", group = "yes")
+public class TeleOp extends AutonomousOpMode {
 
     OldHolonomicDrivebase drive;
     Hanging hang;
@@ -24,7 +19,7 @@ public class DriveTest extends AutonomousOpMode {
 
         drive = new OldHolonomicDrivebase(hardwareMap,telemetry);
 
-       hang = new Hanging(hardwareMap,telemetry);
+        hang = new Hanging(hardwareMap,telemetry);
 
         waitForStart();
 
@@ -45,17 +40,19 @@ public class DriveTest extends AutonomousOpMode {
             }
             slowWatch = gamepad1.a;
 
+            telemetry.addData("slow?" , isSlow);
+
            if (gamepad1.dpad_up && isSlow){
-                hang.setHangingPower(.3);
-            }
-            else if (gamepad1.dpad_down && isSlow){
                 hang.setHangingPower(-.3);
             }
+            else if (gamepad1.dpad_down && isSlow){
+                hang.setHangingPower(.3);
+            }
             else if(gamepad1.dpad_up){
-                hang.setHangingPower(1);
+                hang.setHangingPower(-1);
             }
             else if (gamepad1.dpad_down){
-                hang.setHangingPower(-1);
+                hang.setHangingPower(1);
             }
             else{
                 hang.setHangingPower(0);
