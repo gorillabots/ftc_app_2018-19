@@ -12,6 +12,10 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
     public Sensors sensor;
     public Detector detector;
     public Hanging hanging;
+
+    public DcMotor mExtend;
+    public DcMotor mPivotAndy;
+    public DcMotor mPivotRev;
 /* Saquoit
 
     Rev Hub #10
@@ -19,6 +23,8 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
     extend 3 - mExtend
     pivot andymark 1 - mPivotAndy
     pivot rev 0  - mPivotRev
+
+    servo 5 - sPivot
 
     Rev Hub #2
     front right 3 - mfr
@@ -40,6 +46,11 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
         mbl.setDirection(DcMotor.Direction.FORWARD);
 
         hanging = new Hanging(hardwareMap,telemetry);
+
+        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
+        mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
+        mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
+
 
         //sensor = new Sensors(hardwareMap,telemetry);
 
