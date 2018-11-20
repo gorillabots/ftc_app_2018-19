@@ -16,6 +16,7 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
     public DcMotor mExtend;
     public DcMotor mPivotAndy;
     public DcMotor mPivotRev;
+
 /* Saquoit
 
     Rev Hub #10
@@ -24,14 +25,29 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
     pivot andymark 1 - mPivotAndy
     pivot rev 0  - mPivotRev
 
-    servo 5 - sPivot
+    servo 5 - sCan
 
     Rev Hub #2
     front right 3 - mfr
     back right 0 - mbr
     back left 1 - mbl
     front left 2 - mfl
+
+    Directions
+    mHang - Negative is up
+    mExtend - Negative is extend
+
 */
+
+
+    public static final int degreeCorrection = 0;
+    /* Default (Hanging Mechanism is Up)
+                       90
+                 180          0
+                      270
+
+    */
+
     public static final int ENCODER_TO_EXTEND_UP = 1;
 
     public void initializeAutonomous() {
@@ -45,7 +61,7 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
         mbr.setDirection(DcMotor.Direction.REVERSE);
         mbl.setDirection(DcMotor.Direction.FORWARD);
 
-        hanging = new Hanging(hardwareMap,telemetry);
+        hanging = new Hanging(hardwareMap, telemetry);
 
         mExtend = hardwareMap.get(DcMotor.class, "mExtend");
         mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");

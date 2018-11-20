@@ -15,8 +15,8 @@ public class Hanging {
         mHang = hardwareMap.get(DcMotor.class, "mHang");
     }
 
-    public void isEncoderMode(boolean yes){
-        if (yes){
+    public void isEncoderMode(boolean encoder){
+        if (encoder){
             mHang.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             mHang.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             mHang.setMode(DcMotor.RunMode.RUN_TO_POSITION);

@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCame
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static java.lang.Math.abs;
+import static org.firstinspires.ftc.teamcode.AutonomousOpMode.degreeCorrection;
 
 public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
 
@@ -154,7 +155,7 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
 
 
     public void MoveToByEncoder(double distance, double degree, double power) {
-        double degreeRad = Math.toRadians(degree); // Convert to radians
+        double degreeRad = Math.toRadians(degree - degreeCorrection); // Convert to radians
         double cs = Math.cos(degreeRad);
         double sn = Math.sin(degreeRad);
 
