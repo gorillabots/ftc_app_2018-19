@@ -17,7 +17,7 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
     public OldDriveTrain motors;
     public OldGyro gyro;
     //  public Jewel jewel;
-    public OldServos servos;
+    public OldServos Oservos;
     //  public VuMarkRecognition vuMark;
     public ModernRoboticsI2cRangeSensor snsRange;
     public DigitalChannel snsLimitSwitch; //port 1

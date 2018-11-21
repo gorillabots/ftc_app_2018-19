@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 
-
+@Disabled
 @Autonomous(group="test", name="SensorTesting")
 public class SensorTesting extends AutonomousOpMode
 {

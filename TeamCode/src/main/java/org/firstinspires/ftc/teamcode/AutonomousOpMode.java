@@ -7,17 +7,19 @@ import org.firstinspires.ftc.teamcode.old.OldAutonomousOpMode;
 import org.firstinspires.ftc.teamcode.old.OldGyro;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.Sensors;
+import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
 public abstract class AutonomousOpMode extends OldAutonomousOpMode {
     public Sensors sensor;
     public Detector detector;
     public Hanging hanging;
+    public Servos servos;
 
     public DcMotor mExtend;
     public DcMotor mPivotAndy;
     public DcMotor mPivotRev;
 
-/* Saquoit
+/* Anderson Bot
 
     Rev Hub #10
     hang 2 - mHang
@@ -56,19 +58,21 @@ public abstract class AutonomousOpMode extends OldAutonomousOpMode {
         mbr = hardwareMap.get(DcMotor.class, "mbr");
         mbl = hardwareMap.get(DcMotor.class, "mbl");
 
+        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
+        mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
+        mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
+
         mfr.setDirection(DcMotor.Direction.REVERSE);
         mfl.setDirection(DcMotor.Direction.FORWARD);
         mbr.setDirection(DcMotor.Direction.REVERSE);
         mbl.setDirection(DcMotor.Direction.FORWARD);
 
         hanging = new Hanging(hardwareMap, telemetry);
-
-        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
-        mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
-        mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
-
+        servos = new Servos(hardwareMap, telemetry);
 
         //sensor = new Sensors(hardwareMap,telemetry);
+
+        servos.initializeServos();
 
     }
 

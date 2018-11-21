@@ -53,6 +53,7 @@ public class TeleOp extends LinearOpMode {
 
         boolean isSmartMovement = false;
         boolean smartMovementWatch = false;
+
         boolean hasItMoved = false;
         int holdingPosition;
 
@@ -116,12 +117,11 @@ public class TeleOp extends LinearOpMode {
 
             //anderson arm
 
-            if (gamepad2.right_trigger > .75){
+            if (gamepad2.right_trigger > .75) {
                 mPivotRev.setPower(1);
 
                 hasItMoved = true;
             }
-
 
             if (isInitialMovement) { //gamepad2.a
 
@@ -143,9 +143,8 @@ public class TeleOp extends LinearOpMode {
 
                     hasItMoved = true;
 
-                } else {
+                } else { //in holding
 
-                    mPivotRev.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                     mPivotRev.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     mPivotRev.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -162,7 +161,7 @@ public class TeleOp extends LinearOpMode {
                 }
 
             } else { //control via both joysticks
-                mPivotAndy.setPower(gamepad2.left_stick_y);
+              /*  mPivotAndy.setPower(gamepad2.left_stick_y);
 
                 if (gamepad2.right_stick_y != 0) {
 
@@ -174,8 +173,9 @@ public class TeleOp extends LinearOpMode {
                     mPivotRev.setPower(revPivotPower);
                 } else {
                     mPivotRev.setPower(-.3);
-                }
+                } */
             }
+
 
             //collection
 

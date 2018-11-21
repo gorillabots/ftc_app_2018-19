@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.vuforia.Frame;
 import com.vuforia.Image;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
-
+@Disabled
 @Autonomous(group="test", name="Image Test")
 public class VuforiaImageTest extends LinearOpMode implements Vuforia.UpdateCallbackInterface
 {
