@@ -26,10 +26,9 @@ public class HangingEncoderTest extends AutonomousOpMode {
 
         while (opModeIsActive()) {
             if (gamepad1.right_bumper) {
-
                 int original = hang.mHang.getCurrentPosition();
                 int start = hang.mHang.getCurrentPosition();
-                int end = start - 25;
+                int end = start - 2500;
 
                 hang.setHangingPower(-.5);
 
@@ -43,25 +42,6 @@ public class HangingEncoderTest extends AutonomousOpMode {
                 }
                 hang.setHangingPower(0);
             }
-            if (gamepad1.left_bumper) {
-
-                int original = hang.mHang.getCurrentPosition();
-                int start = hang.mHang.getCurrentPosition();
-                int end = start - 1;
-
-                hang.setHangingPower(-.5);
-
-                hang.mHang.setTargetPosition(end);
-
-                while (hang.mHang.isBusy() && opModeIsActive()) {
-                    telemetry.addData("orig", original);
-                    telemetry.addData("end", end);
-                    telemetry.addData("difference", end - original);
-                    telemetry.update();
-                }
-                hang.setHangingPower(0);
-            }
-
 
         }
 

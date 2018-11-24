@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static java.lang.Math.abs;
 import static org.firstinspires.ftc.teamcode.AutonomousOpMode.degreeCorrection;
-
+//unused
 public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
 
     public OldDriveTrain motors;
@@ -118,10 +118,10 @@ public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
         mbl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void MoveToByTime(long time, double direction, double power) {
+    public void MoveToByTime(long timeMilli, double direction, double power) {
         SetEncoderOff();
         motors.MoveTo(direction, power);
-        sleep(time);
+        sleep(timeMilli);
         motors.stopMotors();
     }
 

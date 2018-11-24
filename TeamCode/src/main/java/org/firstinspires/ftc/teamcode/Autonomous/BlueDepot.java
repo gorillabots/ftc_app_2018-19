@@ -20,9 +20,11 @@ public class BlueDepot extends AutonomousOpMode {
     public void runOpMode() {
 
         initializeAutonomous();
-        detectYellow(false);
+
         waitForStart();
 
+        unHangWithEncoder();
 
+        MoveUntilEncoder(15, 270, .5);
     }
 }
