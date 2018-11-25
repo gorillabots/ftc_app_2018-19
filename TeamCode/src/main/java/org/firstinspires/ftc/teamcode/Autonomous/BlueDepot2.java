@@ -11,8 +11,8 @@ import java.util.Random;
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "Blue Depot", group = "Autonomous")
-public class BlueDepot extends AutonomousOpMode {
+@Autonomous(name = "Blue Depot2", group = "Autonomous")
+public class BlueDepot2 extends AutonomousOpMode {
 
     Random random;
 
@@ -21,7 +21,7 @@ public class BlueDepot extends AutonomousOpMode {
 
         initializeAutonomous();
 
-        int yellow = 1;
+        int yellow = 2;
 
         waitForStart();
 
@@ -33,11 +33,9 @@ public class BlueDepot extends AutonomousOpMode {
 
         if (yellow == 1) {
             scoreLeftDepot();
-
         } else if (yellow == 2) {
             scoreMiddleDepot();
-
-        } else if (yellow == 3) {
+        } else {
             scoreRightDepot();
         }
 

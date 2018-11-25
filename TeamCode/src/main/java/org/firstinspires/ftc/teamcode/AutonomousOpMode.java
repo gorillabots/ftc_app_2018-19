@@ -54,16 +54,25 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
 */
 
-    /* Default (Hanging Mechanism is Up)
+    /* (Hanging Mechanism side is Up)
+
+    Drive
                        0
                 270          90
                       180
 
+    Turning
+                    ----- x ------
+        negative  |               | positive
+                  |               |
+
     */
+
+
     public static final int degreeCorrection = 180;
     public static final int ENCODER_TO_EXTEND_UP = 7500;
 
-    public static final double COUNTS_PER_MOTOR_REV = 140;
+    public static final double COUNTS_PER_MOTOR_REV = 576;     //20:1
     public static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
     public static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -162,30 +171,55 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.isEncoderMode(false);
 
         hanging.mHang.setPower(-.2);
-        sleep(800);
+        sleep(1000);
         hanging.mHang.setPower(0);
 
     }
 
+    public void scoreLeftDepot() {
+        MoveUntilEncoder(36, 180, 1);
+        Turn(-90);
+        MoveUntilTime(1200, 90, 1);
+        MoveUntilEncoder(3, 270, .5);
+        MoveUntilEncoder(30, 180, 1);
+        servos.setCanPosition(false);
+        driveToCraterFromDepot();
+    }
+
+    public void scoreMiddleDepot() {
+
+        hanging.setHangingPower(.2);
+        Turn(-35);
+        hanging.setHangingPower(0);
+        MoveUntilEncoder(55, 180, 1);
+        Turn(-45);
+        MoveUntilTime(1000, 90, 1);
+        servos.setCanPosition(false);
+        driveToCraterFromDepot();
+    }
+
+    public void scoreRightDepot() {
+        Turn(15);
+        MoveUntilTime(3000, 269, 1);
+        MoveUntilEncoder(2, 90, .5);
+        MoveUntilEncoder(27, 180, 1);
+        Turn(-90);
+        MoveUntilTime(1000, 90, 1);
+        servos.setCanPosition(false);
+        MoveUntilEncoder(3, 270, .5);
+        driveToCraterFromDepot();
+    }
+
+    public void driveToCraterFromDepot() {
+
+        MoveUntilEncoder(60, 4, 1);
+        MoveUntilTime(500, 90, 1);
+        MoveUntilTime(100, 270, .5);
+        MoveUntilEncoder(27, 0, 1);
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-----------------------------------DRIVE TRAIN FUNCTIONS------------------------------------------//
+//-----------------------------------MOVE UNTIL FUNCTIONS------------------------------------------//
     /*
 
     public void MoveUntilRed(double direction, double power) {
@@ -252,6 +286,25 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         stopMotors();
     }
 
+
+    public void MoveTo(double degree, double power) {
+        double degreeRad = Math.toRadians(degree - degreeCorrection); // Convert to radians
+        double cs = Math.cos(degreeRad);
+        double sn = Math.sin(degreeRad);
+
+        double fr = power * (-sn + cs);
+        double fl = power * (sn + cs);
+        double br = power * (sn + cs);
+        double bl = power * (-sn + cs);
+
+        mfl.setPower(fl);
+        mfr.setPower(fr);
+        mbl.setPower(bl);
+        mbr.setPower(br);
+    }
+
+    //------------------------------------------TURN-----------------------------------------------//
+
     public void Turn(double TurnDegree) {
         // clock is negative; anti-clock positive degree
         // Maximum degree is 180
@@ -264,16 +317,16 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             TurnDegree = -180;
         }
 
-        double MaxPower = 0.5;
-        double minPower = 0.2;
+        double MaxPower = -0.5;
+        double minPower = -0.1;
 
-        double correctionDegree = 4;
+        double correctionDegree = 5;
         Orientation angles;
         double beginDegree;
         double currentDegree;
         double target;
         double angleDiff;
-        double maxTime = 6; //seconds
+        double maxTime = 5; //seconds
         ElapsedTime runtime = new ElapsedTime();
 
 
@@ -343,20 +396,71 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         telemetry.update();
     }
 
-    public void MoveTo(double degree, double power) {
-        double degreeRad = Math.toRadians(degree - degreeCorrection); // Convert to radians
-        double cs = Math.cos(degreeRad);
-        double sn = Math.sin(degreeRad);
+    public void andyTurn(double targetDegree, double minimumPower, double maximumPower, double error) {
 
-        double fr = power * (-sn + cs);
-        double fl = power * (sn + cs);
-        double br = power * (sn + cs);
-        double bl = power * (-sn + cs);
+        double originalPosition = into0to360(gyro.getZDegree());
+        double currentPosition = into0to360(gyro.getZDegree());
+        double target = into0to360(targetDegree);
+        double motorPower;
+        double x;
+        double y = 0;
+        double middlePosition = (Math.abs(target - originalPosition) / 2);
+        double distanceLeftToGo = target - middlePosition;
+        double reflectiveXValue = middlePosition - distanceLeftToGo;
 
-        mfl.setPower(fl);
-        mfr.setPower(fr);
-        mbl.setPower(bl);
-        mbr.setPower(br);
+        while (opModeIsActive() && Math.abs(target - currentPosition) > error) {
+
+            currentPosition = into0to360(gyro.getZDegree());
+
+            x = currentPosition;
+
+            if (middlePosition > currentPosition) {
+                y = maximumPower;
+            } else if (middlePosition <= currentPosition) {
+                y = quadraticCurve(x, middlePosition, maximumPower, target, minimumPower, reflectiveXValue, minimumPower);
+            }
+
+            motorPower = y;
+            setDrivePower(motorPower);
+        }
+        stopMotors();
+    }
+
+    public double into0to360(double degree) {
+        double withinRangeTargetDegree;
+
+        if (degree > 180) {
+            withinRangeTargetDegree = 180;
+        } else if (degree < -180) {
+            withinRangeTargetDegree = -180;
+        } else {
+            withinRangeTargetDegree = degree;
+        }
+        double targetDegreeInTermsOf0To360;
+
+        if (withinRangeTargetDegree <= 180 && withinRangeTargetDegree >= 0) {
+            targetDegreeInTermsOf0To360 = withinRangeTargetDegree;
+        } else {
+            targetDegreeInTermsOf0To360 = withinRangeTargetDegree + 360;
+        }
+
+        return targetDegreeInTermsOf0To360;
+    }
+
+    public double quadraticCurve(double x, double x1, double y1, double x2, double y2, double x3, double y3) {
+        double y = ((x - x2) * (x - x3)) / ((x1 - x2) * (x1 - x3)) * y1 +
+                ((x - x1) * (x - x3)) / ((x2 - x1) * (x2 - x3)) * y2 +
+                ((x - x1) * (x - x2)) / ((x3 - x1) * (x3 - x2)) * y3;
+        return y;
+    }
+
+    //----------------------------------------SMALL ORGANIZATIONAL STUFF---------------------------//
+
+    public void setDrivePower(double power) {
+        mfr.setPower(power);
+        mfl.setPower(power);
+        mbl.setPower(power);
+        mbr.setPower(power);
     }
 
     public void stopMotors() {
