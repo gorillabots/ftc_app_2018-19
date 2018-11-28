@@ -27,17 +27,7 @@ public class BlueDepot2 extends AutonomousOpMode {
 
         unHangWithEncoder();
 
-        MoveUntilEncoder(3, 270, 1);
-
-        Turn(40);
-
-        if (yellow == 1) {
-            scoreLeftDepot();
-        } else if (yellow == 2) {
-            scoreMiddleDepot();
-        } else {
-            scoreRightDepot();
-        }
+        scorePoints(yellow, true);
 
     }
 }

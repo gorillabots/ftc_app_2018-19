@@ -9,16 +9,20 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "Red Crater", group = "Autonomous")
-public class RedCrater extends AutonomousOpMode {
+@Autonomous(name = "Red Crater 1", group = "Autonomous")
+public class RedCrater1 extends AutonomousOpMode {
 
     @Override
     public void runOpMode() {
 
         initializeAutonomous();
-        detectYellow(true);
+
+        int yellow = 1;
+
         waitForStart();
 
+        unHangWithEncoder();
 
+        scorePoints(yellow, false);
     }
 }

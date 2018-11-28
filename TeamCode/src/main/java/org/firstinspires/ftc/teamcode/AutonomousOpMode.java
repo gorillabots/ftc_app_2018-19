@@ -63,7 +63,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     Turning
                     ----- x ------
-        negative  |               | positive
+        positive  |               | negative
                   |               |
 
     */
@@ -176,7 +176,11 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
 
+    //----DEPOT
+
     public void scoreLeftDepot() {
+        MoveUntilEncoder(3, 270, 1);
+        Turn(40);
         MoveUntilEncoder(36, 180, 1);
         Turn(-90);
         MoveUntilTime(1200, 90, 1);
@@ -187,7 +191,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void scoreMiddleDepot() {
-
+        MoveUntilEncoder(3, 270, 1);
+        Turn(40);
         hanging.setHangingPower(.2);
         Turn(-35);
         hanging.setHangingPower(0);
@@ -199,7 +204,12 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void scoreRightDepot() {
-        Turn(15);
+        MoveUntilEncoder(3, 270, 1);
+
+     //   Turn(40);
+     //   Turn(15);
+
+        Turn(55);
         MoveUntilTime(3000, 269, 1);
         MoveUntilEncoder(2, 90, .5);
         MoveUntilEncoder(27, 180, 1);
@@ -211,14 +221,67 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void driveToCraterFromDepot() {
-
         MoveUntilEncoder(60, 4, 1);
         MoveUntilTime(500, 90, 1);
         MoveUntilTime(100, 270, .5);
         MoveUntilEncoder(27, 0, 1);
     }
 
+    //----DEPOT
 
+    //----CRATER
+
+    public void scoreLeftCrater() {
+        MoveUntilEncoder(3,40,1);
+        Turn(45);
+        MoveUntilEncoder(20,180,.5);
+        Turn(60);
+        MoveUntilEncoder(10,180,1);
+        MoveUntilTime(2000,270,.75);
+
+        sleep(1); //wait for other team
+
+        MoveUntilEncoder(2,90,.5);
+
+        MoveUntilEncoder(81,184,1);
+
+        servos.setCanPosition(false);
+
+        MoveUntilEncoder(80,4,1);
+
+    }
+
+    public void scoreMiddleCrater() {
+        
+    }
+
+    public void scoreRightCrater() {
+
+    }
+
+    //----CRATER
+
+    public void scorePoints(int yellow, boolean isDepot) {
+        if (yellow == 1) {
+            if (isDepot) {
+                scoreLeftDepot();
+            } else {
+                scoreLeftCrater();
+            }
+        } else if (yellow == 2) {
+            if (isDepot) {
+                scoreMiddleDepot();
+            } else {
+                scoreMiddleCrater();
+            }
+        } else {
+            if (isDepot) {
+                scoreRightDepot();
+            } else {
+                scoreRightCrater();
+            }
+        }
+    }
 //-----------------------------------MOVE UNTIL FUNCTIONS------------------------------------------//
     /*
 
