@@ -24,7 +24,7 @@ public class TeleOp extends LinearOpMode {
 
     public DcMotor mExtend;
     public DcMotor mPivotAndy;
-    public DcMotor mPivotRev;
+    //public DcMotor mPivotRev;
 
     @Override
     public void runOpMode() {
@@ -40,7 +40,7 @@ public class TeleOp extends LinearOpMode {
         mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
         mPivotAndy.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
+        //mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
 
 
         waitForStart();
@@ -62,7 +62,7 @@ public class TeleOp extends LinearOpMode {
 
         double revPivotPower;
 
-        holdingPosition = mPivotRev.getCurrentPosition();
+        //holdingPosition = mPivotRev.getCurrentPosition();
 
         while (opModeIsActive()) {
 
@@ -118,14 +118,14 @@ public class TeleOp extends LinearOpMode {
             //anderson arm
 
             if (gamepad2.right_trigger > .75) {
-                mPivotRev.setPower(1);
+                //mPivotRev.setPower(1);
 
                 hasItMoved = true;
             }
 
             if (isInitialMovement) { //gamepad2.a
 
-                mPivotRev.setPower(0); //let it hang down
+                //mPivotRev.setPower(0); //let it hang down
 
                 mPivotAndy.setPower(-gamepad2.left_stick_y);
 
@@ -137,26 +137,26 @@ public class TeleOp extends LinearOpMode {
 
                 if (gamepad2.right_stick_y != 0) {
 
-                    mPivotRev.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    //mPivotRev.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-                    mPivotRev.setPower(gamepad2.right_stick_y * .75);
+                    //mPivotRev.setPower(gamepad2.right_stick_y * .75);
 
                     hasItMoved = true;
 
                 } else { //in holding
 
-                    mPivotRev.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    mPivotRev.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    //mPivotRev.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    //mPivotRev.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                     if (hasItMoved) {
-                        holdingPosition = mPivotRev.getCurrentPosition();
+                        //holdingPosition = mPivotRev.getCurrentPosition();
                     }
 
                     hasItMoved = false;
 
-                    mPivotRev.setPower(1);
+                    //mPivotRev.setPower(1);
 
-                    mPivotRev.setTargetPosition(holdingPosition);
+                    //mPivotRev.setTargetPosition(holdingPosition);
 
                 }
 
@@ -191,6 +191,11 @@ public class TeleOp extends LinearOpMode {
             } else {
                 mExtend.setPower(0);
             }
+
+            servo.setPositionDelta(gamepad2.right_stick_y / 50);
+            telemetry.addData("can pos", servo.pos);
+
+            sleep(20);
 
         }
     }
