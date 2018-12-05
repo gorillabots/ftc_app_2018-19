@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCamera;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Vision.Detector;
-import org.firstinspires.ftc.teamcode.old.OldAutonomousOpMode;
 import org.firstinspires.ftc.teamcode.old.OldGyro;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.Sensors;
@@ -206,8 +205,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public void scoreRightDepot() {
         MoveUntilEncoder(3, 270, 1);
 
-     //   Turn(40);
-     //   Turn(15);
+        //   Turn(40);
+        //   Turn(15);
 
         Turn(55);
         MoveUntilTime(3000, 269, 1);
@@ -232,31 +231,54 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     //----CRATER
 
     public void scoreLeftCrater() {
-        MoveUntilEncoder(3,40,1);
-        Turn(45);
-        MoveUntilEncoder(20,180,.5);
-        Turn(60);
-        MoveUntilEncoder(10,180,1);
-        MoveUntilTime(2000,270,.75);
-
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(45);
+        MoveUntilEncoder(20, 180, .5);
+        TurnFaster(60);
+        MoveUntilEncoder(10, 180, 1);
+        MoveUntilTime(2000, 270, .75);
+        MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-
-        MoveUntilEncoder(2,90,.5);
-
-        MoveUntilEncoder(81,184,1);
-
+        MoveUntilEncoder(81, 184, 1);
         servos.setCanPosition(false);
-
-        MoveUntilEncoder(80,4,1);
-
+        MoveUntilEncoder(80, 4, 1);
     }
 
     public void scoreMiddleCrater() {
-        
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(45);
+        hanging.setHangingPower(.2);
+        TurnAbsolute(0);
+        hanging.setHangingPower(0);
+        MoveUntilEncoder(26, 180, .6);
+        MoveUntilEncoder(20, 0, .6);
+        TurnAbsolute(90);
+        MoveUntilEncoder(41, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(1000, 270, 1);
+        MoveUntilEncoder(2, 90, .5);
+        sleep(1); //wait for other team
+        MoveUntilEncoder(40, 184, 1);
+        servos.setCanPosition(false);
+        MoveUntilEncoder(80, 4, 1);
     }
 
     public void scoreRightCrater() {
-
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(45);
+        hanging.setHangingPower(.2);
+        TurnAbsolute(-45);
+        MoveUntilEncoder(30,180,.6);
+        MoveUntilEncoder(24,0,.6);
+        TurnAbsolute(90);
+        MoveUntilEncoder(41, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(1000, 270, 1);
+        MoveUntilEncoder(2, 90, .5);
+        sleep(1); //wait for other team
+        MoveUntilEncoder(40, 184, 1);
+        servos.setCanPosition(false);
+        MoveUntilEncoder(80, 4, 1);
     }
 
     //----CRATER
@@ -367,6 +389,104 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     //------------------------------------------TURN-----------------------------------------------//
+
+    public void TurnAbsolute(double TargetDegree) {
+        // clock is negative; anti-clock positive degree
+        // rotate range is (-90,90)
+
+        if (TargetDegree > 180) {
+            TargetDegree = 180;
+        }
+        if (TargetDegree < -180) {
+            TargetDegree = -180;
+        }
+
+        double MaxPower = 0.5;
+        double minPower = 0.2;
+
+        double correctionDegree = 0;
+        double beginDegree;
+        double currentDegree;
+
+        double target;
+        double angleDiff;
+        double maxTime = 60; //seconds
+        ElapsedTime runtime = new ElapsedTime();
+
+        setDriveEncoderOn(false);
+
+        beginDegree = gyro.getZDegree();
+
+        runtime.reset();
+        runtime.startTime();
+
+        angleDiff = TargetDegree - beginDegree;
+        while (abs(angleDiff) > 1 && runtime.seconds() < maxTime) {
+            double leftPower;
+            double rightPower;
+            currentDegree = gyro.getZDegree();
+            angleDiff = TargetDegree - currentDegree;
+            if (angleDiff > 180) {
+                angleDiff = angleDiff - 360;
+            }
+            if (angleDiff < -180) {
+                angleDiff = angleDiff + 360;
+            }
+            double drive;
+            drive = (angleDiff) / 100.0;
+
+            if (abs(drive) > MaxPower) {
+                drive = MaxPower * abs(drive) / drive;
+            }
+            if (abs(drive) < minPower) {
+                if (drive > 0) {
+                    drive = minPower;
+                } else if (drive < 0) {
+                    drive = -minPower;
+                } else {
+                    drive = 0;
+                }
+            }
+
+            leftPower = Range.clip(-drive, -1.0, 1.0);
+            rightPower = Range.clip(drive, -1.0, 1.0);
+
+            mfl.setPower(leftPower);
+            mbl.setPower(leftPower);
+            mfr.setPower(rightPower);
+            mbr.setPower(rightPower);
+
+            telemetry.addData("Left Power", leftPower);
+            telemetry.addData("right Power", rightPower);
+            telemetry.addData("beginDegree", beginDegree);
+            telemetry.addData("CurrentDegree", currentDegree);
+            telemetry.addData("angleDiff", angleDiff);
+            telemetry.update();
+        }
+        stopMotors();
+
+        telemetry.addData("Current ZDegree", gyro.getZDegree());
+        telemetry.update();
+    }
+
+    public void TurnFaster(double TurnDegree) {
+        if (TurnDegree > 180) {
+            TurnDegree = 180;
+        }
+        if (TurnDegree < -180) {
+            TurnDegree = -180;
+        }
+
+        double beginDegree = gyro.getZDegree();
+        double TargetDegree = beginDegree + TurnDegree;
+        if (TargetDegree > 180) {
+            TargetDegree = TargetDegree - 360;
+        }
+        if (TargetDegree < -180) {
+            TargetDegree = TargetDegree + 360;
+        }
+        TurnAbsolute(TargetDegree);
+    }
 
     public void Turn(double TurnDegree) {
         // clock is negative; anti-clock positive degree

@@ -9,7 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-public class OldGyro {HardwareMap hardMap;
+public class OldGyro {
+    HardwareMap hardMap;
     Telemetry tele;
 
     public BNO055IMU imu;
@@ -21,11 +22,11 @@ public class OldGyro {HardwareMap hardMap;
         hardMap = hMap;
 
         parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -34,10 +35,12 @@ public class OldGyro {HardwareMap hardMap;
         imu = hardMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
     }
-    public void ResetAngle(){
+
+    public void ResetAngle() {
         imu.initialize(parameters);
     }
-    public double getZDegree(){
+
+    public double getZDegree() {
         double ZDegree;
         ZDegree = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
         return ZDegree;
