@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -20,11 +22,13 @@ public class TeleOp extends LinearOpMode {
     OldHolonomicDrivebase drive;
     Hanging hang;
     ElapsedTime timer;
-    Servos servo;
+    //Servos servo;
 
-    public DcMotor mExtend;
-    public DcMotor mPivotAndy;
-    //public DcMotor mPivotRev;
+    DcMotor mExtend;
+    DcMotor mPivot1;
+    DcMotor mPivot2;
+    CRServo sBin;
+    Servo sCollect;
 
     @Override
     public void runOpMode() {
@@ -33,15 +37,19 @@ public class TeleOp extends LinearOpMode {
 
         hang = new Hanging(hardwareMap, telemetry);
 
-        servo = new Servos(hardwareMap, telemetry);
+        //servo = new Servos(hardwareMap, telemetry);
 
         mExtend = hardwareMap.get(DcMotor.class, "mExtend");
 
-        mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
-        mPivotAndy.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        mPivot1 = hardwareMap.get(DcMotor.class, "mPivotAndy");
+        mPivot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
+        mPivot2 = hardwareMap.get(DcMotor.class, "mPivotRev");
+        mPivot2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        sBin = hardwareMap.get(CRServo.class, "sCan");
+
+        sCollect = hardwareMap.get(Servo.class, "sCollect");
 
         waitForStart();
 
@@ -97,9 +105,9 @@ public class TeleOp extends LinearOpMode {
             double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
 
             if (isSlow) {
-                drive.driveArcade(x1, y1, x2, 2);
+                drive.driveArcade(-x1, -y1, x2, 2);
             } else {
-                drive.driveArcade(x1, y1, x2, 1);
+                drive.driveArcade(-x1, -y1, x2, 1);
             }
 
             //hang
@@ -127,13 +135,13 @@ public class TeleOp extends LinearOpMode {
 
                 //mPivotRev.setPower(0); //let it hang down
 
-                mPivotAndy.setPower(-gamepad2.left_stick_y);
+                //mPivot1.setPower(-gamepad2.left_stick_y);
 
-                servo.initializeServos();
+                //servo.initializeServos();
 
             } else if (isSmartMovement) { //gamepad2.x
 
-                mPivotAndy.setPower(gamepad2.left_stick_y);
+                //mPivot1.setPower(gamepad2.left_stick_y);
 
                 if (gamepad2.right_stick_y != 0) {
 
@@ -180,20 +188,38 @@ public class TeleOp extends LinearOpMode {
             //collection
 
             if (!isInitialMovement) {
-                servo.setCanPosition(isCanCollecting);
+                //servo.setCanPosition(isCanCollecting);
             }
 
             //extension
-            if (gamepad2.dpad_up) {
-                mExtend.setPower(-.75);
-            } else if (gamepad2.dpad_down) {
-                mExtend.setPower(.75);
+            if (gamepad2.right_bumper) {
+                mExtend.setPower(-.5);
+            } else if (gamepad2.left_bumper) {
+                mExtend.setPower(.5);
             } else {
                 mExtend.setPower(0);
             }
 
-            servo.setPositionDelta(gamepad2.right_stick_y / 50);
-            telemetry.addData("can pos", servo.pos);
+            mPivot1.setPower(gamepad2.left_stick_y);
+
+            mPivot2.setPower(gamepad2.right_stick_y / 4);
+
+            double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
+
+            sBin.setPower(-triggers / 2 + 0.5);
+
+            if(gamepad2.dpad_up)
+            {
+                sCollect.setPosition(1);
+            }
+            else if(gamepad2.dpad_down)
+            {
+                sCollect.setPosition(0);
+            }
+            else
+            {
+                sCollect.setPosition(0.5);
+            }
 
             sleep(20);
 
