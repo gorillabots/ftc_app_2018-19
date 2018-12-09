@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -34,18 +35,18 @@ public class Servos {
 
     public void setPositionDelta(double value)
     {
-        pos += value;
+        //pos += value;
 
-        if(pos > 1)
+        /*if(pos > 1)
         {
             pos = 1;
         }
         else if(pos < 0)
         {
             pos = 0;
-        }
+        }*/
 
-        sCan.setPosition(pos);
+        sCan.setPosition(value);
     }
 
 }
