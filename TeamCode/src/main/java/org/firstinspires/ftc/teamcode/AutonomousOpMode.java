@@ -1,16 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.content.res.AssetManager;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCamera;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.Vision.Detector;
 import org.firstinspires.ftc.teamcode.old.OldGyro;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.Sensors;
 import org.firstinspires.ftc.teamcode.subsystems.Servos;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -77,6 +90,14 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
+
+    private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+    private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
+    private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+
+    private VuforiaLocalizer vuforia;
+    private TFObjectDetector tfod;
+
     public void initializeAutonomous() {
         mfr = hardwareMap.get(DcMotor.class, "mfr");
         mfl = hardwareMap.get(DcMotor.class, "mfl");
@@ -97,6 +118,45 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         gyro = new OldGyro(hardwareMap, telemetry);
 
         servos.initializeServos();
+
+        initVuforia();
+
+        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
+            initTfod();
+        } else {
+            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+        }
+        telemetry.addData("Status:", "Done with initial init");
+        telemetry.update();
+
+    }
+
+    private void initVuforia() {
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        parameters.vuforiaLicenseKey = getVuforiaKey();
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "webcam");
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+    }
+
+    private String getVuforiaKey() {
+        try {
+            AssetManager am = hardwareMap.appContext.getAssets();
+            InputStream is = am.open("vuforiakey.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String key = br.readLine();
+            return key;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
     }
 
 //---------------------------------STANDARDIZED AUTONOMOUS FUNCTIONS--------------------------------//
@@ -153,6 +213,56 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         return yellowPosition;
     }
 
+    public int detectYellowTensor() {
+        int position = 2;
+        if (!isStarted()) {
+            /** Activate Tensor Flow Object Detection. */
+            if (tfod != null) {
+                tfod.activate();
+            }
+
+            while (!isStarted()) {
+                if (tfod != null) {
+                    // getUpdatedRecognitions() will return null if no new information is available since
+                    // the last time that call was made.
+                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    if (updatedRecognitions != null) {
+                        telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        if (updatedRecognitions.size() == 3) {
+                            int goldMineralX = -1;
+                            int silverMineral1X = -1;
+                            int silverMineral2X = -1;
+                            for (Recognition recognition : updatedRecognitions) {
+                                if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                                    goldMineralX = (int) recognition.getLeft();
+                                } else if (silverMineral1X == -1) {
+                                    silverMineral1X = (int) recognition.getLeft();
+                                } else {
+                                    silverMineral2X = (int) recognition.getLeft();
+                                }
+                            }
+                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
+                                if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                                    telemetry.addData("Gold Mineral Position", "Left");
+                                    position = 1;
+                                } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                                    telemetry.addData("Gold Mineral Position", "Right");
+                                    position = 3;
+                                } else {
+                                    telemetry.addData("Gold Mineral Position", "Center");
+                                    position = 2;
+                                }
+                            }
+                        }
+                        telemetry.addData("position", position);
+                        telemetry.update();
+                    }
+                }
+            }
+        }
+        return position;
+    }
+
     public void unHangWithEncoder() {
         hanging.isEncoderMode(false);
         hanging.isEncoderMode(true);
@@ -176,7 +286,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
 
-    public void dumpTeamMarker(){
+    public void dumpTeamMarker() {
 
     }
 
@@ -275,8 +385,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         TurnFaster(45);
         hanging.setHangingPower(.2);
         TurnAbsolute(-40);
-        MoveUntilEncoder(30,180,.6);
-        MoveUntilEncoder(13,0,.6);
+        MoveUntilEncoder(30, 180, .6);
+        MoveUntilEncoder(13, 0, .6);
         TurnAbsolute(87);
         MoveUntilEncoder(41, 180, 1);
         TurnFaster(45);
@@ -289,15 +399,68 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     //----CRATER
-    
+
     //----DOUBLE
-    public void scoreLeftDouble(){
-
+    public void scoreLeftDouble() {
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(30);
+        MoveUntilEncoder(30, 180, 1);
+        TurnAbsolute(315);
+        MoveUntilEncoder(40, 0, 1);
+        TurnFaster(-15);
+        MoveUntilEncoder(8, 0, 1);
+        MoveUntilTime(1000, 90, 1);
+        dumpTeamMarker();
+        MoveUntilTime(200, 270, 1);
+        MoveUntilEncoder(80, 180, 1);
     }
-    public void scoreCenterDouble(){
 
+    public void scoreMiddleDouble() {
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(22.5);
+        hanging.setHangingPower(.2);
+        TurnAbsolute(0);
+        hanging.setHangingPower(0);
+        MoveUntilEncoder(23.5, 180, 1);
+        MoveUntilEncoder(12, 0, .9);
+        TurnAbsolute(90);
+        MoveUntilEncoder(41, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(500, 270, 1);
+        MoveUntilEncoder(2, 90, .5);
+        MoveUntilEncoder(55, 184, 1);
+        dumpTeamMarker();
+        TurnFaster(90);
+        MoveUntilEncoder(20, 180, 1);
+        MoveUntilTime(1500, 0, 1);
+        TurnFaster(-90);
+        MoveUntilTime(500, 270, 1);
+        MoveUntilTime(200, 90, 1);
+        MoveUntilEncoder(80, 358, 1);
     }
-    public void scoreRightDouble(){
+
+    public void scoreRightDouble() {
+
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(20);
+        hanging.setHangingPower(.2);
+        TurnAbsolute(-40);
+        hanging.setHangingPower(0);
+        MoveUntilEncoder(30, 180, 1);
+        MoveUntilEncoder(13, 0, 1);
+        TurnAbsolute(87);
+        MoveUntilEncoder(41, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(500, 270, 1);
+        MoveUntilEncoder(2, 90, 1);
+        sleep(1); //wait for other team
+        MoveUntilEncoder(46, 184, 1);
+        TurnFaster(-90);
+        dumpTeamMarker();
+        MoveUntilEncoder(40, 0, 1);
+        MoveUntilTime(1000, 90, 1);
+        MoveUntilTime(200, 270, 1);
+        MoveUntilEncoder(40, 4, 1);
 
     }
     //----DOUBLE
@@ -307,18 +470,24 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         if (yellow == 1) {
             if (isDepot) {
                 scoreLeftDepot();
+            } else if (isDouble) {
+                scoreLeftDouble();
             } else {
                 scoreLeftCrater();
             }
         } else if (yellow == 2) {
             if (isDepot) {
                 scoreMiddleDepot();
+            } else if (isDouble) {
+                scoreMiddleDouble();
             } else {
                 scoreMiddleCrater();
             }
         } else {
             if (isDepot) {
                 scoreRightDepot();
+            } else if (isDouble) {
+                scoreRightDouble();
             } else {
                 scoreRightCrater();
             }
@@ -456,7 +625,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             if (angleDiff < 0) {
                 angleDiff = angleDiff + correctionDegree;
             }
-            if (angleDiff > 0){
+            if (angleDiff > 0) {
                 angleDiff = angleDiff - correctionDegree;
             }
 
@@ -514,6 +683,112 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             TargetDegree = TargetDegree + 360;
         }
         TurnAbsolute(TargetDegree);
+    }
+
+    public void TurnSuperFast(double TurnDegree) {
+        if (TurnDegree > 180) {
+            TurnDegree = 180;
+        }
+        if (TurnDegree < -180) {
+            TurnDegree = -180;
+        }
+
+        double beginDegree = gyro.getZDegree();
+        double TargetDegree = beginDegree + TurnDegree;
+        if (TargetDegree > 180) {
+            TargetDegree = TargetDegree - 360;
+        }
+        if (TargetDegree < -180) {
+            TargetDegree = TargetDegree + 360;
+        }
+        TurnAbsoluteFAST(TargetDegree);
+    }
+
+    public void TurnAbsoluteFAST(double TargetDegree) {
+        // clock is negative; anti-clock positive degree
+        // rotate range is (-90,90)
+
+        if (TargetDegree > 180) {
+            TargetDegree = 180;
+        }
+        if (TargetDegree < -180) {
+            TargetDegree = -180;
+        }
+
+        double MaxPower = 1;
+        double minPower = 0.5;
+
+        double correctionDegree = 0;
+        double beginDegree;
+        double currentDegree;
+
+        double target;
+        double angleDiff;
+        double maxTime = 6; //seconds
+        ElapsedTime runtime = new ElapsedTime();
+
+        setDriveEncoderOn(false);
+
+        beginDegree = gyro.getZDegree();
+
+        runtime.reset();
+        runtime.startTime();
+
+        angleDiff = TargetDegree - beginDegree;
+        while (abs(angleDiff) > 1 && runtime.seconds() < maxTime && opModeIsActive()) {
+            double leftPower;
+            double rightPower;
+            currentDegree = gyro.getZDegree();
+            angleDiff = TargetDegree - currentDegree;
+            if (angleDiff > 180) {
+                angleDiff = angleDiff - 360;
+            }
+            if (angleDiff < -180) {
+                angleDiff = angleDiff + 360;
+            }
+
+            if (angleDiff < 0) {
+                angleDiff = angleDiff + correctionDegree;
+            }
+            if (angleDiff > 0) {
+                angleDiff = angleDiff - correctionDegree;
+            }
+
+            double drive;
+            drive = (angleDiff) / 100.0;
+
+            if (abs(drive) > MaxPower) {
+                drive = MaxPower * abs(drive) / drive;
+            }
+            if (abs(drive) < minPower) {
+                if (drive > 0) {
+                    drive = minPower;
+                } else if (drive < 0) {
+                    drive = -minPower;
+                } else {
+                    drive = 0;
+                }
+            }
+
+            leftPower = Range.clip(-drive, -1.0, 1.0);
+            rightPower = Range.clip(drive, -1.0, 1.0);
+
+            mfl.setPower(rightPower);
+            mbl.setPower(rightPower);
+            mfr.setPower(leftPower);
+            mbr.setPower(leftPower);
+
+            telemetry.addData("Left Power", leftPower);
+            telemetry.addData("right Power", rightPower);
+            telemetry.addData("beginDegree", beginDegree);
+            telemetry.addData("CurrentDegree", currentDegree);
+            telemetry.addData("angleDiff", angleDiff);
+            telemetry.update();
+        }
+        stopMotors();
+
+        telemetry.addData("Current ZDegree", gyro.getZDegree());
+        telemetry.update();
     }
 
     public void Turn(double TurnDegree) {

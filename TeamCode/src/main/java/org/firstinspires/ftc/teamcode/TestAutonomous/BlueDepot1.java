@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.TestAutonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "Red Crater 1", group = "Autonomous")
-public class RedCrater1 extends AutonomousOpMode {
+@Autonomous(name = "Blue Depot 1", group = "Autonomous")
+public class BlueDepot1 extends AutonomousOpMode {
 
     @Override
     public void runOpMode() {
@@ -23,6 +23,7 @@ public class RedCrater1 extends AutonomousOpMode {
 
         unHangWithEncoder();
 
-        scorePoints(yellow, false,false);
+        scorePoints(yellow, true,false);
+
     }
 }
