@@ -23,6 +23,6 @@ public class RedCrater2 extends AutonomousOpMode {
 
         unHangWithEncoder();
 
-        scorePoints(yellow, false);
+        scorePoints(yellow, false,false);
     }
 }

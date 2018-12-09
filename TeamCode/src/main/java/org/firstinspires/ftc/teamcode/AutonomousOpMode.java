@@ -69,7 +69,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
 
     public static final int degreeCorrection = 180;
-    public static final int ENCODER_TO_EXTEND_UP = 7500;
+    public static final int ENCODER_TO_EXTEND_UP = 7500; //5.7 inches from the top
 
     public static final double COUNTS_PER_MOTOR_REV = 576;     //20:1
     public static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -154,6 +154,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void unHangWithEncoder() {
+        hanging.isEncoderMode(false);
         hanging.isEncoderMode(true);
 
         int start = hanging.mHang.getCurrentPosition();
@@ -233,15 +234,17 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public void scoreLeftCrater() {
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(45);
-        MoveUntilEncoder(20, 180, .5);
+        TurnFaster(-10);
+        MoveUntilEncoder(30, 180, .5);
         TurnFaster(60);
-        MoveUntilEncoder(10, 180, 1);
-        MoveUntilTime(2000, 270, .75);
+        MoveUntilEncoder(20, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(1000, 270, .75);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(81, 184, 1);
+        MoveUntilEncoder(70, 184, 1);
         servos.setCanPosition(false);
-        MoveUntilEncoder(80, 4, 1);
+        MoveUntilEncoder(80, 358, 1);
     }
 
     public void scoreMiddleCrater() {
@@ -250,40 +253,46 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.setHangingPower(.2);
         TurnAbsolute(0);
         hanging.setHangingPower(0);
-        MoveUntilEncoder(26, 180, .6);
-        MoveUntilEncoder(20, 0, .6);
+        MoveUntilEncoder(23.5, 180, .6);
+        MoveUntilEncoder(12, 0, .6);
         TurnAbsolute(90);
         MoveUntilEncoder(41, 180, 1);
         TurnFaster(45);
         MoveUntilTime(1000, 270, 1);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(40, 184, 1);
+        MoveUntilEncoder(55, 184, 1);
         servos.setCanPosition(false);
-        MoveUntilEncoder(80, 4, 1);
+        MoveUntilEncoder(80, 358, 1);
     }
 
     public void scoreRightCrater() {
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(45);
         hanging.setHangingPower(.2);
-        TurnAbsolute(-45);
+        TurnAbsolute(-40);
         MoveUntilEncoder(30,180,.6);
-        MoveUntilEncoder(24,0,.6);
-        TurnAbsolute(90);
+        MoveUntilEncoder(13,0,.6);
+        TurnAbsolute(87);
         MoveUntilEncoder(41, 180, 1);
         TurnFaster(45);
         MoveUntilTime(1000, 270, 1);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(40, 184, 1);
+        MoveUntilEncoder(50, 184, 1);
         servos.setCanPosition(false);
-        MoveUntilEncoder(80, 4, 1);
+        MoveUntilEncoder(80, 0, 1);
     }
 
     //----CRATER
+    //----DOUBLE
+    public void scoreLeftDouble(){}
+    public void scoreCenterDouble(){}
+    public void scoreRightDouble(){}
+    //----DOUBLE
 
-    public void scorePoints(int yellow, boolean isDepot) {
+
+    public void scorePoints(int yellow, boolean isDepot, boolean isDouble) {
         if (yellow == 1) {
             if (isDepot) {
                 scoreLeftDepot();
@@ -410,7 +419,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         double target;
         double angleDiff;
-        double maxTime = 60; //seconds
+        double maxTime = 6; //seconds
         ElapsedTime runtime = new ElapsedTime();
 
         setDriveEncoderOn(false);
@@ -421,7 +430,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         runtime.startTime();
 
         angleDiff = TargetDegree - beginDegree;
-        while (abs(angleDiff) > 1 && runtime.seconds() < maxTime) {
+        while (abs(angleDiff) > 1 && runtime.seconds() < maxTime && opModeIsActive()) {
             double leftPower;
             double rightPower;
             currentDegree = gyro.getZDegree();
@@ -432,6 +441,14 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             if (angleDiff < -180) {
                 angleDiff = angleDiff + 360;
             }
+
+            if (angleDiff < 0) {
+                angleDiff = angleDiff + correctionDegree;
+            }
+            if (angleDiff > 0){
+                angleDiff = angleDiff - correctionDegree;
+            }
+
             double drive;
             drive = (angleDiff) / 100.0;
 
@@ -451,10 +468,10 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             leftPower = Range.clip(-drive, -1.0, 1.0);
             rightPower = Range.clip(drive, -1.0, 1.0);
 
-            mfl.setPower(leftPower);
-            mbl.setPower(leftPower);
-            mfr.setPower(rightPower);
-            mbr.setPower(rightPower);
+            mfl.setPower(rightPower);
+            mbl.setPower(rightPower);
+            mfr.setPower(leftPower);
+            mbr.setPower(leftPower);
 
             telemetry.addData("Left Power", leftPower);
             telemetry.addData("right Power", rightPower);

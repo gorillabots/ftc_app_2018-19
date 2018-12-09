@@ -18,67 +18,71 @@ public class TurnTest extends AutonomousOpMode {
         initializeAutonomous();
 
         waitForStart();
-        boolean isAndy = false;
+        boolean isFast = false;
         boolean andyWatch = false;
         while (opModeIsActive()) {
 
             if (gamepad1.left_stick_button && !andyWatch) {
-                isAndy = !isAndy;
+                isFast = !isFast;
             }
             andyWatch = gamepad1.left_stick_button;
 
-            telemetry.addData("andy?", isAndy);
+            telemetry.addData("fast?", isFast);
 
-            if (!isAndy) {
+            if (!isFast) {
                 if (gamepad1.a) {
-                    Turn(90);
+                    TurnAbsolute(90);
                 }
                 if (gamepad1.b) {
-                    Turn(-90);
+                    TurnAbsolute(-90);
                 }
                 if (gamepad1.y) {
-                    Turn(45); //particle 1 40
+                    TurnAbsolute(45);
                 }
                 if (gamepad1.x) {
-                    Turn(-45);
+                    TurnAbsolute(-45);
                 }
                 if (gamepad2.a) {
-                    Turn(180);
+                    TurnAbsolute(180);
                 }
-                if (gamepad1.b) {
-                    Turn(-180);
+                if (gamepad2.b) {
+                    TurnAbsolute(-180);
                 }
                 if (gamepad2.y) {
-                    Turn(15);
+                    TurnAbsolute(0);
                 }
                 if (gamepad2.x) {
-                    Turn(-15); //particle 3
+                    TurnAbsolute(-15);
                 }
             } else {
                 if (gamepad1.a) {
-                    andyTurn(90, .15, 1, 1);
+                    TurnFaster(90);
+                }
+                if (gamepad1.a) {
+                    TurnFaster(90);
                 }
                 if (gamepad1.b) {
-                    andyTurn(-90, .15, 1, 1);
-                }
-                if (gamepad1.x) {
-                    andyTurn(45, .15, 1, 1);
+                    TurnFaster(-90);
                 }
                 if (gamepad1.y) {
-                    andyTurn(-45, .15, 1, 1);
+                    TurnFaster(45);
+                }
+                if (gamepad1.x) {
+                    TurnFaster(-45);
                 }
                 if (gamepad2.a) {
-                    andyTurn(180, .15, 1, 1);
+                    TurnFaster(180);
                 }
                 if (gamepad2.b) {
-                    andyTurn(-180, .15, 1, 1);
-                }
-                if (gamepad2.x) {
-                    andyTurn(15, .15, 1, 1);
+                    TurnFaster(-180);
                 }
                 if (gamepad2.y) {
-                    andyTurn(15, .15, 1, 1);
+                    TurnFaster(0);
                 }
+                if (gamepad2.x) {
+                    TurnFaster(-15);
+                }
+
             }
 
         }
