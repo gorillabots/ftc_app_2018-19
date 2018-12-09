@@ -27,7 +27,7 @@ public class TeleOp extends LinearOpMode {
     DcMotor mExtend;
     DcMotor mPivot1;
     DcMotor mPivot2;
-    CRServo sBin;
+    Servo sBin;
     Servo sCollect;
 
     @Override
@@ -47,7 +47,7 @@ public class TeleOp extends LinearOpMode {
         mPivot2 = hardwareMap.get(DcMotor.class, "mPivotRev");
         mPivot2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        sBin = hardwareMap.get(CRServo.class, "sCan");
+        sBin = hardwareMap.get(Servo.class, "sCan");
 
         sCollect = hardwareMap.get(Servo.class, "sCollect");
 
@@ -68,7 +68,7 @@ public class TeleOp extends LinearOpMode {
         boolean isCanCollecting = false;
         boolean canCollectingWatch = false;
 
-        double revPivotPower;
+        double canPower = 0;
 
         //holdingPosition = mPivotRev.getCurrentPosition();
 
@@ -202,11 +202,19 @@ public class TeleOp extends LinearOpMode {
 
             mPivot1.setPower(gamepad2.left_stick_y);
 
-            mPivot2.setPower(gamepad2.right_stick_y / 4);
+            mPivot2.setPower(gamepad2.right_stick_y);
 
             double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
 
-            sBin.setPower(-triggers / 2 + 0.5);
+
+
+            //sBin.setPower(-triggers / 2 + 0.5);
+
+            canPower += triggers / 200;
+            //canPower = -triggers / 2 + 0.75;
+            telemetry.addData("pow", canPower);
+            telemetry.addData("trig", -triggers / 2 + 0.5);
+            sBin.setPosition(canPower);
 
             if(gamepad2.dpad_up)
             {
