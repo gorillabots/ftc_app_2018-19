@@ -176,6 +176,10 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
 
+    public void dumpTeamMarker(){
+
+    }
+
     //----DEPOT
 
     public void scoreLeftDepot() {
@@ -186,7 +190,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilTime(1200, 90, 1);
         MoveUntilEncoder(3, 270, .5);
         MoveUntilEncoder(30, 180, 1);
-        servos.setCanPosition(false);
+        dumpTeamMarker();
         driveToCraterFromDepot();
     }
 
@@ -199,7 +203,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(55, 180, 1);
         Turn(-45);
         MoveUntilTime(1000, 90, 1);
-        servos.setCanPosition(false);
+        dumpTeamMarker();
         driveToCraterFromDepot();
     }
 
@@ -215,7 +219,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(27, 180, 1);
         Turn(-90);
         MoveUntilTime(1000, 90, 1);
-        servos.setCanPosition(false);
+        dumpTeamMarker();
         MoveUntilEncoder(3, 270, .5);
         driveToCraterFromDepot();
     }
@@ -243,7 +247,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
         MoveUntilEncoder(70, 184, 1);
-        servos.setCanPosition(false);
+        dumpTeamMarker();
         MoveUntilEncoder(80, 358, 1);
     }
 
@@ -262,7 +266,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
         MoveUntilEncoder(55, 184, 1);
-        servos.setCanPosition(false);
+        dumpTeamMarker();
         MoveUntilEncoder(80, 358, 1);
     }
 
@@ -280,15 +284,22 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
         MoveUntilEncoder(50, 184, 1);
-        servos.setCanPosition(false);
+        dumpTeamMarker();
         MoveUntilEncoder(80, 0, 1);
     }
 
     //----CRATER
+    
     //----DOUBLE
-    public void scoreLeftDouble(){}
-    public void scoreCenterDouble(){}
-    public void scoreRightDouble(){}
+    public void scoreLeftDouble(){
+
+    }
+    public void scoreCenterDouble(){
+
+    }
+    public void scoreRightDouble(){
+
+    }
     //----DOUBLE
 
 
