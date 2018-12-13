@@ -5,11 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.subsystems.Servos;
+
 
 @TeleOp(name = "servoTest", group = "a")
-public class ServoTest extends LinearOpMode {
+public class ServoTest extends AutonomousOpMode {
 
-    // Servos servo;
+  //   Servos servo;
     public Servo sCan;
 
 
@@ -17,33 +20,34 @@ public class ServoTest extends LinearOpMode {
     public void runOpMode() {
         //  servo = new Servos(hardwareMap);
         sCan = hardwareMap.servo.get("sCan ");
-
+     //   servo = new Servos(hardwareMap,telemetry);
+initializeAutonomous();
         waitForStart();
 
         while (opModeIsActive()) {
             if (gamepad1.a) {
-                sCan.setPosition(0); //collect
+                sCan.setPosition(0);// init
             }
             if (gamepad1.b) {
-                sCan.setPosition(1); //dump
+                sCan.setPosition(0.1); //dump
             }
             if (gamepad1.y) {
-                sCan.setPosition(.5);
+                sCan.setPosition(.05);
             }
             if (gamepad1.x) {
-                sCan.setPosition(.57);
+                sCan.setPosition(.03);
             }
             if (gamepad1.dpad_up) {
-                sCan.setPosition(.58); // resting
+        //        servo.setCanPosition(true);
             }
             if (gamepad1.dpad_left) {
-                sCan.setPosition(.59);
+          //      servo.initializeServos();
             }
             if (gamepad1.dpad_down) {
-                sCan.setPosition(.6);
+            //    servo.moveCollector(true, false);
             }
             if (gamepad1.dpad_right) {
-                sCan.setPosition(.06);
+                dumpTeamMarker();
             }
             if (gamepad1.right_bumper) {
                 sCan.setPosition(.07);

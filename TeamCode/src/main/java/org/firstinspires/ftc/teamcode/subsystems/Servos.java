@@ -10,31 +10,45 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Servos {
     public Servo sCan;
+    public Servo sCollect;
 
-    public static final double CAN_DUMP_POSITION = 1;
-    public static final double CAN_COLLECT_POSITION = 0;
-    public static final double CAN_INIT_POSITION = .5;
+    public static final double CAN_DUMP_POSITION = .04;
+    public static final double CAN_COLLECT_POSITION = 0.04;
+    public static final double CAN_INIT_POSITION = 0;
 
     public double pos = .5;
 
     public Servos(HardwareMap hardwareMap, Telemetry telemetry) {
         sCan = hardwareMap.get(Servo.class, "sCan");
+        sCollect = hardwareMap.get(Servo.class, "sCollect");
     }
 
     public void initializeServos() {
-        //sCan.setPosition(CAN_INIT_POSITION);
+        sCan.setPosition(CAN_INIT_POSITION);
+        moveCollector(false,false );
     }
 
     public void setCanPosition(boolean collect) {
         if (collect) {
-            //sCan.setPosition(CAN_COLLECT_POSITION);
+            sCan.setPosition(CAN_COLLECT_POSITION);
         } else {
-            //sCan.setPosition(CAN_DUMP_POSITION);
+            sCan.setPosition(CAN_DUMP_POSITION);
         }
     }
 
-    public void setPositionDelta(double value)
-    {
+    public void moveCollector(boolean isMove, boolean collect) {
+        if (!isMove) {
+            sCollect.setPosition(.5);
+        } else {
+            if (collect) {
+                sCollect.setPosition(1);
+            } else {
+                sCollect.setPosition(0);
+            }
+        }
+    }
+
+    public void setPositionDelta(double value) {
         //pos += value;
 
         /*if(pos > 1)

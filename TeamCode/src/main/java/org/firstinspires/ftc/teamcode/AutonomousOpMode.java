@@ -131,6 +131,13 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
 
+    public enum GoldPosition {
+        LEFT,
+        CENTER,
+        RIGHT,
+        UNKNOWN
+    }
+
     private void initVuforia() {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
         parameters.vuforiaLicenseKey = getVuforiaKey();
@@ -215,20 +222,21 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     public int detectYellowTensor() {
         int position = 2;
-        if (!isStarted()) {
+        if (!isStarted() && !isStopRequested()) {
             /** Activate Tensor Flow Object Detection. */
             if (tfod != null) {
                 tfod.activate();
             }
 
-            while (!isStarted()) {
+            while (!isStarted() && !isStopRequested()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        if (updatedRecognitions.size() == 3) {
+                        if (updatedRecognitions.size() == 2) {
+                            //Assume Right Two items
                             int goldMineralX = -1;
                             int silverMineral1X = -1;
                             int silverMineral2X = -1;
@@ -241,24 +249,28 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
                                     silverMineral2X = (int) recognition.getLeft();
                                 }
                             }
-                            if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                                if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                                    telemetry.addData("Gold Mineral Position", "Left");
-                                    position = 1;
-                                } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                                    telemetry.addData("Gold Mineral Position", "Right");
-                                    position = 3;
-                                } else {
-                                    telemetry.addData("Gold Mineral Position", "Center");
+                            telemetry.addData("G,S1,S2 Positions", "" + goldMineralX + "," + silverMineral1X + "," + silverMineral2X);
+                            if (goldMineralX != -1 && silverMineral1X != -1) {
+                                if (goldMineralX < silverMineral1X) {
                                     position = 2;
+                                    //telemetry.addData("Gold Mineral Position", "Center");
+                                } else if (goldMineralX > silverMineral1X) {
+                                    //telemetry.addData("Gold Mineral Position", "Right");
+                                    position = 3;
                                 }
+                            } else if (silverMineral1X != -1 && silverMineral2X != -1) {
+                                //telemetry.addData("Gold Mineral Position", "Left");
+                                position = 1;
                             }
                         }
-                        telemetry.addData("position", position);
-                        telemetry.update();
                     }
                 }
+                telemetry.addData("position", position);
+                telemetry.update();
             }
+        }
+        if (tfod != null) {
+            tfod.shutdown();
         }
         return position;
     }
@@ -280,14 +292,14 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.setHangingPower(0);
         hanging.isEncoderMode(false);
 
-        hanging.mHang.setPower(-.2);
+        hanging.mHang.setPower(-.4);
         sleep(1000);
         hanging.mHang.setPower(0);
 
     }
 
     public void dumpTeamMarker() {
-
+        servos.sCan.setPosition(.04);
     }
 
     //----DEPOT
@@ -299,8 +311,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         Turn(-90);
         MoveUntilTime(1200, 90, 1);
         MoveUntilEncoder(3, 270, .5);
-        MoveUntilEncoder(30, 180, 1);
         dumpTeamMarker();
+        MoveUntilEncoder(30, 180, 1);
+
         driveToCraterFromDepot();
     }
 
@@ -312,31 +325,28 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.setHangingPower(0);
         MoveUntilEncoder(55, 180, 1);
         Turn(-45);
-        MoveUntilTime(1000, 90, 1);
         dumpTeamMarker();
+        MoveUntilTime(1000, 90, 1);
         driveToCraterFromDepot();
     }
 
     public void scoreRightDepot() {
         MoveUntilEncoder(3, 270, 1);
-
-        //   Turn(40);
-        //   Turn(15);
-
-        Turn(55);
-        MoveUntilTime(3000, 269, 1);
-        MoveUntilEncoder(2, 90, .5);
-        MoveUntilEncoder(27, 180, 1);
-        Turn(-90);
-        MoveUntilTime(1000, 90, 1);
+        TurnFaster(40);
+        TurnAbsolute(-45);
+        MoveUntilEncoder(36, 180, 1);
+        TurnFaster(90);
+        MoveUntilTime(750,270 ,.6 );
+        MoveUntilEncoder(24, 180, 1);
         dumpTeamMarker();
-        MoveUntilEncoder(3, 270, .5);
+        TurnFaster(-90);
+        MoveUntilTime(1000, 90, 1);
         driveToCraterFromDepot();
     }
 
     public void driveToCraterFromDepot() {
         MoveUntilEncoder(60, 4, 1);
-        MoveUntilTime(500, 90, 1);
+        MoveUntilTime(500, 90, .6);
         MoveUntilTime(100, 270, .5);
         MoveUntilEncoder(27, 0, 1);
     }
@@ -358,7 +368,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         sleep(1); //wait for other team
         MoveUntilEncoder(70, 184, 1);
         dumpTeamMarker();
-        MoveUntilEncoder(80, 358, 1);
+        MoveUntilEncoder(85, 358, 1);
     }
 
     public void scoreMiddleCrater() {
@@ -368,16 +378,16 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         TurnAbsolute(0);
         hanging.setHangingPower(0);
         MoveUntilEncoder(23.5, 180, .6);
-        MoveUntilEncoder(12, 0, .6);
-        TurnAbsolute(90);
+        MoveUntilEncoder(11, 0, .6);
+        TurnAbsolute(88);
         MoveUntilEncoder(41, 180, 1);
         TurnFaster(45);
-        MoveUntilTime(1000, 270, 1);
+        MoveUntilTime(1000, 270, .7);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(55, 184, 1);
+        MoveUntilEncoder(50, 184, 1);
         dumpTeamMarker();
-        MoveUntilEncoder(80, 358, 1);
+        MoveUntilEncoder(75, 358, 1);
     }
 
     public void scoreRightCrater() {
@@ -390,7 +400,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         TurnAbsolute(87);
         MoveUntilEncoder(41, 180, 1);
         TurnFaster(45);
-        MoveUntilTime(1000, 270, 1);
+        MoveUntilTime(1000, 270, .7);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
         MoveUntilEncoder(50, 184, 1);
@@ -401,42 +411,55 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     //----CRATER
 
     //----DOUBLE
-    public void scoreLeftDouble() {
+    public void scoreLeftDouble() { //success
         MoveUntilEncoder(3, 270, 1);
-        TurnFaster(30);
-        MoveUntilEncoder(30, 180, 1);
-        TurnAbsolute(315);
-        MoveUntilEncoder(40, 0, 1);
-        TurnFaster(-15);
-        MoveUntilEncoder(8, 0, 1);
-        MoveUntilTime(1000, 90, 1);
+        TurnFaster(36);
+        MoveUntilEncoder(28, 180, .5);
+        TurnFaster(60);
+        MoveUntilEncoder(20, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(750, 270, .7);
+        MoveUntilEncoder(2, 90, .5);
+        sleep(1); //wait for other team
+        MoveUntilEncoder(50, 180, 1);
         dumpTeamMarker();
-        MoveUntilTime(200, 270, 1);
-        MoveUntilEncoder(80, 180, 1);
+        MoveUntilTime(1000, 180, .7);
+        MoveUntilEncoder(5, 0, 1);
+        TurnFaster(-90);
+        MoveUntilEncoder(5, 0, 1);
+        MoveUntilEncoder(30, 0, 1);
+        MoveUntilEncoder(9.5, 270, 1);
+        MoveUntilTime(900, 90, .7);
+        MoveUntilTime(100, 270, 1);
+        MoveUntilEncoder(40, 4, 1);
+
     }
 
-    public void scoreMiddleDouble() {
+    public void scoreMiddleDouble() { //success
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(22.5);
         hanging.setHangingPower(.2);
         TurnAbsolute(0);
         hanging.setHangingPower(0);
         MoveUntilEncoder(23.5, 180, 1);
-        MoveUntilEncoder(12, 0, .9);
-        TurnAbsolute(90);
+        MoveUntilEncoder(11, 0, .9);
+        TurnAbsolute(87);
         MoveUntilEncoder(41, 180, 1);
         TurnFaster(45);
         MoveUntilTime(500, 270, 1);
         MoveUntilEncoder(2, 90, .5);
-        MoveUntilEncoder(55, 184, 1);
+        MoveUntilEncoder(46, 184, 1);
         dumpTeamMarker();
+        MoveUntilTime(1000, 180, .6);
+        MoveUntilEncoder(20, 0, 1);
         TurnFaster(90);
         MoveUntilEncoder(20, 180, 1);
-        MoveUntilTime(1500, 0, 1);
+        MoveUntilTime(1000, 0, 1);
+        MoveUntilTime(400, 0, .5);
         TurnFaster(-90);
-        MoveUntilTime(500, 270, 1);
-        MoveUntilTime(200, 90, 1);
-        MoveUntilEncoder(80, 358, 1);
+        MoveUntilTime(400, 270, .7);
+        MoveUntilTime(100, 90, 1);
+        MoveUntilEncoder(80, 3, 1);
     }
 
     public void scoreRightDouble() {
@@ -447,20 +470,17 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         TurnAbsolute(-40);
         hanging.setHangingPower(0);
         MoveUntilEncoder(30, 180, 1);
-        MoveUntilEncoder(13, 0, 1);
+        MoveUntilEncoder(12, 0, 1);
         TurnAbsolute(87);
-        MoveUntilEncoder(41, 180, 1);
-        TurnFaster(45);
-        MoveUntilTime(500, 270, 1);
-        MoveUntilEncoder(2, 90, 1);
+        MoveUntilEncoder(43, 180, 1);
+        TurnFaster(43);
         sleep(1); //wait for other team
-        MoveUntilEncoder(46, 184, 1);
-        TurnFaster(-90);
+        MoveUntilEncoder(24, 180, 1);
+        MoveUntilTime(1200, 270, .7);
+        MoveUntilEncoder(2, 90, 1);
         dumpTeamMarker();
-        MoveUntilEncoder(40, 0, 1);
-        MoveUntilTime(1000, 90, 1);
-        MoveUntilTime(200, 270, 1);
-        MoveUntilEncoder(40, 4, 1);
+        MoveUntilEncoder(28, 180, 1);
+        MoveUntilEncoder(81, 0, 1);
 
     }
     //----DOUBLE

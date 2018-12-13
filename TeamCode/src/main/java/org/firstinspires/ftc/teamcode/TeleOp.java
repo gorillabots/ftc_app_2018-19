@@ -125,71 +125,9 @@ public class TeleOp extends LinearOpMode {
 
             //anderson arm
 
-            if (gamepad2.right_trigger > .75) {
-                //mPivotRev.setPower(1);
-
-                hasItMoved = true;
-            }
-
-            if (isInitialMovement) { //gamepad2.a
-
-                //mPivotRev.setPower(0); //let it hang down
-
-                //mPivot1.setPower(-gamepad2.left_stick_y);
-
-                //servo.initializeServos();
-
-            } else if (isSmartMovement) { //gamepad2.x
-
-                //mPivot1.setPower(gamepad2.left_stick_y);
-
-                if (gamepad2.right_stick_y != 0) {
-
-                    //mPivotRev.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-                    //mPivotRev.setPower(gamepad2.right_stick_y * .75);
-
-                    hasItMoved = true;
-
-                } else { //in holding
-
-                    //mPivotRev.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    //mPivotRev.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                    if (hasItMoved) {
-                        //holdingPosition = mPivotRev.getCurrentPosition();
-                    }
-
-                    hasItMoved = false;
-
-                    //mPivotRev.setPower(1);
-
-                    //mPivotRev.setTargetPosition(holdingPosition);
-
-                }
-
-            } else { //control via both joysticks
-              /*  mPivotAndy.setPower(gamepad2.left_stick_y);
-
-                if (gamepad2.right_stick_y != 0) {
-
-                    if (gamepad2.right_stick_y > 0) {
-                        revPivotPower = gamepad2.right_stick_y * .1; //going down is positive
-                    } else {
-                        revPivotPower = gamepad2.right_stick_y * .9; //going up is negative
-                    }
-                    mPivotRev.setPower(revPivotPower);
-                } else {
-                    mPivotRev.setPower(-.3);
-                } */
-            }
 
 
             //collection
-
-            if (!isInitialMovement) {
-                //servo.setCanPosition(isCanCollecting);
-            }
 
             //extension
             if (gamepad2.right_bumper) {
@@ -206,19 +144,18 @@ public class TeleOp extends LinearOpMode {
 
             double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
 
-
-
             //sBin.setPower(-triggers / 2 + 0.5);
 
             canPower += triggers / 200;
             //canPower = -triggers / 2 + 0.75;
             telemetry.addData("pow", canPower);
             telemetry.addData("trig", -triggers / 2 + 0.5);
+
             sBin.setPosition(canPower);
 
             if(gamepad2.dpad_up)
             {
-                sCollect.setPosition(1);
+                sCollect.setPosition(1); //collect
             }
             else if(gamepad2.dpad_down)
             {
