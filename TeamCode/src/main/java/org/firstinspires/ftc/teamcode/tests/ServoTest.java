@@ -32,10 +32,10 @@ initializeAutonomous();
                 sCan.setPosition(0.1); //dump
             }
             if (gamepad1.y) {
-                sCan.setPosition(.05);
+                sCan.setPosition(.05); //.06 dumpppppppppppp
             }
             if (gamepad1.x) {
-                sCan.setPosition(.03);
+                sCan.setPosition(.03); //.03 collecttttttttttttt
             }
             if (gamepad1.dpad_up) {
         //        servo.setCanPosition(true);

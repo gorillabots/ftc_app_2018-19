@@ -112,9 +112,9 @@ public class TeleOp extends LinearOpMode {
 
             //hang
             if (gamepad1.dpad_up && isSlow) {
-                hang.setHangingPower(-.3);
+                hang.setHangingPower(-.5);
             } else if (gamepad1.dpad_down && isSlow) {
-                hang.setHangingPower(.3);
+                hang.setHangingPower(.5);
             } else if (gamepad1.dpad_up) {
                 hang.setHangingPower(-1);
             } else if (gamepad1.dpad_down) {
@@ -124,7 +124,6 @@ public class TeleOp extends LinearOpMode {
             }
 
             //anderson arm
-
 
 
             //collection
@@ -140,8 +139,8 @@ public class TeleOp extends LinearOpMode {
 
             mPivot1.setPower(gamepad2.left_stick_y);
 
-            mPivot2.setPower(gamepad2.right_stick_y);
-
+            mPivot2.setPower(-gamepad2.right_stick_y);
+/*
             double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
 
             //sBin.setPower(-triggers / 2 + 0.5);
@@ -152,17 +151,24 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("trig", -triggers / 2 + 0.5);
 
             sBin.setPosition(canPower);
+*/
 
-            if(gamepad2.dpad_up)
+if (gamepad2.right_trigger> .5){
+    sBin.setPosition(.06); //deposit
+}
+if (gamepad2.left_trigger>.5){
+    sBin.setPosition(.03);
+}
+            if (gamepad2.dpad_up)
             {
                 sCollect.setPosition(1); //collect
             }
-            else if(gamepad2.dpad_down)
+            else if (gamepad2.dpad_down)
             {
-                sCollect.setPosition(0);
+                 sCollect.setPosition(0);
             }
-            else
-            {
+            else {
+
                 sCollect.setPosition(0.5);
             }
 
