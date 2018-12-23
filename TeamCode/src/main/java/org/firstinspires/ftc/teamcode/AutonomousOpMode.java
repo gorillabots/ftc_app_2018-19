@@ -308,10 +308,10 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(3, 270, 1);
         Turn(40);
         MoveUntilEncoder(36, 180, 1);
-        Turn(-90);
+        TurnFaster(-90);
+        dumpTeamMarker();
         MoveUntilTime(1200, 90, 1);
         MoveUntilEncoder(3, 270, .5);
-        dumpTeamMarker();
         MoveUntilEncoder(30, 180, 1);
 
         driveToCraterFromDepot();
@@ -323,9 +323,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.setHangingPower(.2);
         Turn(-35);
         hanging.setHangingPower(0);
+        dumpTeamMarker();
         MoveUntilEncoder(55, 180, 1);
         Turn(-45);
-        dumpTeamMarker();
         MoveUntilTime(1000, 90, 1);
         driveToCraterFromDepot();
     }
@@ -333,12 +333,13 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public void scoreRightDepot() {
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(40);
-        TurnAbsolute(-45);
+        TurnAbsolute(-40);
         MoveUntilEncoder(36, 180, 1);
         TurnFaster(90);
+        dumpTeamMarker();
         MoveUntilTime(750,270 ,.6 );
         MoveUntilEncoder(24, 180, 1);
-        dumpTeamMarker();
+
         TurnFaster(-90);
         MoveUntilTime(1000, 90, 1);
         driveToCraterFromDepot();
@@ -366,8 +367,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilTime(1000, 270, .75);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(70, 184, 1);
         dumpTeamMarker();
+        MoveUntilEncoder(70, 184, 1);
         MoveUntilEncoder(85, 358, 1);
     }
 
@@ -385,8 +386,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilTime(1000, 270, .7);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(50, 184, 1);
         dumpTeamMarker();
+        MoveUntilEncoder(50, 184, 1);
         MoveUntilEncoder(75, 358, 1);
     }
 
@@ -403,8 +404,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilTime(1000, 270, .7);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(50, 184, 1);
         dumpTeamMarker();
+        MoveUntilEncoder(50, 184, 1);
+
         MoveUntilEncoder(80, 0, 1);
     }
 
@@ -415,13 +417,14 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(36);
         MoveUntilEncoder(28, 180, .5);
+        MoveUntilEncoder(5,0 ,.8);
         TurnFaster(60);
         MoveUntilEncoder(20, 180, 1);
         TurnFaster(45);
         MoveUntilTime(750, 270, .7);
         MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
-        MoveUntilEncoder(50, 180, 1);
+        MoveUntilEncoder(49, 180, 1);
         dumpTeamMarker();
         MoveUntilTime(1000, 180, .7);
         MoveUntilEncoder(5, 0, 1);
@@ -477,9 +480,10 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         sleep(1); //wait for other team
         MoveUntilEncoder(24, 180, 1);
         MoveUntilTime(1200, 270, .7);
-        MoveUntilEncoder(2, 90, 1);
         dumpTeamMarker();
+        MoveUntilEncoder(2, 90, 1);
         MoveUntilEncoder(28, 180, 1);
+        sleep(1500);
         MoveUntilEncoder(81, 0, 1);
 
     }

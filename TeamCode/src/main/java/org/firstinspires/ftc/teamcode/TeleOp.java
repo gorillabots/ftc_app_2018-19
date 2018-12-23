@@ -56,8 +56,8 @@ public class TeleOp extends LinearOpMode {
         boolean isSlow = false;
         boolean slowWatch = false;
 
-        boolean isInitialMovement = true;
-        boolean initialMovementWatch = false;
+        boolean driveOpposite = false;
+        boolean driveOppositeWatch = false;
 
         boolean isSmartMovement = false;
         boolean smartMovementWatch = false;
@@ -81,13 +81,13 @@ public class TeleOp extends LinearOpMode {
             slowWatch = gamepad1.x;
             telemetry.addData("slow?", isSlow);
 
-            if (gamepad2.a && !initialMovementWatch) {
-                isInitialMovement = !isInitialMovement;
+            if (gamepad1.y && !driveOppositeWatch) {
+                driveOpposite = !driveOpposite;
             }
-            initialMovementWatch = gamepad2.a;
-            telemetry.addData("initial arm movement?", isInitialMovement);
+            driveOppositeWatch = gamepad1.y;
+            telemetry.addData("driveOpposite?", driveOpposite);
 
-            if (gamepad2.x && !smartMovementWatch) {
+         /* if (gamepad2.x && !smartMovementWatch) {
                 isSmartMovement = !isSmartMovement;
             }
             smartMovementWatch = gamepad2.x;
@@ -98,16 +98,24 @@ public class TeleOp extends LinearOpMode {
             }
             canCollectingWatch = gamepad2.right_bumper;
             telemetry.addData("collect?", isCanCollecting);
-
+*/
             //drive
             double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
             double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
             double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
 
-            if (isSlow) {
-                drive.driveArcade(-x1, -y1, x2, 2);
+            if (driveOpposite) {
+                if (isSlow) {
+                    drive.driveArcade(-x1, -y1, x2, 2);
+                } else {
+                    drive.driveArcade(-x1, -y1, x2, 1);
+                }
             } else {
-                drive.driveArcade(-x1, -y1, x2, 1);
+                if (isSlow) {
+                    drive.driveArcade(x1, y1, x2, 2);
+                } else {
+                    drive.driveArcade(x1, y1, x2, 1);
+                }
             }
 
             //hang
@@ -123,20 +131,16 @@ public class TeleOp extends LinearOpMode {
                 hang.setHangingPower(.0);
             }
 
-            //anderson arm
-
-
-            //collection
 
             //extension
-            if (gamepad2.right_bumper) {
+/*            if (gamepad2.right_bumper) {
                 mExtend.setPower(-.5);
             } else if (gamepad2.left_bumper) {
                 mExtend.setPower(.5);
             } else {
                 mExtend.setPower(0);
             }
-
+*/
             mPivot1.setPower(gamepad2.left_stick_y);
 
             mPivot2.setPower(-gamepad2.right_stick_y);
@@ -153,22 +157,17 @@ public class TeleOp extends LinearOpMode {
             sBin.setPosition(canPower);
 */
 
-if (gamepad2.right_trigger> .5){
-    sBin.setPosition(.06); //deposit
-}
-if (gamepad2.left_trigger>.5){
-    sBin.setPosition(.03);
-}
-            if (gamepad2.dpad_up)
-            {
+            if (gamepad2.right_trigger > .5) {
+                sBin.setPosition(.06); //deposit
+            }
+            if (gamepad2.left_trigger > .5) {
+                sBin.setPosition(.03);
+            }
+            if (gamepad2.dpad_up) {
                 sCollect.setPosition(1); //collect
-            }
-            else if (gamepad2.dpad_down)
-            {
-                 sCollect.setPosition(0);
-            }
-            else {
-
+            } else if (gamepad2.dpad_down) {
+                sCollect.setPosition(0);
+            } else {
                 sCollect.setPosition(0.5);
             }
 
