@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,58 +8,72 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Servos {
-    public Servo sCan;
-    public Servo sCollect;
 
-    public static final double CAN_DUMP_POSITION = .04;
-    public static final double CAN_COLLECT_POSITION = 0.04;
-    public static final double CAN_INIT_POSITION = 0;
+    public Servo sBackstop;
+    public Servo sCollectionRot;
+    public Servo sDepositRot;
+    public Servo sTeamMarkerRot;
 
-    public double pos = .5;
+    public static final double BACKSTOP_INIT = 0;
+    public static final double BACKSTOP_CLOSED = 0;
+    public static final double BACKSTOP_OPEN = 0;
+
+    public static final double COLLECTION_INIT = 0;
+    public static final double COLLECTION_COLLECT = 0;
+    public static final double COLLECTION_DUMP = 0;
+
+    public static final double DEPOSIT_INIT = 0;
+    public static final double DEPOSIT_COLLECT = 0;
+    public static final double DEPOSIT_SCORE = 0;
+
+    public static final double TEAMMARKER_INIT = 0;
+    public static final double TEAMMARKER_DEPOSIT = 0;
+
 
     public Servos(HardwareMap hardwareMap, Telemetry telemetry) {
-        sCan = hardwareMap.get(Servo.class, "sCan");
-        sCollect = hardwareMap.get(Servo.class, "sCollect");
+        sBackstop = hardwareMap.get(Servo.class, "sBackStop");
+        sCollectionRot = hardwareMap.get(Servo.class, "sCollectionRot");
+        sDepositRot = hardwareMap.get(Servo.class, "sDepositRot");
+        sTeamMarkerRot = hardwareMap.get(Servo.class, "sTeamMarkerRot");
     }
 
     public void initializeServos() {
-        sCan.setPosition(CAN_INIT_POSITION);
-        moveCollector(false,false );
+        sBackstop.setPosition(BACKSTOP_INIT);
+        sCollectionRot.setPosition(COLLECTION_INIT);
+        sDepositRot.setPosition(DEPOSIT_INIT);
+        sTeamMarkerRot.setPosition(TEAMMARKER_INIT);
     }
 
-    public void setCanPosition(boolean collect) {
+    public void setBackstopOpen(boolean open) {
+        if (open) {
+            sBackstop.setPosition(BACKSTOP_OPEN);
+        } else {
+            sBackstop.setPosition(BACKSTOP_CLOSED);
+        }
+    }
+
+    public void setCollectionCollect(boolean collect) {
         if (collect) {
-            sCan.setPosition(CAN_COLLECT_POSITION);
+            sCollectionRot.setPosition(COLLECTION_COLLECT);
         } else {
-            sCan.setPosition(CAN_DUMP_POSITION);
+            sCollectionRot.setPosition(COLLECTION_DUMP);
         }
     }
 
-    public void moveCollector(boolean isMove, boolean collect) {
-        if (!isMove) {
-            sCollect.setPosition(.5);
+    public void setDepositDump(boolean dump) {
+        if (dump) {
+            sDepositRot.setPosition(DEPOSIT_SCORE);
         } else {
-            if (collect) {
-                sCollect.setPosition(1);
-            } else {
-                sCollect.setPosition(0);
-            }
+            sDepositRot.setPosition(DEPOSIT_COLLECT);
         }
     }
 
-    public void setPositionDelta(double value) {
-        //pos += value;
-
-        /*if(pos > 1)
-        {
-            pos = 1;
+    public void setTeamMarkerFree(boolean dump){
+        if (dump){
+            sTeamMarkerRot.setPosition(TEAMMARKER_DEPOSIT);
         }
-        else if(pos < 0)
-        {
-            pos = 0;
-        }*/
-
-        sCan.setPosition(value);
+        else{
+            sTeamMarkerRot.setPosition(TEAMMARKER_INIT);
+        }
     }
-
 }

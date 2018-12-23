@@ -15,7 +15,6 @@ public class ServoTest extends AutonomousOpMode {
   //   Servos servo;
     public Servo sCan;
 
-
     @Override
     public void runOpMode() {
         //  servo = new Servos(hardwareMap);

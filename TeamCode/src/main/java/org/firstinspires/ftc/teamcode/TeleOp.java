@@ -38,7 +38,6 @@ public class TeleOp extends LinearOpMode {
         boolean driveOppositeWatch = false;
 
         while (opModeIsActive()) {
-
             //toggles
             if (gamepad1.x && !slowWatch) {
                 isSlow = !isSlow;

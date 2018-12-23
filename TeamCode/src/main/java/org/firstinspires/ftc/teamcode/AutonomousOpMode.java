@@ -35,34 +35,19 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public Servos servos;
     public OldGyro gyro;
 
-    public DcMotor mExtend;
-    public DcMotor mPivotAndy;
-    public DcMotor mPivotRev;
-
     public DcMotor mfr;
     public DcMotor mfl;
     public DcMotor mbr;
     public DcMotor mbl;
 
-/* Anderson Bot
+
+/* Taras Bot
 
     Rev Hub #10
-    hang 2 - mHang
-    extend 3 - mExtend
-    pivot andymark 1 - mPivotAndy
-    pivot rev 0  - mPivotRev
-
-    servo 5 - sCan
 
     Rev Hub #2
-    front right 3 - mfr
-    back right 0 - mbr
-    back left 1 - mfl
-    front left 2 - mbl
 
     Directions
-    mHang - Negative is up
-    mExtend - Negative is extend
 
 */
 
@@ -104,9 +89,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         mbr = hardwareMap.get(DcMotor.class, "mbr");
         mbl = hardwareMap.get(DcMotor.class, "mbl");
 
-        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
-        mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
-        mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
+
 
         mfr.setDirection(DcMotor.Direction.REVERSE);
         mfl.setDirection(DcMotor.Direction.FORWARD);
@@ -131,12 +114,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
 
-    public enum GoldPosition {
-        LEFT,
-        CENTER,
-        RIGHT,
-        UNKNOWN
-    }
 
     private void initVuforia() {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -299,7 +276,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void dumpTeamMarker() {
-        servos.sCan.setPosition(.04);
+
     }
 
     //----DEPOT
@@ -313,7 +290,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilTime(1200, 90, 1);
         MoveUntilEncoder(3, 270, .5);
         MoveUntilEncoder(30, 180, 1);
-
         driveToCraterFromDepot();
     }
 
@@ -518,22 +494,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         }
     }
 //-----------------------------------MOVE UNTIL FUNCTIONS------------------------------------------//
-    /*
-
-    public void MoveUntilRed(double direction, double power) {
-        while (!sensor.isRedGround() && opModeIsActive()) {
-            MoveTo(direction, power);
-        }
-        stopMotors();
-    }
-
-    public void MoveUntilBlue(double direction, double power) {
-        while (!sensor.isBlueGround() && opModeIsActive()) {
-            MoveTo(direction, power);
-        }
-        stopMotors();
-    }
-*/
 
     public void MoveUntilTime(long timeMilli, double direction, double power) {
         setDriveEncoderOn(false);

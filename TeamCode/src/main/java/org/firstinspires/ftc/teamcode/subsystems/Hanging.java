@@ -9,8 +9,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Hanging {
     public DcMotor mHang;
 
-    //negative is up
-
     public Hanging(HardwareMap hardwareMap, Telemetry telemetry) {
         mHang = hardwareMap.get(DcMotor.class, "mHang");
     }
