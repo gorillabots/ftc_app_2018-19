@@ -21,14 +21,6 @@ public class TeleOp extends LinearOpMode {
 
     OldHolonomicDrivebase drive;
     Hanging hang;
-    ElapsedTime timer;
-    //Servos servo;
-
-    DcMotor mExtend;
-    DcMotor mPivot1;
-    DcMotor mPivot2;
-    Servo sBin;
-    Servo sCollect;
 
     @Override
     public void runOpMode() {
@@ -37,20 +29,6 @@ public class TeleOp extends LinearOpMode {
 
         hang = new Hanging(hardwareMap, telemetry);
 
-        //servo = new Servos(hardwareMap, telemetry);
-
-        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
-
-        mPivot1 = hardwareMap.get(DcMotor.class, "mPivotAndy");
-        mPivot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        mPivot2 = hardwareMap.get(DcMotor.class, "mPivotRev");
-        mPivot2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        sBin = hardwareMap.get(Servo.class, "sCan");
-
-        sCollect = hardwareMap.get(Servo.class, "sCollect");
-
         waitForStart();
 
         boolean isSlow = false;
@@ -58,19 +36,6 @@ public class TeleOp extends LinearOpMode {
 
         boolean driveOpposite = false;
         boolean driveOppositeWatch = false;
-
-        boolean isSmartMovement = false;
-        boolean smartMovementWatch = false;
-
-        boolean hasItMoved = false;
-        int holdingPosition;
-
-        boolean isCanCollecting = false;
-        boolean canCollectingWatch = false;
-
-        double canPower = 0;
-
-        //holdingPosition = mPivotRev.getCurrentPosition();
 
         while (opModeIsActive()) {
 
@@ -87,18 +52,6 @@ public class TeleOp extends LinearOpMode {
             driveOppositeWatch = gamepad1.y;
             telemetry.addData("driveOpposite?", driveOpposite);
 
-         /* if (gamepad2.x && !smartMovementWatch) {
-                isSmartMovement = !isSmartMovement;
-            }
-            smartMovementWatch = gamepad2.x;
-            telemetry.addData("smart movement?", isSmartMovement);
-
-            if (gamepad2.right_bumper && !canCollectingWatch) {
-                isCanCollecting = !isCanCollecting;
-            }
-            canCollectingWatch = gamepad2.right_bumper;
-            telemetry.addData("collect?", isCanCollecting);
-*/
             //drive
             double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
             double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -131,45 +84,6 @@ public class TeleOp extends LinearOpMode {
                 hang.setHangingPower(.0);
             }
 
-
-            //extension
-/*            if (gamepad2.right_bumper) {
-                mExtend.setPower(-.5);
-            } else if (gamepad2.left_bumper) {
-                mExtend.setPower(.5);
-            } else {
-                mExtend.setPower(0);
-            }
-*/
-            mPivot1.setPower(gamepad2.left_stick_y);
-
-            mPivot2.setPower(-gamepad2.right_stick_y);
-/*
-            double triggers = gamepad2.right_trigger - gamepad2.left_trigger;
-
-            //sBin.setPower(-triggers / 2 + 0.5);
-
-            canPower += triggers / 200;
-            //canPower = -triggers / 2 + 0.75;
-            telemetry.addData("pow", canPower);
-            telemetry.addData("trig", -triggers / 2 + 0.5);
-
-            sBin.setPosition(canPower);
-*/
-
-            if (gamepad2.right_trigger > .5) {
-                sBin.setPosition(.06); //deposit
-            }
-            if (gamepad2.left_trigger > .5) {
-                sBin.setPosition(.03);
-            }
-            if (gamepad2.dpad_up) {
-                sCollect.setPosition(1); //collect
-            } else if (gamepad2.dpad_down) {
-                sCollect.setPosition(0);
-            } else {
-                sCollect.setPosition(0.5);
-            }
 
             sleep(20);
 
