@@ -1,18 +1,14 @@
 package org.firstinspires.ftc.teamcode.tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
-import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
 
-@TeleOp(name = "servoTestBackstop", group = "a")
-public class ServoTest extends AutonomousOpMode {
+@TeleOp(name = "servoTestCollectRot", group = "a")
+public class ServoTest2 extends AutonomousOpMode {
 
-Servo sBackstop;
 Servo sCollectionRot;
 Servo sDepositRot;
 Servo sTeamMarkerRot;
@@ -20,7 +16,7 @@ Servo sTeamMarkerRot;
     @Override
     public void runOpMode() {
 
-        sBackstop = hardwareMap.servo.get("sBackstop");
+
         sCollectionRot = hardwareMap.servo.get("sCollectionRot");
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
@@ -30,77 +26,77 @@ Servo sTeamMarkerRot;
         while (opModeIsActive()) {
 
             if (gamepad1.a) {
-                sBackstop.setPosition(0);
+                sCollectionRot.setPosition(0);
             }
             if (gamepad1.b) {
-                sBackstop.setPosition(0.5);
+                sCollectionRot.setPosition(0.5);
             }
             if (gamepad1.y) {
-                sBackstop.setPosition(1);
+                sCollectionRot.setPosition(1);
             }
             if (gamepad1.x) {
-                sBackstop.setPosition(.25);
+                sCollectionRot.setPosition(.25);
             }
             if (gamepad1.dpad_up) {
-                sBackstop.setPosition(.75);
+                sCollectionRot.setPosition(.75);
             }
             if (gamepad1.dpad_left) {
-                sBackstop.setPosition(.13);
+                sCollectionRot.setPosition(.13);
             }
             if (gamepad1.dpad_down) {
-                sBackstop.setPosition(.38);
+                sCollectionRot.setPosition(.38);
             }
             if (gamepad1.dpad_right) {
-              sBackstop.setPosition(.63);
+              sCollectionRot.setPosition(.63);
             }
             if (gamepad1.right_bumper) {
-                sBackstop.setPosition(.88);
+                sCollectionRot.setPosition(.88);
             }
             if (gamepad1.right_trigger > .5) {
-                sBackstop.setPosition(.06);
+                sCollectionRot.setPosition(.06);
             }
             if (gamepad1.left_bumper) {
-                sBackstop.setPosition(.19);
+                sCollectionRot.setPosition(.19);
             }
             if (gamepad1.left_trigger > .5) {
-                sBackstop.setPosition(.31);
+                sCollectionRot.setPosition(.31);
             }
 
             if (gamepad2.a) {
-                sBackstop.setPosition(.44);
+                sCollectionRot.setPosition(.44);
             }
             if (gamepad2.b) {
-                sBackstop.setPosition(.56);
+                sCollectionRot.setPosition(.56);
             }
             if (gamepad2.y) {
-                sBackstop.setPosition(.69);
+                sCollectionRot.setPosition(.69);
             }
             if (gamepad2.x) {
-                sBackstop.setPosition(.81);
+                sCollectionRot.setPosition(.81);
             }
             if (gamepad2.dpad_up) {
-                sBackstop.setPosition(.94);
+                sCollectionRot.setPosition(.94);
             }
             if (gamepad2.dpad_left) {
-                sBackstop.setPosition(.16);
+                sCollectionRot.setPosition(.16);
             }
             if (gamepad2.dpad_down) {
-                sBackstop.setPosition(.17);
+                sCollectionRot.setPosition(.17);
             }
             if (gamepad2.dpad_right) {
-                sBackstop.setPosition(.18);
+                sCollectionRot.setPosition(.18);
             }
             if (gamepad2.right_bumper) {
-                sBackstop.setPosition(.19);
+                sCollectionRot.setPosition(.19);
             }
             if (gamepad2.right_trigger > .5) {
-                sBackstop.setPosition(.20);
+                sCollectionRot.setPosition(.20);
             }
             if (gamepad2.left_bumper) {
-                sBackstop.setPosition(.21);
+                sCollectionRot.setPosition(.21);
             }
             if (gamepad2.left_trigger > .5) {
-                sBackstop.setPosition(.22);
+                sCollectionRot.setPosition(.22);
             }
         }
 

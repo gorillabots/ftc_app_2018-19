@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.Vision.Detector;
 import org.firstinspires.ftc.teamcode.old.OldGyro;
+import org.firstinspires.ftc.teamcode.old.OldHolonomicDrivebase;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.Sensors;
@@ -31,14 +32,10 @@ import static java.lang.Math.abs;
 
 public abstract class TeleOpOpMode extends LinearOpMode {
 
-    public Hanging hanging;
+    public Hanging hang;
     public Servos servos;
     public MineralCollectionMechanism minerals;
-
-    public DcMotor mfr;
-    public DcMotor mfl;
-    public DcMotor mbr;
-    public DcMotor mbl;
+    public OldHolonomicDrivebase drive;
 
     public static final int ENCODER_TO_DEPOSITUP = 0;
 
@@ -47,14 +44,11 @@ public abstract class TeleOpOpMode extends LinearOpMode {
 
 
     public void initializeTeleop() {
-        mfr = hardwareMap.get(DcMotor.class, "mfr");
-        mfl = hardwareMap.get(DcMotor.class, "mfl");
-        mbr = hardwareMap.get(DcMotor.class, "mbr");
-        mbl = hardwareMap.get(DcMotor.class, "mbl");
 
-        hanging = new Hanging(hardwareMap, telemetry);
         servos = new Servos(hardwareMap, telemetry);
         minerals = new MineralCollectionMechanism(hardwareMap, telemetry);
+        drive = new OldHolonomicDrivebase(hardwareMap, telemetry);
+        hang = new Hanging(hardwareMap, telemetry);
 
         servos.initializeServos();
 
@@ -112,7 +106,37 @@ public abstract class TeleOpOpMode extends LinearOpMode {
 
         }
         minerals.mExtendHoriz.setPower(0);
-        minerals.isEncoderModeVert(false);
+        minerals.isEncoderModeHoriz(false);
     }
 
+    //---------FULL AUTONOMOUS---------
+    public void setToScoringPosition(int encoderHoriz){
+        setHorizontalPos(ENCODER_HORIZ_CRATERWALL);
+        servos.setCollectionCollect(true);
+        setVertExtention(true);
+        servos.setDepositDump(true);
+        servos.setBackstopOpen(false);
+        minerals.mCollect.setPower(1);
+        setHorizontalPos(encoderHoriz);
+        servos.setDepositDump(false);
+    }
+    public void setToInteralPosition(int encoderHorizBack){
+        servos.setCollectionCollect(false);
+        setVertExtention(false);
+        setHorizontalPos(encoderHorizBack);
+        minerals.mCollect.setPower(-1);
+        servos.setBackstopOpen(true);
+    }
+    // --------------- FULL AUTONOMOUS ----------------
+    // --------------- PARTIAL AUTONOMOUS--------------
+    public void setDriverInternalHelp(){
+
+        servos.setCollectionCollect(false);
+        servos.setBackstopOpen(true);
+        minerals.mCollect.setPower(-1);
+        sleep(400);
+        setVertExtention(true);
+        minerals.mCollect.setPower(0);
+
+    }
 }
