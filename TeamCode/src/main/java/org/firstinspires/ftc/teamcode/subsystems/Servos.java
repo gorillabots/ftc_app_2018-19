@@ -14,20 +14,20 @@ public class Servos {
     public Servo sDepositRot;
     public Servo sTeamMarkerRot;
 
-    public static final double BACKSTOP_INIT = 0;
-    public static final double BACKSTOP_CLOSED = 0;
-    public static final double BACKSTOP_OPEN = 0;
+    public static final double BACKSTOP_INIT = .72;
+    public static final double BACKSTOP_CLOSED = 0.72;
+    public static final double BACKSTOP_OPEN = 0.3;
 
     public static final double COLLECTION_INIT = 0;
-    public static final double COLLECTION_COLLECT = 0;
-    public static final double COLLECTION_DUMP = 0;
+    public static final double COLLECTION_COLLECT = .79;
+    public static final double COLLECTION_DUMP = .94;
 
     public static final double DEPOSIT_INIT = 0;
     public static final double DEPOSIT_COLLECT = 0;
     public static final double DEPOSIT_SCORE = 0;
 
-    public static final double TEAMMARKER_INIT = 0;
-    public static final double TEAMMARKER_DEPOSIT = 0;
+    public static final double TEAMMARKER_INIT = 0; //
+    public static final double TEAMMARKER_DEPOSIT = .75;
 
 
     public Servos(HardwareMap hardwareMap, Telemetry telemetry) {
