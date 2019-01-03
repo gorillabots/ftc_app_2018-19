@@ -35,7 +35,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public Servos servos;
     public OldGyro gyro;
 
-    public DcMotor mExtend;
+
     public DcMotor mPivotAndy;
     public DcMotor mPivotRev;
 
@@ -104,7 +104,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         mbr = hardwareMap.get(DcMotor.class, "mbr");
         mbl = hardwareMap.get(DcMotor.class, "mbl");
 
-        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
         mPivotAndy = hardwareMap.get(DcMotor.class, "mPivotAndy");
         mPivotRev = hardwareMap.get(DcMotor.class, "mPivotRev");
 
@@ -304,40 +303,40 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     //----DEPOT
 
-    public void scoreLeftDepot() {
+    public void scoreLeftDepot() { //15 second to team marker
         MoveUntilEncoder(3, 270, 1);
-        Turn(40);
+        TurnFaster(40);
         MoveUntilEncoder(36, 180, 1);
         TurnFaster(-90);
         dumpTeamMarker();
         MoveUntilTime(1200, 90, 1);
         MoveUntilEncoder(3, 270, .5);
         MoveUntilEncoder(30, 180, 1);
-
         driveToCraterFromDepot();
     }
 
-    public void scoreMiddleDepot() {
+    public void scoreMiddleDepot() { //15 second to team marker
         MoveUntilEncoder(3, 270, 1);
-        Turn(40);
-        hanging.setHangingPower(.2);
-        Turn(-35);
+        TurnFaster(40);
+        hanging.setHangingPower(.5);
+        TurnFaster(-35);
         hanging.setHangingPower(0);
         dumpTeamMarker();
         MoveUntilEncoder(55, 180, 1);
-        Turn(-45);
-        MoveUntilTime(1000, 90, 1);
+        TurnFaster(-45);
+        MoveUntilTime(1000, 90, .7);
+        MoveUntilEncoder(1.5,270 , 1);
         driveToCraterFromDepot();
     }
 
-    public void scoreRightDepot() {
+    public void scoreRightDepot() { //18 second to team marker
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(40);
         TurnAbsolute(-40);
         MoveUntilEncoder(36, 180, 1);
         TurnFaster(90);
         dumpTeamMarker();
-        MoveUntilTime(750,270 ,.6 );
+        MoveUntilTime(750, 270, .6);
         MoveUntilEncoder(24, 180, 1);
 
         TurnFaster(-90);
@@ -357,72 +356,79 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     //----CRATER
 
     public void scoreLeftCrater() {
-        MoveUntilEncoder(3, 270, 1);
-        TurnFaster(45);
-        TurnFaster(-10);
-        MoveUntilEncoder(30, 180, .5);
-        TurnFaster(60);
-        MoveUntilEncoder(20, 180, 1);
-        TurnFaster(45);
-        MoveUntilTime(1000, 270, .75);
-        MoveUntilEncoder(2, 90, .5);
+        doCraterLeft();
         sleep(1); //wait for other team
         dumpTeamMarker();
         MoveUntilEncoder(70, 184, 1);
+        sleep(2000);
         MoveUntilEncoder(85, 358, 1);
     }
 
     public void scoreMiddleCrater() {
-        MoveUntilEncoder(3, 270, 1);
-        TurnFaster(45);
-        hanging.setHangingPower(.2);
-        TurnAbsolute(0);
-        hanging.setHangingPower(0);
-        MoveUntilEncoder(23.5, 180, .6);
-        MoveUntilEncoder(11, 0, .6);
-        TurnAbsolute(88);
-        MoveUntilEncoder(41, 180, 1);
-        TurnFaster(45);
-        MoveUntilTime(1000, 270, .7);
-        MoveUntilEncoder(2, 90, .5);
+        doCraterMiddle();
         sleep(1); //wait for other team
         dumpTeamMarker();
         MoveUntilEncoder(50, 184, 1);
+        sleep(2000);
         MoveUntilEncoder(75, 358, 1);
     }
 
     public void scoreRightCrater() {
-        MoveUntilEncoder(3, 270, 1);
-        TurnFaster(45);
-        hanging.setHangingPower(.2);
-        TurnAbsolute(-40);
-        MoveUntilEncoder(30, 180, .6);
-        MoveUntilEncoder(13, 0, .6);
-        TurnAbsolute(87);
-        MoveUntilEncoder(41, 180, 1);
-        TurnFaster(45);
+        doCraterRight();
+
         MoveUntilTime(1000, 270, .7);
-        MoveUntilEncoder(2, 90, .5);
         sleep(1); //wait for other team
         dumpTeamMarker();
         MoveUntilEncoder(50, 184, 1);
-
+        sleep(2000);
         MoveUntilEncoder(80, 0, 1);
     }
 
     //----CRATER
-
-    //----DOUBLE
-    public void scoreLeftDouble() { //success
+    public void doCraterLeft() {
         MoveUntilEncoder(3, 270, 1);
         TurnFaster(36);
         MoveUntilEncoder(28, 180, .5);
-        MoveUntilEncoder(5,0 ,.8);
+        MoveUntilEncoder(5, 0, .8);
         TurnFaster(60);
         MoveUntilEncoder(20, 180, 1);
         TurnFaster(45);
         MoveUntilTime(750, 270, .7);
         MoveUntilEncoder(2, 90, .5);
+    }
+
+    public void doCraterMiddle() {
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(22.5);
+        hanging.setHangingPower(.5);
+        TurnAbsolute(0);
+        hanging.setHangingPower(0);
+        MoveUntilEncoder(23.5, 180, 1);
+        MoveUntilEncoder(11, 0, .9);
+        TurnAbsolute(83);
+        MoveUntilEncoder(41, 180, 1);
+        TurnFaster(45);
+        MoveUntilTime(500, 270, .7);
+        MoveUntilEncoder(2, 90, .5);
+    }
+
+    public void doCraterRight() {
+        MoveUntilEncoder(3, 270, 1);
+        TurnFaster(20);
+        hanging.setHangingPower(.2);
+        TurnAbsolute(-40);
+        hanging.setHangingPower(0);
+        MoveUntilEncoder(30, 180, 1);
+        MoveUntilEncoder(12, 0, 1);
+        TurnAbsolute(80);
+
+        MoveUntilEncoder(43, 180, 1);
+        TurnFaster(43);
+    }
+
+    //----DOUBLE
+    public void scoreLeftDouble() {
+        doCraterLeft();
         sleep(1); //wait for other team
         MoveUntilEncoder(49, 180, 1);
         dumpTeamMarker();
@@ -435,22 +441,12 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilTime(900, 90, .7);
         MoveUntilTime(100, 270, 1);
         MoveUntilEncoder(40, 4, 1);
+        MoveUntilTime(700, 45, 1);
 
     }
 
     public void scoreMiddleDouble() { //success
-        MoveUntilEncoder(3, 270, 1);
-        TurnFaster(22.5);
-        hanging.setHangingPower(.2);
-        TurnAbsolute(0);
-        hanging.setHangingPower(0);
-        MoveUntilEncoder(23.5, 180, 1);
-        MoveUntilEncoder(11, 0, .9);
-        TurnAbsolute(87);
-        MoveUntilEncoder(41, 180, 1);
-        TurnFaster(45);
-        MoveUntilTime(500, 270, 1);
-        MoveUntilEncoder(2, 90, .5);
+        doCraterMiddle();
         MoveUntilEncoder(46, 184, 1);
         dumpTeamMarker();
         MoveUntilTime(1000, 180, .6);
@@ -467,16 +463,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     public void scoreRightDouble() {
 
-        MoveUntilEncoder(3, 270, 1);
-        TurnFaster(20);
-        hanging.setHangingPower(.2);
-        TurnAbsolute(-40);
-        hanging.setHangingPower(0);
-        MoveUntilEncoder(30, 180, 1);
-        MoveUntilEncoder(12, 0, 1);
-        TurnAbsolute(87);
-        MoveUntilEncoder(43, 180, 1);
-        TurnFaster(43);
+        doCraterRight();
         sleep(1); //wait for other team
         MoveUntilEncoder(24, 180, 1);
         MoveUntilTime(1200, 270, .7);
@@ -484,7 +471,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         MoveUntilEncoder(2, 90, 1);
         MoveUntilEncoder(28, 180, 1);
         sleep(1500);
-        MoveUntilEncoder(81, 0, 1);
+        MoveUntilEncoder(81, 356, 1);
 
     }
     //----DOUBLE

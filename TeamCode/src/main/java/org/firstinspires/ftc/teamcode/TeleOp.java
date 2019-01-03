@@ -39,8 +39,6 @@ public class TeleOp extends LinearOpMode {
 
         //servo = new Servos(hardwareMap, telemetry);
 
-        mExtend = hardwareMap.get(DcMotor.class, "mExtend");
-
         mPivot1 = hardwareMap.get(DcMotor.class, "mPivotAndy");
         mPivot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
