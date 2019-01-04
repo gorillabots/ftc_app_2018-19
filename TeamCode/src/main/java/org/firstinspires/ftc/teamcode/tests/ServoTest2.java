@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 @TeleOp(name = "servoTestCollectRot", group = "a")
 public class ServoTest2 extends AutonomousOpMode {
 
-Servo sCollectionRot;
-Servo sDepositRot;
-Servo sTeamMarkerRot;
+    Servo sCollectionRot;
+    Servo sDepositRot;
+    Servo sTeamMarkerRot;
 
     @Override
     public void runOpMode() {
@@ -47,7 +47,7 @@ Servo sTeamMarkerRot;
                 sCollectionRot.setPosition(.38);
             }
             if (gamepad1.dpad_right) {
-              sCollectionRot.setPosition(.63);
+                sCollectionRot.setPosition(.63);
             }
             if (gamepad1.right_bumper) {
                 sCollectionRot.setPosition(.88);

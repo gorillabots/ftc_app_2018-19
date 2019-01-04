@@ -68,7 +68,7 @@ Servo sTeamMarkerRot;
                 sTeamMarkerRot.setPosition(.56);
             }
             if (gamepad2.y) {
-                sTeamMarkerRot.setPosition(.69);
+                sTeamMarkerRot.setPosition(.69); //.69 dump
             }
             if (gamepad2.x) {
                 sTeamMarkerRot.setPosition(.81);
@@ -77,13 +77,13 @@ Servo sTeamMarkerRot;
                 sTeamMarkerRot.setPosition(.94);
             }
             if (gamepad2.dpad_left) {
-                sTeamMarkerRot.setPosition(.16);
+                sTeamMarkerRot.setPosition(.12);
             }
             if (gamepad2.dpad_down) {
-                sTeamMarkerRot.setPosition(.17);
+                sTeamMarkerRot.setPosition(.11);
             }
             if (gamepad2.dpad_right) {
-                sTeamMarkerRot.setPosition(.18);
+                sTeamMarkerRot.setPosition(.10);
             }
             if (gamepad2.right_bumper) {
                 sTeamMarkerRot.setPosition(.19);

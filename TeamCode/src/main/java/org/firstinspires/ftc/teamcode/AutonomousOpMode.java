@@ -43,21 +43,21 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
 /* Taras Bot
 
-    Rev Hub #2
+    Rev Hub #3
 
     mCollect - port 0
     mExtendVert - port 1
 
     sTeamMarkerRot - port 5
 
-    Rev Hub #3
+    Rev Hub #2
 
     mHang - port 0
     mExtendHoriz - port 1
 
     sDepositRot - port 1
-    sBackstop - port 2
-    sCollectionRot - port 3
+    sBackstop - port 3
+    sCollectionRot - port 2
 
     Directions
 
