@@ -35,7 +35,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public Servos servos;
     public OldGyro gyro;
 
-
     public DcMotor mPivotAndy;
     public DcMotor mPivotRev;
 
