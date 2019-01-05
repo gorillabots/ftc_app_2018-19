@@ -56,7 +56,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     mExtendHoriz - port 1
 
     sDepositRot - port 1
-    sBackstop - port 3
+    sBackstopCol - port 3
     sCollectionRot - port 2
 
     Directions

@@ -20,7 +20,7 @@ Servo sTeamMarkerRot;
     @Override
     public void runOpMode() {
 
-        sBackstop = hardwareMap.servo.get("sBackstop");
+        sBackstop = hardwareMap.servo.get("sBackstopCol");
         sCollectionRot = hardwareMap.servo.get("sCollectionRot");
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
