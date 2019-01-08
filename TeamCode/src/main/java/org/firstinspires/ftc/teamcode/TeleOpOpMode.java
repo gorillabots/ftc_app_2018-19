@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.old.OldHolonomicDrivebase;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
+import org.firstinspires.ftc.teamcode.subsystems.Sensors;
 import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
 import static java.lang.Math.abs;
@@ -15,6 +16,7 @@ public abstract class TeleOpOpMode extends LinearOpMode {
     public Servos servos;
     public MineralCollectionMechanism minerals;
     public OldHolonomicDrivebase drive;
+    public Sensors sensors;
 
     public static final int ENCODER_TO_DEPOSITUP = 0;
 
@@ -28,6 +30,7 @@ public abstract class TeleOpOpMode extends LinearOpMode {
         minerals = new MineralCollectionMechanism(hardwareMap, telemetry);
         drive = new OldHolonomicDrivebase(hardwareMap, telemetry);
         hang = new Hanging(hardwareMap, telemetry);
+        sensors = new Sensors(hardwareMap, telemetry);
 
         servos.initializeServos();
 

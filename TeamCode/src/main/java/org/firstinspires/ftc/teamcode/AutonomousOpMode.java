@@ -29,11 +29,12 @@ import static java.lang.Math.abs;
 
 public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
-    public Sensors sensor;
+    public Sensors sensors;
     public Detector detector;
     public Hanging hanging;
     public Servos servos;
     public OldGyro gyro;
+
 
     public DcMotor mfr;
     public DcMotor mfl;
@@ -106,8 +107,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         mbr = hardwareMap.get(DcMotor.class, "mbr");
         mbl = hardwareMap.get(DcMotor.class, "mbl");
 
-
-
         mfr.setDirection(DcMotor.Direction.REVERSE);
         mfl.setDirection(DcMotor.Direction.FORWARD);
         mbr.setDirection(DcMotor.Direction.REVERSE);
@@ -116,6 +115,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging = new Hanging(hardwareMap, telemetry);
         servos = new Servos(hardwareMap, telemetry);
         gyro = new OldGyro(hardwareMap, telemetry);
+        sensors = new Sensors(hardwareMap,telemetry);
 
         servos.initializeServos();
 
