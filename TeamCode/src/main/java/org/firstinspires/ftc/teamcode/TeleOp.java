@@ -156,10 +156,10 @@ public class TeleOp extends LinearOpMode {
 */
 
             if (gamepad2.right_trigger > .5) {
-                sBin.setPosition(.06); //deposit
+                sBin.setPosition(.08); //deposit
             }
             if (gamepad2.left_trigger > .5) {
-                sBin.setPosition(.03);
+                sBin.setPosition(.05);
             }
             if (gamepad2.dpad_up) {
                 sCollect.setPosition(1); //collect

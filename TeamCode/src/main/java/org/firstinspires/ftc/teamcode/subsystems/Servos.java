@@ -12,9 +12,9 @@ public class Servos {
     public Servo sCan;
     public Servo sCollect;
 
-    public static final double CAN_DUMP_POSITION = .04;
-    public static final double CAN_COLLECT_POSITION = 0.04;
-    public static final double CAN_INIT_POSITION = 0;
+    public static final double CAN_DUMP_POSITION = .14;
+    public static final double CAN_COLLECT_POSITION = 0.11;
+    public static final double CAN_INIT_POSITION = 0.035;
 
     public double pos = .5;
 

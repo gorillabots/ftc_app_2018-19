@@ -20,7 +20,6 @@ public class dump extends AutonomousOpMode {
 
         waitForStart();
 
-        servos.moveCollector(true, false);
 
     }
 }
