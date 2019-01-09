@@ -58,7 +58,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
             if (stage == 1) {
 
-                //picking up stuff --- will go through many times
+                //picking up stuff --- will go through many times --- use switch stage
 
                 double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                 double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -91,9 +91,9 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 if (intakeStage == 1) { //intake config
                     minerals.mCollect.setPower(-1);
                 } else if (intakeStage == 2) {
-                    minerals.mCollect.setPower(1);
-                } else {
                     minerals.mCollect.setPower(0);
+                } else {
+                    minerals.mCollect.setPower(1);
                 }
 
                 minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
@@ -102,7 +102,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
             else if (stage == 2) {
 
-                //will only go through once
+                //will only go through once --- automatic switch stage
+
                 minerals.mCollect.setPower(-1);
 
                 servos.setCollectionCollect(false);
@@ -165,6 +166,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                         }
                     }
 
+                    minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
+
                 }
 
                 minerals.mExtendVert.setPower(0);
@@ -174,7 +177,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 stage = stage + 1;
             }
-            else if(stage == 3){
+            else if(stage == 3){ // auto switch stage
 
                 depositStage = 1;
 
@@ -182,7 +185,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
             }
             else if(stage == 4){
 
-                //will go through many times
+                //will go through many times --- manual switch stage
 
                 double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                 double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -210,6 +213,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 if (depositStage == 1){
                     servos.setBackstopDepOpen(false);
+                    servos.setDepositDump(false);
                 }
                 else if(depositStage == 2){
                     servos.setDepositDump(true);
@@ -221,13 +225,20 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                     depositStage = 1;
                 }
 
-                //advance stage through right trigger
-
                 minerals.mExtendHoriz.setPower(gamepad2.right_stick_y);
 
             }
 
-            else if(stage == 5){ // through once
+            else if (stage == 5){ // switch stage auto
+
+                servos.setBackstopDepOpen(false);
+                servos.setDepositDump(false);
+
+                stage = stage + 1;
+
+            }
+
+            else if(stage == 6){ // auto switch stage
 
                 minerals.mExtendHoriz.setPower(0);
 
@@ -258,21 +269,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 }
 
                 minerals.mExtendVert.setPower(0);
-                stage = stage + 1;
+                stage = 1;
             }
-            else if (stage == 6){//through once
-
-                
-
-            }
-
-
-
-
-
-
-
-
 
 
         }

@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.Vision.Detector;
 import org.firstinspires.ftc.teamcode.old.OldGyro;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
+import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.Sensors;
 import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
@@ -26,6 +27,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.min;
+import static org.firstinspires.ftc.teamcode.TeleOpOpMode.ENCODER_TO_DEPOSITUP;
 
 public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
@@ -34,6 +37,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public Hanging hanging;
     public Servos servos;
     public OldGyro gyro;
+    public MineralCollectionMechanism minerals;
 
 
     public DcMotor mfr;
@@ -93,6 +97,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
+    public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 0;
+
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -115,7 +121,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging = new Hanging(hardwareMap, telemetry);
         servos = new Servos(hardwareMap, telemetry);
         gyro = new OldGyro(hardwareMap, telemetry);
-        sensors = new Sensors(hardwareMap,telemetry);
+        sensors = new Sensors(hardwareMap, telemetry);
+        minerals = new MineralCollectionMechanism(hardwareMap, telemetry);
 
         servos.initializeServos();
 
@@ -293,9 +300,67 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void dumpTeamMarker() {
+        servos.setTeamMarkerFree(true);
+    }
+
+    public void extendHorizToEncoder(int encoder) {
+        minerals.isEncoderModeHoriz(false);
+        minerals.isEncoderModeHoriz(true);
+
+        int start = minerals.mExtendHoriz.getCurrentPosition();
+        int end = start + encoder;
+
+        minerals.mExtendHoriz.setPower(1);
+
+        minerals.mExtendHoriz.setTargetPosition(end);
+
+        while (minerals.mExtendHoriz.isBusy() && opModeIsActive()) {
+
+        }
+        minerals.mExtendHoriz.setPower(0);
+        minerals.isEncoderModeHoriz(false);
 
     }
 
+    public void retractHoriz() {
+        minerals.isEncoderModeHoriz(false);
+        minerals.mExtendHoriz.setPower(-.75);
+        while (opModeIsActive() && sensors.horizTouch.isPressed()) {
+
+        }
+        minerals.mExtendHoriz.setPower(0);
+    }
+
+    public void setVertExtentionUp() {
+
+            minerals.isEncoderModeVert(false);
+            minerals.isEncoderModeVert(true);
+
+            int start = minerals.mExtendVert.getCurrentPosition();
+            int end = start - ENCODER_TO_DEPOSITUP;
+
+            minerals.mExtendVert.setPower(-1);
+
+            minerals.mExtendVert.setTargetPosition(end);
+
+            while (minerals.mExtendVert.isBusy() && opModeIsActive()) {
+
+            }
+            minerals.mExtendVert.setPower(0);
+            minerals.isEncoderModeVert(false);
+    }
+    public void setVertExtensionDown(){
+
+        minerals.isEncoderModeVert(false);
+
+        minerals.mExtendVert.setPower(.5);
+
+        while(sensors.vertTouch.isPressed() && opModeIsActive()){}
+
+        minerals.mExtendVert.setPower(0);
+
+    }
+/*
     //----DEPOT
 
     public void scoreLeftDepot() {
@@ -481,7 +546,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
     //----DOUBLE
-
+*/
 
     public void scorePoints(int yellow, boolean isDepot, boolean isDouble) {
         if (yellow == 1) {
@@ -510,6 +575,176 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             }
         }
     }
+
+    public void scoreMorePoints(int yellow, boolean isDepot, boolean isDouble, boolean withoutTeamMarker) {
+        if (yellow == 1) {
+            if (isDepot) {
+                scoreLeftDepot();
+            } else if (isDouble) {
+                scoreLeftDouble();
+            } else if (withoutTeamMarker) {
+                scoreLeftCraterWithoutTeam();
+            } else {
+                scoreLeftCrater();
+            }
+
+        } else if (yellow == 2) {
+            if (isDepot) {
+                scoreMiddleDepot();
+            } else if (isDouble) {
+                scoreMiddleDouble();
+            } else if (withoutTeamMarker) {
+                scoreMiddleCraterWithoutTeam();
+            } else {
+                scoreMiddleCrater();
+            }
+        } else {
+            if (isDepot) {
+                scoreRightDepot();
+            } else if (isDouble) {
+                scoreRightDouble();
+            } else if (withoutTeamMarker) {
+                scoreRightCraterWithoutTeam();
+            } else {
+                scoreRightCrater();
+            }
+        }
+    }
+
+    public void scoreLeftDepot() {
+        unhangWithExtension();
+    }
+
+
+    public void scoreMiddleDepot() {
+        unHangWithEncoder();                                //score and collect mineral / unhang / deposit team marker
+        servos.setCollectionCollect(true);
+        minerals.mCollect.setPower(-1); //collect
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+        dumpTeamMarker();
+        retractHoriz();
+        minerals.mCollect.setPower(0);
+
+        MoveUntilEncoder(3, 270, 1); //exit hook
+        TurnFaster(40);
+        hanging.setHangingPower(.4);
+        TurnAbsolute(0);
+        hanging.setHangingPower(0);
+
+        MoveUntilEncoder(8, 180, .5); //deposit mineral
+        servos.setBackstopColOpen(true);
+        servos.setBackstopDepOpen(true);
+        setVertExtentionUp();
+        servos.setDepositDump(true);
+        sleep(1000);
+        servos.setDepositDump(false);
+        sleep(500);
+        setVertExtensionDown();
+
+        TurnAbsolute(-90);                      //maneuver to crater
+        MoveUntilEncoder(36,180 , 1);
+        TurnFaster(45);
+
+        extendHorizToEncoder(555);                                // collect any minerals for teleop
+
+        servos.setCollectionCollect(true);
+        minerals.mCollect.setPower(-1);
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+
+        sleep(3000);
+
+    }
+
+
+    public void scoreRightDepot() {
+        unhangWithExtension();
+    }
+
+    public void unhangWithExtension() {
+
+        hanging.isEncoderMode(false);
+        hanging.isEncoderMode(true);
+
+        minerals.isEncoderModeHoriz(false);
+        minerals.isEncoderModeHoriz(true);
+
+        int startHang = hanging.mHang.getCurrentPosition();
+        int endHang = startHang - ENCODER_TO_EXTEND_UP;
+
+        int startHoriz = minerals.mExtendHoriz.getCurrentPosition();
+        int endHoriz = startHoriz + ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER;
+
+        hanging.setHangingPower(-1);
+        minerals.mExtendHoriz.setPower(1);
+
+        hanging.mHang.setTargetPosition(endHang);
+        minerals.mExtendHoriz.setTargetPosition(endHoriz);
+
+        boolean firstCycle = true;
+
+        while ((hanging.mHang.isBusy() || minerals.mExtendHoriz.isBusy()) && opModeIsActive()) {
+
+            if (!minerals.mExtendHoriz.isBusy() && firstCycle) {
+                minerals.mExtendHoriz.setPower(0);
+                servos.setTeamMarkerFree(true);
+                minerals.isEncoderModeHoriz(false);
+                minerals.mExtendHoriz.setPower(-.75);
+                while (opModeIsActive() && sensors.horizTouch.isPressed() && hanging.mHang.isBusy()) {
+
+                }
+                minerals.mExtendHoriz.setPower(0);
+                firstCycle = false;
+            }
+
+        }
+        hanging.setHangingPower(0);
+        minerals.mExtendHoriz.setPower(0);
+
+        minerals.isEncoderModeHoriz(false);
+        hanging.isEncoderMode(false);
+
+        hanging.mHang.setPower(-.4);
+        sleep(1000);
+        hanging.mHang.setPower(0);
+
+    }
+
+    public void scoreLeftDouble() {
+    }
+
+
+    public void scoreMiddleDouble() {
+    }
+
+
+    public void scoreRightDouble() {
+    }
+
+
+    public void scoreLeftCrater() {
+    }
+
+
+    public void scoreMiddleCrater() {
+    }
+
+
+    public void scoreRightCrater() {
+    }
+
+
+    public void scoreLeftCraterWithoutTeam() {
+    }
+
+
+    public void scoreMiddleCraterWithoutTeam() {
+    }
+
+
+    public void scoreRightCraterWithoutTeam() {
+    }
+
+
 //-----------------------------------MOVE UNTIL FUNCTIONS------------------------------------------//
 
     public void MoveUntilTime(long timeMilli, double direction, double power) {

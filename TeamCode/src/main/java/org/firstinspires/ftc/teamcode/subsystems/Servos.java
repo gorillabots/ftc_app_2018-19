@@ -40,6 +40,7 @@ public class Servos {
         sCollectionRot = hardwareMap.get(Servo.class, "sCollectionRot");
         sDepositRot = hardwareMap.get(Servo.class, "sDepositRot");
         sTeamMarkerRot = hardwareMap.get(Servo.class, "sTeamMarkerRot");
+        sBackstopDep = hardwareMap.get(Servo.class , "sBackstopDep");
     }
 
     public void initializeServos() {
