@@ -100,7 +100,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
             }
 
-            if (stage == 2) {
+            else if (stage == 2) {
 
                 //will only go through once
                 minerals.mCollect.setPower(-1);
@@ -174,13 +174,13 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 stage = stage + 1;
             }
-            if(stage == 3){
+            else if(stage == 3){
 
                 depositStage = 1;
 
                 stage = stage + 1;
             }
-            if(stage == 4){
+            else if(stage == 4){
 
                 //will go through many times
 
@@ -205,12 +205,74 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 if (gamepad1.right_bumper && !depositStageWatch) {
                     depositStage = depositStage + 1;
                 }
-                slowWatch = gamepad1.right_bumper;
+                depositStageWatch = gamepad1.right_bumper;
                 telemetry.addData("deposit Stage", depositStage);
 
-               
+                if (depositStage == 1){
+                    servos.setBackstopDepOpen(false);
+                }
+                else if(depositStage == 2){
+                    servos.setDepositDump(true);
+                }
+                else if (depositStage == 3){
+                    servos.setBackstopDepOpen(true);
+                }
+                else{
+                    depositStage = 1;
+                }
+
+                //advance stage through right trigger
+
+                minerals.mExtendHoriz.setPower(gamepad2.right_stick_y);
 
             }
+
+            else if(stage == 5){ // through once
+
+                minerals.mExtendHoriz.setPower(0);
+
+                while(opModeIsActive() && sensors.vertTouch.isPressed()){
+
+                    double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
+                    double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
+                    double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
+
+                    if (isDriveOpposite) {
+                        if (isSlow) {
+                            drive.driveArcade(-x1, -y1, x2, 2);
+                        } else {
+                            drive.driveArcade(-x1, -y1, x2, 1);
+                        }
+                    } else {
+                        if (isSlow) {
+                            drive.driveArcade(x1, y1, x2, 2);
+                        } else {
+                            drive.driveArcade(x1, y1, x2, 1);
+                        }
+                    }
+
+                    minerals.mExtendVert.setPower(.6);
+
+                    minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
+
+                }
+
+                minerals.mExtendVert.setPower(0);
+                stage = stage + 1;
+            }
+            else if (stage == 6){//through once
+
+                
+
+            }
+
+
+
+
+
+
+
+
 
 
         }
