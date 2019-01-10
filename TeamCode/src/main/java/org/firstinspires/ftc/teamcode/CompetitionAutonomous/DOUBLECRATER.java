@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.CompetitionAutonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.AutonomousProgramsOpMode;
 
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import java.util.Random;
  */
 
 @Autonomous(name = "DOUBLE CRATER", group = "Autonomous")
-public class DOUBLECRATER extends AutonomousOpMode {
+public class DOUBLECRATER extends AutonomousProgramsOpMode {
 
 
     @Override

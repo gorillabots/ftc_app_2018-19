@@ -3,18 +3,14 @@ package org.firstinspires.ftc.teamcode.CompetitionAutonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.AutonomousProgramsOpMode;
-
-import java.util.Random;
 
 /**
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "DEPOT", group = "Autonomous")
-public class DEPOT extends AutonomousProgramsOpMode {
-
+@Autonomous(name = "CRATER UTICA WITHOUT TEAM", group = "Autonomous")
+public class CRATER_NO_TEAM_UTICA extends AutonomousProgramsOpMode {
 
     @Override
     public void runOpMode() {
@@ -23,9 +19,6 @@ public class DEPOT extends AutonomousProgramsOpMode {
 
         int yellow = detectYellowTensor();
 
-        unHangWithEncoder();
-
-        scorePoints(yellow, true,false);
-
+        scoreMorePoints(yellow, false,false,true);
     }
 }
