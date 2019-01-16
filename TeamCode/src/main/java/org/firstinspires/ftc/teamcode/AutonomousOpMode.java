@@ -362,54 +362,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         minerals.mExtendVert.setPower(0);
 
     }
-    public void unhangWithExtension() {
-
-        hanging.isEncoderMode(false);
-        hanging.isEncoderMode(true);
-
-        minerals.isEncoderModeHoriz(false);
-        minerals.isEncoderModeHoriz(true);
-
-        int startHang = hanging.mHang.getCurrentPosition();
-        int endHang = startHang - ENCODER_TO_EXTEND_UP;
-
-        int startHoriz = minerals.mExtendHoriz.getCurrentPosition();
-        int endHoriz = startHoriz + ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER;
-
-        hanging.setHangingPower(-1);
-        minerals.mExtendHoriz.setPower(1);
-
-        hanging.mHang.setTargetPosition(endHang);
-        minerals.mExtendHoriz.setTargetPosition(endHoriz);
-
-        boolean firstCycle = true;
-
-        while ((hanging.mHang.isBusy() || minerals.mExtendHoriz.isBusy()) && opModeIsActive()) {
-
-            if (!minerals.mExtendHoriz.isBusy() && firstCycle) {
-                minerals.mExtendHoriz.setPower(0);
-                servos.setTeamMarkerFree(true);
-                minerals.isEncoderModeHoriz(false);
-                minerals.mExtendHoriz.setPower(-.75);
-                while (opModeIsActive() && sensors.horizTouch.isPressed() && hanging.mHang.isBusy()) {
-
-                }
-                minerals.mExtendHoriz.setPower(0);
-                firstCycle = false;
-            }
-
-        }
-        hanging.setHangingPower(0);
-        minerals.mExtendHoriz.setPower(0);
-
-        minerals.isEncoderModeHoriz(false);
-        hanging.isEncoderMode(false);
-
-        hanging.mHang.setPower(-.4);
-        sleep(1000);
-        hanging.mHang.setPower(0);
-
-    }
 
 
 //-----------------------------------MOVE UNTIL FUNCTIONS------------------------------------------//

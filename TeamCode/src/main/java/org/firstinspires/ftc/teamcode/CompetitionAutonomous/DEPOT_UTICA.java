@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.AutonomousProgramsOpMode;
 @Autonomous(name = "DEPOT UTICA", group = "Autonomous")
 public class DEPOT_UTICA extends AutonomousProgramsOpMode {
 
-
     @Override
     public void runOpMode() {
 
@@ -20,7 +19,20 @@ public class DEPOT_UTICA extends AutonomousProgramsOpMode {
 
         int yellow = detectYellowTensor();
 
-        scoreMorePoints(yellow, true,false,false);
+        unHangWithEncoder();
 
+        craterBeginning(yellow);
+
+        switch(yellow) {
+            case 1:
+                scoreLeftDepotStart();
+                endingOfLeftRightDepot();
+            case 2:
+                scoreMiddleDepot();
+            case 3:
+                scoreRightDepotStart();
+                endingOfLeftRightDepot();
+
+        }
     }
 }

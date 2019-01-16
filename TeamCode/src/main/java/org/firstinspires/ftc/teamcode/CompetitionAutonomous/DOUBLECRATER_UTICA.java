@@ -20,7 +20,18 @@ public class DOUBLECRATER_UTICA extends AutonomousProgramsOpMode {
 
         int yellow = detectYellowTensor();
 
-        scoreMorePoints(yellow, false,true,false);
+        unHangWithEncoder();
 
+        craterBeginning(yellow);
+
+        switch(yellow) {
+            case 1:
+                scoreLeftDouble();
+            case 2:
+                scoreMiddleDouble();
+            case 3:
+                scoreRightDouble();
+
+        }
     }
 }

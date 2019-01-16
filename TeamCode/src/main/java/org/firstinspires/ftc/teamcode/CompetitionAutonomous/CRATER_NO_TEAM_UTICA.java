@@ -19,6 +19,8 @@ public class CRATER_NO_TEAM_UTICA extends AutonomousProgramsOpMode {
 
         int yellow = detectYellowTensor();
 
-        scoreMorePoints(yellow, false,false,true);
+        unHangWithEncoder();
+
+        craterBeginning(yellow);
     }
 }

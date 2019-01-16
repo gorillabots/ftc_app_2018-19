@@ -19,6 +19,16 @@ public class CRATER_UTICA extends AutonomousProgramsOpMode {
 
         int yellow = detectYellowTensor();
 
-        scoreMorePoints(yellow, false,false, false);
+        unHangWithEncoder();
+
+        switch(yellow) {
+            case 1:
+                scoreLeftCrater();
+            case 2:
+                scoreMiddleCrater();
+            case 3:
+                scoreRightCrater();
+
+        }
     }
 }
