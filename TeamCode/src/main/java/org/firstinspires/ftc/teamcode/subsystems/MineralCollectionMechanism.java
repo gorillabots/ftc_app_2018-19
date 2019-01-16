@@ -32,11 +32,11 @@ public class MineralCollectionMechanism {
 
     public void isEncoderModeHoriz(boolean encoder) {
         if (encoder) {
-            mExtendVert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            mExtendVert.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            mExtendVert.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            mExtendHoriz.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            mExtendHoriz.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            mExtendHoriz.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         } else {
-            mExtendVert.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            mExtendHoriz.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
 }

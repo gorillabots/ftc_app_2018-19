@@ -1,28 +1,23 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Fridayyyy;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.teamcode.old.OldHolonomicDrivebase;
+import org.firstinspires.ftc.teamcode.TeleOpOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
-import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
 /**
  * Created by xiax on 4/23/2018.
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Teleop", group = "yes")
-public class TeleOp extends TeleOpOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Teleohp", group = "yes")
+public class TeleOph extends TeleOpOpMode {
 
+
+    public Hanging hang;
     @Override
     public void runOpMode() {
 
-        initializeTeleop();
+
+        hang = new Hanging(hardwareMap,telemetry);
 
         waitForStart();
 
@@ -74,27 +69,6 @@ public class TeleOp extends TeleOpOpMode {
             DepositWatch = gamepad2.left_bumper;
             telemetry.addData("isCollectionRotDown?", isCollectionRotDown);
 
-            if(isAutonomous){}
-            else {
-                //drive
-                double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
-                double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
-                double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
-
-                if (isDriveOpposite) {
-                    if (isSlow) {
-                        drive.driveArcade(-x1, -y1, x2, 2);
-                    } else {
-                        drive.driveArcade(-x1, -y1, x2, 1);
-                    }
-                } else {
-                    if (isSlow) {
-                        drive.driveArcade(x1, y1, x2, 2);
-                    } else {
-                        drive.driveArcade(x1, y1, x2, 1);
-                    }
-                }
-
                 //hang
                 if (gamepad1.dpad_up && isSlow) {
                     hang.setHangingPower(.5);
@@ -108,21 +82,6 @@ public class TeleOp extends TeleOpOpMode {
                     hang.setHangingPower(.0);
                 }
 
-                minerals.mExtendHoriz.setPower(gamepad2.left_stick_y);
-                minerals.mExtendVert.setPower(gamepad2.right_stick_y);
-
-                servos.setCollectionCollect(isCollectionRotDown);
-
-                if (gamepad2.right_trigger > .5){
-                    minerals.mCollect.setPower(1);
-                }
-                if (gamepad2.right_bumper){
-                    minerals.mCollect.setPower(-1);
-                }
-
-                servos.setDepositDump(isDepositRotDumping);
-
-            }
             sleep(20);
         }
     }

@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 
+import static org.firstinspires.ftc.teamcode.subsystems.Servos.COLLECTION_INIT;
+
 
 @TeleOp(name = "servoTestCollectRot", group = "a")
 public class ServoTest2 extends AutonomousOpMode {
@@ -20,6 +22,8 @@ public class ServoTest2 extends AutonomousOpMode {
         sCollectionRot = hardwareMap.servo.get("sCollectionRot");
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
+
+        double position;
 
         waitForStart();
 
@@ -96,8 +100,12 @@ public class ServoTest2 extends AutonomousOpMode {
                 sCollectionRot.setPosition(.21);
             }
             if (gamepad2.left_trigger > .5) {
-                sCollectionRot.setPosition(.22);
+                sCollectionRot.setPosition(COLLECTION_INIT);
             }
+            position = sCollectionRot.getPosition();
+
+            telemetry.addData("position", position);
+            telemetry.update();
         }
 
 

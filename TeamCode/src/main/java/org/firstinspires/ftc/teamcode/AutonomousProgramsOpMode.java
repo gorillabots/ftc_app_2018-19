@@ -258,21 +258,39 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
 
     public void scoreLeftDepot() {
-        unhangWithExtension(); //unhang / deposit team marker
+        unHangWithEncoder();
 
-        MoveUntilEncoder(3, 270, 1); // exit hook
-        TurnAbsolute(45);
+        servos.setCollectionCollect(false);
+
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER); //dump team marker
+
+        dumpTeamMarker();
+
+        sleep(1000);
+
+        retractHoriz();
+
+        TurnFaster(-30);
+        TurnAbsolute(28);
 
         endingOfLeftRightDepot();
 
     }
 
     public void scoreRightDepot() {
-        unhangWithExtension(); //unhang / deposit team marker
+        unHangWithEncoder();
 
-        MoveUntilEncoder(3, 270, 1); // exit hook
-        TurnFaster(30);
-        TurnAbsolute(-45);
+        servos.setCollectionCollect(false);
+
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER); //dump team marker
+
+        dumpTeamMarker();
+
+        sleep(1000);
+
+        retractHoriz();
+
+        TurnAbsolute(-28);
 
         endingOfLeftRightDepot();
     }
@@ -281,10 +299,17 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
         servos.setCollectionCollect(true); //score and collect mineral
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
-        sleep(300);
+        sleep(1000);
+        minerals.mCollect.setPower(0);
+
+        TurnFaster(10);
+        TurnFaster(-20);
         servos.setCollectionCollect(false);
+
         retractHoriz();
-        servos.setBackstopColOpen(true);
+
+        MoveUntilEncoder(13, 180, 1);
+  /*      servos.setBackstopColOpen(true);
 
         TurnAbsolute(0); //score mineral into the lander - setup
         minerals.mCollect.setPower(0);
@@ -299,37 +324,65 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
         servos.setDepositDump(false);
         sleep(500);
         setVertExtensionDown();
-
-        TurnAbsolute(-90);                      //maneuver to crater
+*/
+        TurnAbsolute(90);                      //maneuver to crater
         MoveUntilEncoder(36, 180, 1);
         TurnFaster(45);
 
-        extendHorizToEncoder(555);                                // collect any minerals for teleop
+        MoveUntilTime(1000, 270, .5);
 
-        servos.setCollectionCollect(true);
+        servos.setCollectionCollect(false);
+
+        extendHorizToEncoder(600);
+
+        // collect any minerals for teleop
+
+  /*      servos.setCollectionCollect(true);
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
-        sleep(3000);
+        sleep(3000);*/
     }
 
     public void scoreMiddleDepot() {
-        unHangWithEncoder();                                //score and collect mineral / unhang / deposit team marker
+        unHangWithEncoder();
+
         servos.setCollectionCollect(true);
         minerals.mCollect.setPower(-1); //collect
-        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_MID_MINERAL);
+
+        sleep(1000);
         servos.setCollectionCollect(false);
+        minerals.mCollect.setPower(0);
+
+        extendHorizToEncoder(450); //dump
         dumpTeamMarker();
+        sleep(1000);
         retractHoriz();
         minerals.mCollect.setPower(0);
 
-        MoveUntilEncoder(3, 270, 1); //exit hook
-        TurnFaster(40);
-        hanging.setHangingPower(.4);
+        TurnFaster(-30);
+
+        hanging.setHangingPower(-.5);
+
         TurnAbsolute(0);
+
         hanging.setHangingPower(0);
 
-        servos.setBackstopColOpen(true);
+        MoveUntilEncoder(13, 180, 1);
+
+        TurnFaster(90);
+        //maneuver to crater
+        MoveUntilEncoder(40, 180, 1);
+        TurnFaster(45);
+
+        MoveUntilTime(1000, 270, .5);
+
+        servos.setCollectionCollect(false);
+
+        extendHorizToEncoder(600);
+
+    /*  servos.setBackstopColOpen(true);
         minerals.mCollect.setPower(-1);
         MoveUntilEncoder(8, 180, .5); //deposit mineral
         minerals.mCollect.setPower(0);
@@ -341,19 +394,8 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
         servos.setDepositDump(false);
         sleep(500);
         setVertExtensionDown();
-
-        TurnAbsolute(-90);                      //maneuver to crater
-        MoveUntilEncoder(36, 180, 1);
-        TurnFaster(45);
-
-        extendHorizToEncoder(555);                                // collect any minerals for teleop
-
-        servos.setCollectionCollect(true);
-        minerals.mCollect.setPower(-1);
-        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
-
+*/
         sleep(3000);
-
     }
 
 
@@ -363,7 +405,7 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
         maneuverToHalfwayPositionDC();
 
-        MoveUntilEncoder(42,180 ,1 );
+        MoveUntilEncoder(42, 180, 1);
 
         dumpTeamMarker();
 
@@ -382,7 +424,7 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
         TurnFaster(90);
 
-        MoveUntilEncoder(42,180 ,1 );
+        MoveUntilEncoder(42, 180, 1);
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
@@ -394,7 +436,7 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
         maneuverToHalfwayPositionDC();
 
-        MoveUntilEncoder(33,180 ,1 );
+        MoveUntilEncoder(33, 180, 1);
 
         dumpTeamMarker();
 
@@ -413,7 +455,7 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
         TurnFaster(90);
 
-        MoveUntilEncoder(33,180 ,1 );
+        MoveUntilEncoder(33, 180, 1);
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
@@ -434,10 +476,15 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
         extendHorizToEncoder(555); //collect other mineral
 
-        sleep(300);
+        sleep(1000);
+
+        minerals.mCollect.setPower(0);
+
+        TurnFaster(10);
+        TurnFaster(-20);
 
         servos.setCollectionCollect(false);
-        minerals.mCollect.setPower(0);
+
         retractHoriz();
 
         TurnFaster(135);
@@ -449,23 +496,26 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
     public void scoreLeftCrater() {
         craterBeginning(1);
 
-        minerals.mCollect.setPower(-1);
-        servos.setBackstopColOpen(true);
+   //     minerals.mCollect.setPower(-1);
+ //       servos.setBackstopColOpen(true);
 
-        MoveUntilEncoder(8, 90,.5);
+    //    MoveUntilEncoder(8, 90, .5);
 
-        minerals.mCollect.setPower(0);
+   /*     minerals.mCollect.setPower(0);
         servos.setBackstopDepOpen(true);
         setVertExtentionUp();
         servos.setDepositDump(true);
         sleep(500);
         servos.setDepositDump(false);
         setVertExtensionDown();
-
-       maneuverToHalfwayPositionC();
+*/
+        maneuverToHalfwayPositionC();
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+
+
         dumpTeamMarker();
+        sleep(1000);
         retractHoriz();
 
         TurnFaster(180);
@@ -477,8 +527,8 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
     public void scoreMiddleCrater() {
         craterBeginning(2);
 
-        MoveUntilEncoder(8, 90,.5);
-
+      //  MoveUntilEncoder(8, 90, .5);
+/*
         minerals.mCollect.setPower(0);
         servos.setBackstopDepOpen(true);
         setVertExtentionUp();
@@ -486,11 +536,12 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
         sleep(500);
         servos.setDepositDump(false);
         setVertExtensionDown();
-
+*/
         maneuverToHalfwayPositionC();
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
         dumpTeamMarker();
+        sleep(1000);
         retractHoriz();
 
         TurnFaster(180);
@@ -502,20 +553,23 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
     public void scoreRightCrater() {
         craterBeginning(3);
 
-        MoveUntilEncoder(8, 90,.5);
+        //MoveUntilEncoder(8, 90, .5);
 
-        minerals.mCollect.setPower(0);
+   /*     minerals.mCollect.setPower(0);
         servos.setBackstopDepOpen(true);
         setVertExtentionUp();
         servos.setDepositDump(true);
         sleep(500);
         servos.setDepositDump(false);
         setVertExtensionDown();
-
+*/
         maneuverToHalfwayPositionC();
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
         dumpTeamMarker();
+
+        sleep(1000);
+
         retractHoriz();
 
         TurnFaster(180);
@@ -545,47 +599,50 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
         if (side == 1) {
 
-            MoveUntilEncoder(3, 270, 1); //exit hook
-            TurnFaster(36);
+            TurnFaster(-30);
+            TurnAbsolute(28);
 
-            servos.setCollectionCollect(true);
+            servos.setCollectionCollect(true); //score and collect mineral
             minerals.mCollect.setPower(-1);
-
             extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
-            sleep(300);
-            servos.setCollectionCollect(false);
-            retractHoriz();
+            sleep(1000);
             minerals.mCollect.setPower(0);
 
+            TurnFaster(10);
+            TurnFaster(-20);
+            servos.setCollectionCollect(false);
+
+            retractHoriz();
         } else if (side == 2) {
 
-            servos.setCollectionCollect(true);
+            servos.setCollectionCollect(true); //score and collect mineral
             minerals.mCollect.setPower(-1);
-
-            extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_MID_MINERAL);
-            sleep(300);
-            servos.setCollectionCollect(false);
-            retractHoriz();
+            extendHorizToEncoder(700);
+            sleep(1000);
             minerals.mCollect.setPower(0);
 
-            MoveUntilEncoder(3, 270, 1);
-            TurnFaster(30);
+            servos.setCollectionCollect(false);
+
+            retractHoriz();
+
+            TurnFaster(-30);
             TurnAbsolute(0);
 
         } else if (side == 3) {
 
-            MoveUntilEncoder(3, 270, 1); //exit hook
-            TurnFaster(30);
-            TurnAbsolute(-40);
+            TurnAbsolute(-28);
 
-            servos.setCollectionCollect(true);
+            servos.setCollectionCollect(true); //score and collect mineral
             minerals.mCollect.setPower(-1);
-
             extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
-            sleep(300);
-            servos.setCollectionCollect(false);
-            retractHoriz();
+            sleep(1000);
             minerals.mCollect.setPower(0);
+
+            TurnFaster(10);
+            TurnFaster(-20);
+            servos.setCollectionCollect(false);
+
+            retractHoriz();
 
         } else {
         }
@@ -596,27 +653,22 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
     public void maneuverToHalfwayPositionDC() {
 
         TurnAbsolute(0);
-        MoveUntilEncoder(5, 180, 1);
-        TurnAbsolute(-80);
-        MoveUntilEncoder(48, 180, 1);
+        MoveUntilEncoder(13, 180, 1);
+        TurnAbsolute(90);
+        MoveUntilEncoder(36, 180, 1);
         TurnFaster(45);
 
         MoveUntilTime(1500, 270, .6);
 
-        MoveUntilEncoder(3, 90, 1);
     }
-    public void maneuverToHalfwayPositionC(){
 
-        MoveUntilEncoder(5,180 ,1 );
-        TurnFaster(-80);
-        MoveUntilEncoder(30, 180, 1);
+    public void maneuverToHalfwayPositionC() {
+
+        MoveUntilEncoder(11, 180, 1);
+        TurnAbsolute(90);
+        MoveUntilEncoder(36, 180, 1);
         TurnFaster(45);
         MoveUntilTime(1500, 270, .6);
-        MoveUntilEncoder(3, 90, 1);
-
-
-
-
 
     }
 
