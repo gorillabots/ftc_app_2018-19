@@ -104,7 +104,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 1100;
-    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 675;
+    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 700;
     public static final int ENCODER_TO_EXTEND_HORIZ_MID_MINERAL = 600;
 
 
@@ -145,7 +145,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         telemetry.addData("Status:", "Done with initial init");
         telemetry.update();
 
-        minerals.mExtendHoriz.setPower(-.1);
 
     }
 
@@ -323,7 +322,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         int start = minerals.mExtendHoriz.getCurrentPosition();
         int end = start + encoder;
 
-        minerals.mExtendHoriz.setPower(.5);
+        minerals.mExtendHoriz.setPower(1);
 
         minerals.mExtendHoriz.setTargetPosition(end);
         timer.reset();
@@ -341,7 +340,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         servos.servoReadyToRetract();
 
-        minerals.mExtendHoriz.setPower(-.6);
+        minerals.mExtendHoriz.setPower(-1);
 
         timer.reset();
         timer.startTime();
@@ -350,6 +349,75 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         }
         minerals.mExtendHoriz.setPower(0);
+    }
+
+    public void MoveAndExtend(double distance, double degree, double power, int encoder , int time){
+
+        double degreeRad = Math.toRadians(degree - degreeCorrection);
+        double cs = Math.cos(degreeRad);
+        double sn = Math.sin(degreeRad);
+
+        setDriveEncoderOn(true);
+
+
+        minerals.isEncoderModeHoriz(true);
+
+        int start = minerals.mExtendHoriz.getCurrentPosition();
+        int end = start + encoder;
+
+        int rightFrontStartPos = mfr.getCurrentPosition();
+        int rightRearStartPos = mbr.getCurrentPosition();
+        int leftFrontStartPos = mfl.getCurrentPosition();
+        int leftRearStartPos = mbl.getCurrentPosition();
+
+        int target = (int) (distance * COUNTS_PER_INCH);
+
+        int rightFrontEndPos = rightFrontStartPos + (int) (target * (-sn + cs));
+        int leftFrontEndPos = leftFrontStartPos + (int) (target * (sn + cs));
+        int rightRearEndPos = rightRearStartPos + (int) (target * (sn + cs));
+        int leftRearEndPos = leftRearStartPos + (int) (target * (-sn + cs));
+
+        double pwr = power;
+
+        double rightFrontPower = pwr * (-sn + cs);
+        double leftFrontPower = pwr * (sn + cs);
+        double rightRearPower = pwr * (sn + cs);
+        double leftRearPower = pwr * (-sn + cs);
+
+        mfr.setPower(rightFrontPower);
+        mfl.setPower(leftFrontPower);
+        mbr.setPower(rightRearPower);
+        mbl.setPower(leftRearPower);
+
+        minerals.mExtendHoriz.setPower(1);
+
+        mfr.setTargetPosition(rightFrontEndPos);
+        mfl.setTargetPosition(leftFrontEndPos);
+        mbr.setTargetPosition(rightRearEndPos);
+        mbl.setTargetPosition(leftRearEndPos);
+
+        minerals.mExtendHoriz.setTargetPosition(end);
+
+        timer.reset();
+        timer.startTime();
+
+        while (mfl.isBusy() && opModeIsActive() && timer.seconds() < time) {
+
+            if (!minerals.mExtendHoriz.isBusy()){
+                minerals.mExtendHoriz.setPower(0);
+            }
+
+            telemetry.addData("within","true" );
+            telemetry.addData("mfl.busy", mfl.isBusy());
+            telemetry.update();
+        }
+        /*|| mfl.isBusy() || mbr.isBusy() || mbl.isBusy())*/
+        stopMotors();
+
+        minerals.mExtendHoriz.setPower(0);
+
+        telemetry.addData("within","false" );
+
     }
 
     public void setVertExtentionUp() {
