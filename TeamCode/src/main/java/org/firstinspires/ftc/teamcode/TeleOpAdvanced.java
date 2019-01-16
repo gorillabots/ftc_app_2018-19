@@ -158,7 +158,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                     }
 
 
-                    minerals.mExtendHoriz.setPower(-.5);
+                    minerals.mExtendHoriz.setPower(-.8);
 
                     telemetry.addData("stage", "2 loop 1");
                     telemetry.update();
@@ -234,6 +234,9 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 //will go through many times --- manual switch stage
 
+                isDriveOpposite = true;
+                isSlow = true;
+
                 double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                 double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
                 double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
@@ -263,6 +266,9 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                     servos.setDepositDump(false);
                 } else if (depositStage == 2) {
                     servos.setDepositDump(true);
+
+                    servos.setBackstopDepOpen(true); //??
+
                 } else if (depositStage == 3) {
                     servos.setBackstopDepOpen(true);
                 } else {
