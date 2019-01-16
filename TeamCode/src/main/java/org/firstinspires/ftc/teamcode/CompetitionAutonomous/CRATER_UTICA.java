@@ -21,6 +21,8 @@ public class CRATER_UTICA extends AutonomousProgramsOpMode {
 
         unHangWithEncoder();
 
+        craterBeginning(yellow);
+
         switch(yellow) {
             case 1:
                 scoreLeftCrater();
