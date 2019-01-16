@@ -24,7 +24,7 @@ public class DoubleFromCrater3 extends AutonomousOpMode {
 
         unHangWithEncoder();
 
-        scorePoints(yellow, false,true);
+     //   scorePoints(yellow, false,true);
 
     }
 }

@@ -25,6 +25,8 @@ Servo sTeamMarkerRot;
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
 
+        double position;
+
         waitForStart();
 
         while (opModeIsActive()) {
@@ -102,6 +104,11 @@ Servo sTeamMarkerRot;
             if (gamepad2.left_trigger > .5) {
                 sBackstop.setPosition(.22);
             }
+
+            position = sBackstop.getPosition();
+
+            telemetry.addData("position", position);
+            telemetry.update();
         }
 
 

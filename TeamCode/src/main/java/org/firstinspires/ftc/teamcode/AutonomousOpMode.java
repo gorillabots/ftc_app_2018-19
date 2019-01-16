@@ -38,6 +38,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public Servos servos;
     public OldGyro gyro;
     public MineralCollectionMechanism minerals;
+    public ElapsedTime timer;
 
 
     public DcMotor mfr;
@@ -52,23 +53,28 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     mCollect - port 0
     mExtendVert - port 1
+    mbr - port 2
+    mfr - port 3
 
     sTeamMarkerRot - port 5
+    sBackstopDep - port 4
 
     Rev Hub #2
 
     mHang - port 0
     mExtendHoriz - port 1
+    mbl - port 3
+    mfl - port 2
 
-    sDepositRot - port 1
-    sBackstopCol - port 3
-    sCollectionRot - port 2
+    sDepositRot - port 2
+    sBackstopCol - port 0
+    sCollectionRot - port 1
 
     Directions
 
     mCollect positive is reverse
     mExtendVert positive is down
-    mHang negative is up
+    mHang positive is up
     mExtendHoriz positive is extending out
 
 */
@@ -97,9 +103,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
-    public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 0;
-    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 0;
-    public static final int ENCODER_TO_EXTEND_HORIZ_MID_MINERAL = 0;
+    public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 1100;
+    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 675;
+    public static final int ENCODER_TO_EXTEND_HORIZ_MID_MINERAL = 600;
 
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
@@ -125,6 +131,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         gyro = new OldGyro(hardwareMap, telemetry);
         sensors = new Sensors(hardwareMap, telemetry);
         minerals = new MineralCollectionMechanism(hardwareMap, telemetry);
+        timer = new ElapsedTime();
 
         servos.initializeServos();
 
@@ -137,6 +144,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         }
         telemetry.addData("Status:", "Done with initial init");
         telemetry.update();
+
+        minerals.mExtendHoriz.setPower(-.1);
 
     }
 
@@ -283,9 +292,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.isEncoderMode(true);
 
         int start = hanging.mHang.getCurrentPosition();
-        int end = start - ENCODER_TO_EXTEND_UP;
+        int end = start + ENCODER_TO_EXTEND_UP;
 
-        hanging.setHangingPower(-1);
+        hanging.setHangingPower(1);
 
         hanging.mHang.setTargetPosition(end);
 
@@ -295,9 +304,11 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         hanging.setHangingPower(0);
         hanging.isEncoderMode(false);
 
-        hanging.mHang.setPower(-.4);
-        sleep(1000);
-        hanging.mHang.setPower(0);
+    /*    hanging.mHang.setPower(.4);
+        sleep(700);
+        hanging.mHang.setPower(0);*/
+
+        gyro.ResetAngle();
 
     }
 
@@ -306,17 +317,18 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     }
 
     public void extendHorizToEncoder(int encoder) {
-        minerals.isEncoderModeHoriz(false);
+
         minerals.isEncoderModeHoriz(true);
 
         int start = minerals.mExtendHoriz.getCurrentPosition();
         int end = start + encoder;
 
-        minerals.mExtendHoriz.setPower(1);
+        minerals.mExtendHoriz.setPower(.5);
 
         minerals.mExtendHoriz.setTargetPosition(end);
-
-        while (minerals.mExtendHoriz.isBusy() && opModeIsActive()) {
+        timer.reset();
+        timer.startTime();
+        while (minerals.mExtendHoriz.isBusy() && opModeIsActive() && timer.seconds() < 3) {
 
         }
         minerals.mExtendHoriz.setPower(0);
@@ -326,8 +338,15 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     public void retractHoriz() {
         minerals.isEncoderModeHoriz(false);
-        minerals.mExtendHoriz.setPower(-.75);
-        while (opModeIsActive() && sensors.horizTouch.isPressed()) {
+
+        servos.servoReadyToRetract();
+
+        minerals.mExtendHoriz.setPower(-.6);
+
+        timer.reset();
+        timer.startTime();
+
+        while (opModeIsActive() && sensors.horizTouch.getState() && timer.seconds() < 2) {
 
         }
         minerals.mExtendHoriz.setPower(0);
@@ -335,29 +354,31 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     public void setVertExtentionUp() {
 
-            minerals.isEncoderModeVert(false);
-            minerals.isEncoderModeVert(true);
+        minerals.isEncoderModeVert(false);
+        minerals.isEncoderModeVert(true);
 
-            int start = minerals.mExtendVert.getCurrentPosition();
-            int end = start - ENCODER_TO_DEPOSITUP;
+        int start = minerals.mExtendVert.getCurrentPosition();
+        int end = start - ENCODER_TO_DEPOSITUP;
 
-            minerals.mExtendVert.setPower(-1);
+        minerals.mExtendVert.setPower(-1);
 
-            minerals.mExtendVert.setTargetPosition(end);
+        minerals.mExtendVert.setTargetPosition(end);
 
-            while (minerals.mExtendVert.isBusy() && opModeIsActive()) {
+        while (minerals.mExtendVert.isBusy() && opModeIsActive()) {
 
-            }
-            minerals.mExtendVert.setPower(0);
-            minerals.isEncoderModeVert(false);
+        }
+        minerals.mExtendVert.setPower(0);
+        minerals.isEncoderModeVert(false);
     }
-    public void setVertExtensionDown(){
+
+    public void setVertExtensionDown() {
 
         minerals.isEncoderModeVert(false);
 
         minerals.mExtendVert.setPower(.5);
 
-        while(sensors.vertTouch.isPressed() && opModeIsActive()){}
+        while (sensors.vertTouch.getState() && opModeIsActive()) {
+        }
 
         minerals.mExtendVert.setPower(0);
 

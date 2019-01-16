@@ -18,16 +18,18 @@ public class Servos {
     public static final double BACKSTOPCOL_OPEN = 0.3;
 
     public static final double BACKSTOPDEP_INIT = 0;
-    public static final double BACKSTOPDEP_CLOSED = 0;
+    public static final double BACKSTOPDEP_CLOSED = 0.31;
     public static final double BACKSTOPDEP_OPEN = 0;
 
-    public static final double COLLECTION_INIT = 0;
-    public static final double COLLECTION_COLLECT = .79;
-    public static final double COLLECTION_DUMP = .94;
+    public static final double COLLECTION_INIT = .73;
+    public static final double COLLECTION_COLLECT = .15; //.16
+    public static final double COLLECTION_DUMP = .4;
 
-    public static final double DEPOSIT_INIT = 0;
-    public static final double DEPOSIT_COLLECT = 0;
-    public static final double DEPOSIT_SCORE = 0;
+    public static final double DEPOSIT_INIT = .55; //goooood
+    public static final double DEPOSIT_COLLECT = .64;
+    public static final double DEPOSIT_SCORE = .13;
+    public static final double DEPOSIT_HALFWAY = .3;
+    public static final double DEPOSIT_AIM = .2;
 
     public static final double TEAMMARKER_INIT = 0; //
     public static final double TEAMMARKER_DEPOSIT = .75;
@@ -75,6 +77,14 @@ public class Servos {
         }
     }
 
+    public void setDepositHalfway(){
+        sDepositRot.setPosition(DEPOSIT_HALFWAY);
+    }
+
+    public void setDepositAim(){
+        sDepositRot.setPosition(DEPOSIT_AIM);
+    }
+
     public void setDepositDump(boolean dump) {
         if (dump) {
             sDepositRot.setPosition(DEPOSIT_SCORE);
@@ -90,5 +100,11 @@ public class Servos {
         else{
             sTeamMarkerRot.setPosition(TEAMMARKER_INIT);
         }
+    }
+
+    public void servoReadyToRetract(){
+        sDepositRot.setPosition(DEPOSIT_INIT);
+        sCollectionRot.setPosition(COLLECTION_INIT);
+        setBackstopColOpen(false);
     }
 }

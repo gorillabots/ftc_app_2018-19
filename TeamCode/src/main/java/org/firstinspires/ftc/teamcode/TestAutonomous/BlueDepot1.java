@@ -23,7 +23,7 @@ public class BlueDepot1 extends AutonomousOpMode {
 
         unHangWithEncoder();
 
-        scorePoints(yellow, true,false);
+    //    scorePoints(yellow, true,false);
 
     }
 }

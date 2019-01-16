@@ -4,6 +4,9 @@ package org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
+import static org.firstinspires.ftc.teamcode.subsystems.Servos.COLLECTION_INIT;
+import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
+
 /**
  * Created by xiax on 4/23/2018.
  */
@@ -27,7 +30,10 @@ public class TeleOpAdvanced extends TeleOpOpMode {
         boolean isDriveOpposite = false;
         boolean driveOppositeWatch = false;
 
-        int intakeStage = 1;
+        boolean collectionToggle = true;
+        boolean collectionToggleWatch = false;
+
+        int intakeStage = 2;
         boolean intakeStageWatch = false;
 
         int depositStage = 1;
@@ -35,6 +41,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
         minerals.isEncoderModeVert(false);
         minerals.isEncoderModeHoriz(false);
+
+        servos.setCollectionCollect(false);
 
         while (opModeIsActive()) {
 
@@ -56,9 +64,18 @@ public class TeleOpAdvanced extends TeleOpOpMode {
             driveOppositeWatch = gamepad1.y;
             telemetry.addData("isDriveOpposite?", isDriveOpposite);
 
+            if (gamepad2.dpad_up) {
+                hang.setHangingPower(1);
+            } else if (gamepad2.dpad_down) {
+                hang.setHangingPower(-1);
+            } else {
+                hang.setHangingPower(0);
+            }
+
             if (stage == 1) {
 
                 //picking up stuff --- will go through many times --- use switch stage
+                isDriveOpposite = true;
 
                 double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                 double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -84,7 +101,13 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 intakeStageWatch = gamepad1.right_bumper;
                 telemetry.addData("intakeStage", intakeStage);
 
-                if (intakeStage == 4) {
+                if (gamepad1.left_bumper && !collectionToggleWatch) {
+                    collectionToggle = !collectionToggle;
+                }
+                collectionToggleWatch = gamepad1.left_bumper;
+                telemetry.addData("collectionToggle", collectionToggle);
+
+                if (intakeStage == 3) {
                     intakeStage = 1;
                 }
 
@@ -93,22 +116,28 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 } else if (intakeStage == 2) {
                     minerals.mCollect.setPower(0);
                 } else {
+                }
+                if (gamepad1.left_trigger > .5) {
                     minerals.mCollect.setPower(1);
                 }
 
-                minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
+                minerals.mExtendHoriz.setPower(-gamepad1.right_stick_y * .5);
 
-            }
+                servos.setCollectionCollect(collectionToggle);
 
-            else if (stage == 2) {
+            } else if (stage == 2) {
 
                 //will only go through once --- automatic switch stage
 
-                minerals.mCollect.setPower(-1);
+                minerals.mCollect.setPower(0);
 
-                servos.setCollectionCollect(false);
+                servos.sCollectionRot.setPosition(COLLECTION_INIT);
+                servos.sDepositRot.setPosition(DEPOSIT_INIT);
 
-                while (opModeIsActive() && !sensors.horizTouch.isPressed()) {
+                minerals.isEncoderModeHoriz(false);
+                while (opModeIsActive() && sensors.horizTouch.getState()) {
+
+                    isDriveOpposite = false;
 
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                     double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -128,14 +157,29 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                         }
                     }
 
-                    minerals.mExtendHoriz.setPower(-.75);
+
+                    minerals.mExtendHoriz.setPower(-.5);
+
+                    telemetry.addData("stage", "2 loop 1");
+                    telemetry.update();
                 }
 
+                servos.setDepositDump(false);
+
+                servos.setCollectionCollect(false);
+
+
+                sleep(300);
+
+                minerals.mCollect.setPower(-1);
+
                 servos.setBackstopColOpen(true);
+                servos.setBackstopDepOpen(true);
 
-                sleep(600);
+                sleep(1000);
 
-                minerals.mExtendHoriz.setPower(.3);
+                minerals.mExtendHoriz.setPower(.2);
+                servos.setBackstopDepOpen(false);
 
                 minerals.isEncoderModeVert(true);
 
@@ -146,7 +190,11 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 minerals.mExtendVert.setTargetPosition(end);
 
-                while(opModeIsActive() && minerals.mExtendVert.isBusy()){
+                timer.reset();
+
+                timer.startTime();
+
+                while (opModeIsActive() && minerals.mExtendVert.isBusy() && timer.seconds() < 3) {
 
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                     double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -166,24 +214,23 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                         }
                     }
 
-                    minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
+
 
                 }
 
-                minerals.mExtendVert.setPower(0);
+                minerals.mExtendVert.setPower(-.2);
                 minerals.mExtendHoriz.setPower(0);
 
-                minerals.isEncoderModeVert(false);
-
                 stage = stage + 1;
-            }
-            else if(stage == 3){ // auto switch stage
+            } else if (stage == 3) { // auto switch stage
 
                 depositStage = 1;
+                minerals.mCollect.setPower(0);
 
                 stage = stage + 1;
-            }
-            else if(stage == 4){
+            } else if (stage == 4) {
+
+                minerals.mCollect.setPower(0);
 
                 //will go through many times --- manual switch stage
 
@@ -211,39 +258,35 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 depositStageWatch = gamepad1.right_bumper;
                 telemetry.addData("deposit Stage", depositStage);
 
-                if (depositStage == 1){
+                if (depositStage == 1) {
                     servos.setBackstopDepOpen(false);
                     servos.setDepositDump(false);
-                }
-                else if(depositStage == 2){
+                } else if (depositStage == 2) {
                     servos.setDepositDump(true);
-                }
-                else if (depositStage == 3){
+                } else if (depositStage == 3) {
                     servos.setBackstopDepOpen(true);
-                }
-                else{
+                } else {
                     depositStage = 1;
                 }
 
-                minerals.mExtendHoriz.setPower(gamepad2.right_stick_y);
-
-            }
-
-            else if (stage == 5){ // switch stage auto
+            } else if (stage == 5) { // switch stage auto
 
                 servos.setBackstopDepOpen(false);
                 servos.setDepositDump(false);
+                servos.setBackstopColOpen(false);
+                servos.setCollectionCollect(false);
+
+                sleep(300);
 
                 stage = stage + 1;
 
-            }
-
-            else if(stage == 6){ // auto switch stage
+            } else if (stage == 6) { // auto switch stage
 
                 minerals.mExtendHoriz.setPower(0);
 
-                while(opModeIsActive() && sensors.vertTouch.isPressed()){
+                minerals.isEncoderModeVert(false);
 
+                while (opModeIsActive() && sensors.vertTouch.getState()) {
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                     double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
                     double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
@@ -262,13 +305,16 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                         }
                     }
 
-                    minerals.mExtendVert.setPower(.6);
+                    minerals.mExtendVert.setPower(.4);
 
-                    minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
+                    minerals.mExtendHoriz.setPower( - gamepad1.right_stick_y * .5);
 
                 }
 
                 minerals.mExtendVert.setPower(0);
+
+                collectionToggle = false;
+
                 stage = 1;
             }
 

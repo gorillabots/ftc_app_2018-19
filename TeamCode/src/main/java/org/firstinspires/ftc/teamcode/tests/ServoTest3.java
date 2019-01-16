@@ -15,12 +15,16 @@ Servo sDepositRot;
 Servo sTeamMarkerRot;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() { //.64 around test
+        //.13 deposit position
 
         sCollectionRot = hardwareMap.servo.get("sCollectionRot");
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
 
+
+
+        double position;
         waitForStart();
 
         while (opModeIsActive()) {
@@ -56,10 +60,10 @@ Servo sTeamMarkerRot;
                 sDepositRot.setPosition(.06);
             }
             if (gamepad1.left_bumper) {
-                sDepositRot.setPosition(.19);
+                sDepositRot.setPosition(1);
             }
             if (gamepad1.left_trigger > .5) {
-                sDepositRot.setPosition(.31);
+                sDepositRot.setPosition(.60);
             }
 
             if (gamepad2.a) {
@@ -69,35 +73,40 @@ Servo sTeamMarkerRot;
                 sDepositRot.setPosition(.56);
             }
             if (gamepad2.y) {
-                sDepositRot.setPosition(.69);
+                sDepositRot.setPosition(.61);
             }
             if (gamepad2.x) {
-                sDepositRot.setPosition(.81);
+                sDepositRot.setPosition(.62);
             }
             if (gamepad2.dpad_up) {
-                sDepositRot.setPosition(.94);
+                sDepositRot.setPosition(.63);
             }
             if (gamepad2.dpad_left) {
-                sDepositRot.setPosition(.16);
+                sDepositRot.setPosition(.64);
             }
             if (gamepad2.dpad_down) {
-                sDepositRot.setPosition(.17);
+                sDepositRot.setPosition(.54);
             }
             if (gamepad2.dpad_right) {
-                sDepositRot.setPosition(.18);
+                sDepositRot.setPosition(.55);
             }
             if (gamepad2.right_bumper) {
-                sDepositRot.setPosition(.19);
+                sDepositRot.setPosition(.56);
             }
             if (gamepad2.right_trigger > .5) {
-                sDepositRot.setPosition(.20);
+                sDepositRot.setPosition(.57);
             }
             if (gamepad2.left_bumper) {
-                sDepositRot.setPosition(.21);
+                sDepositRot.setPosition(.59);
             }
             if (gamepad2.left_trigger > .5) {
-                sDepositRot.setPosition(.22);
+                sDepositRot.setPosition(.58);
             }
+
+            position = sDepositRot.getPosition();
+
+            telemetry.addData("position", position);
+            telemetry.update();
         }
 
 

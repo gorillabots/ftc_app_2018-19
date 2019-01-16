@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.old.OldHolonomicDrivebase;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
@@ -17,8 +18,9 @@ public abstract class TeleOpOpMode extends LinearOpMode {
     public MineralCollectionMechanism minerals;
     public OldHolonomicDrivebase drive;
     public Sensors sensors;
+    public ElapsedTime timer;
 
-    public static final int ENCODER_TO_DEPOSITUP = 0;
+    public static final int ENCODER_TO_DEPOSITUP = 4200;
 
     public static final int ENCODER_HORIZ_CRATERWALL = 0;
     public static final int ENCODER_HORIZ_FOUR_IN = 0; //interval
@@ -31,6 +33,8 @@ public abstract class TeleOpOpMode extends LinearOpMode {
         drive = new OldHolonomicDrivebase(hardwareMap, telemetry);
         hang = new Hanging(hardwareMap, telemetry);
         sensors = new Sensors(hardwareMap, telemetry);
+        timer = new ElapsedTime();
+        timer.seconds();
 
         servos.initializeServos();
 
