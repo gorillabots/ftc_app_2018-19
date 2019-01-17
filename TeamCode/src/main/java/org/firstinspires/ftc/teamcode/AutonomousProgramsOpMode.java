@@ -2,6 +2,19 @@ package org.firstinspires.ftc.teamcode;
 
 public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
 
+
+
+    //STORAGE SPACE FOR MISC THINGS
+
+
+
+
+
+
+
+
+
+
     /*
         //----DEPOT
 
@@ -574,5 +587,7 @@ public abstract class AutonomousProgramsOpMode extends AutonomousOpMode {
         MoveUntilTime(1500, 270, .6);
 
     }
+
+
 
 }

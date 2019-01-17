@@ -64,6 +64,13 @@ public class TeleOpAdvanced extends TeleOpOpMode {
             driveOppositeWatch = gamepad1.y;
             telemetry.addData("isDriveOpposite?", isDriveOpposite);
 
+
+
+
+
+
+
+
             if (gamepad2.dpad_up) {
                 hang.setHangingPower(1);
             } else if (gamepad2.dpad_down) {
@@ -125,6 +132,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 servos.setCollectionCollect(collectionToggle);
 
+                minerals.mExtendVert.setPower(gamepad2.right_stick_y * .5);
+
             } else if (stage == 2) {
 
                 //will only go through once --- automatic switch stage
@@ -135,7 +144,10 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 servos.sDepositRot.setPosition(DEPOSIT_INIT);
 
                 minerals.isEncoderModeHoriz(false);
-                while (opModeIsActive() && sensors.horizTouch.getState()) {
+
+                boolean manualOverrideH = false;
+
+                while (opModeIsActive() && sensors.horizTouch.getState() && !manualOverrideH) {
 
                     isDriveOpposite = false;
 
@@ -162,6 +174,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                     telemetry.addData("stage", "2 loop 1");
                     telemetry.update();
+
+                    manualOverrideH = gamepad1.a;
                 }
 
                 servos.setDepositDump(false);
@@ -213,8 +227,6 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                             drive.driveArcade(x1, y1, x2, 1);
                         }
                     }
-
-
 
                 }
 
@@ -292,7 +304,9 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 minerals.isEncoderModeVert(false);
 
-                while (opModeIsActive() && sensors.vertTouch.getState()) {
+                boolean manualOverrideV = false;
+
+                while (opModeIsActive() && sensors.vertTouch.getState() && !manualOverrideV) {
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                     double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
                     double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
@@ -314,6 +328,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                     minerals.mExtendVert.setPower(.4);
 
                     minerals.mExtendHoriz.setPower( - gamepad1.right_stick_y * .5);
+
+                    manualOverrideV = gamepad1.a;
 
                 }
 
