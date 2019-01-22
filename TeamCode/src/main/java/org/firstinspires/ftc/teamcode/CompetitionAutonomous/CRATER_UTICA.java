@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.CraterAutos;
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "CRATER UTICA", group = "Autonomous")
+@Autonomous(name = "CRATER", group = "Autonomous")
 public class CRATER_UTICA extends CraterAutos {
 
     @Override

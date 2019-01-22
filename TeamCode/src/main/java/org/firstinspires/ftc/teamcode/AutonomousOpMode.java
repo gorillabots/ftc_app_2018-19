@@ -351,6 +351,22 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         minerals.mExtendHoriz.setPower(0);
     }
 
+    public void rudimentaryWiggle(double degreeToReturnTo) {
+
+        mfl.setPower(1);
+        mbl.setPower(1);
+        mfr.setPower(-1);
+        mbr.setPower(-1);
+        sleep(150);
+
+        mbr.setPower(1);
+        mfr.setPower(1);
+        mbl.setPower(-1);
+        mfl.setPower(-1);
+        sleep(200);
+
+        TurnAbsolute(degreeToReturnTo);
+    }
 
 
     public void setVertExtentionUp() {
@@ -437,7 +453,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         stopMotors();
     }
 
-    public void MoveAndExtend(double distance, double degree, double power, int encoder , int time){
+    public void MoveAndExtend(double distance, double degree, double power, int encoder, int time) {
 
         double degreeRad = Math.toRadians(degree - degreeCorrection);
         double cs = Math.cos(degreeRad);
@@ -489,11 +505,11 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         while (mfl.isBusy() && opModeIsActive() && timer.seconds() < time) {
 
-            if (!minerals.mExtendHoriz.isBusy()){
+            if (!minerals.mExtendHoriz.isBusy()) {
                 minerals.mExtendHoriz.setPower(0);
             }
 
-            telemetry.addData("within","true" );
+            telemetry.addData("within", "true");
             telemetry.addData("mfl.busy", mfl.isBusy());
             telemetry.update();
         }
@@ -502,11 +518,11 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         minerals.mExtendHoriz.setPower(0);
 
-        telemetry.addData("within","false" );
+        telemetry.addData("within", "false");
 
     }
 
-    public void MoveAndRetract(double distance, double degree, double power, int time){
+    public void MoveAndRetract(double distance, double degree, double power, int time) {
 
 
         minerals.isEncoderModeHoriz(false);
@@ -547,7 +563,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         mfl.setTargetPosition(leftFrontEndPos);
         mbr.setTargetPosition(rightRearEndPos);
         mbl.setTargetPosition(leftRearEndPos);
-
 
 
         minerals.mExtendHoriz.setPower(-1);

@@ -13,10 +13,12 @@ public abstract class DepotAutos extends AutonomousOpMode {
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
         sleep(1000);
-        minerals.mCollect.setPower(0);
+
 
         TurnFaster(10);
         TurnFaster(-20);
+
+        minerals.mCollect.setPower(0);
 
         servos.setCollectionCollect(false);
 
@@ -34,11 +36,11 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         retractHoriz();
 
-        TurnAbsolute(90);                      //maneuver to crater
+        TurnAbsolute(80);                      //maneuver to crater
         MoveUntilEncoder(36, 180, 1);
-        TurnFaster(45);
+        TurnAbsolute(135);
 
-        MoveUntilTime(1000, 270, .5);
+        MoveUntilTime(2000, 270, .5);
 
         servos.setCollectionCollect(false);
 
@@ -66,18 +68,18 @@ public abstract class DepotAutos extends AutonomousOpMode {
         servos.setCollectionCollect(false);
         minerals.mCollect.setPower(0);
 
-        TurnSuperFast(-10);
+        TurnSuperFast(-2);
         dumpTeamMarker();
         sleep(1000);
         retractHoriz();
         minerals.mCollect.setPower(0);
 
-        TurnAbsolute(90);
+        TurnAbsolute(87);
 
         MoveUntilEncoder(40, 180, 1);
-        TurnFaster(45);
+        TurnAbsolute(135);
 
-        MoveUntilTime(1000, 270, .5);
+        MoveUntilTime(2000, 270, .5);
 
         servos.setCollectionCollect(false);
 
@@ -94,10 +96,12 @@ public abstract class DepotAutos extends AutonomousOpMode {
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
         sleep(1000);
-        minerals.mCollect.setPower(0);
+
 
         TurnFaster(10);
         TurnFaster(-20);
+
+        minerals.mCollect.setPower(0);
         servos.setCollectionCollect(false);
 
         retractHoriz();
@@ -114,11 +118,11 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         retractHoriz();
 
-        TurnAbsolute(90);                      //maneuver to crater
+        TurnAbsolute(81);                      //maneuver to crater
         MoveUntilEncoder(36, 180, 1);
-        TurnFaster(45);
+        TurnAbsolute(135);
 
-        MoveUntilTime(1000, 270, .5);
+        MoveUntilTime(2000, 270, .5);
 
         servos.setCollectionCollect(false);
 

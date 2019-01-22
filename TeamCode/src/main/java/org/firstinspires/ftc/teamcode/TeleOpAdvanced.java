@@ -71,9 +71,9 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
 
 
-            if (gamepad2.dpad_up) {
+            if (gamepad2.dpad_up || gamepad1.dpad_up) {
                 hang.setHangingPower(1);
-            } else if (gamepad2.dpad_down) {
+            } else if (gamepad2.dpad_down || gamepad1.dpad_down) {
                 hang.setHangingPower(-1);
             } else {
                 hang.setHangingPower(0);
@@ -83,6 +83,9 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 //picking up stuff --- will go through many times --- use switch stage
                 isDriveOpposite = true;
+                isSlow = false;
+
+                servos.setDepositDump(false);
 
                 double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                 double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -128,7 +131,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                     minerals.mCollect.setPower(1);
                 }
 
-                minerals.mExtendHoriz.setPower(-gamepad1.right_stick_y * .5);
+                minerals.mExtendHoriz.setPower(-gamepad1.right_stick_y);
 
                 servos.setCollectionCollect(collectionToggle);
 
@@ -138,6 +141,8 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 //will only go through once --- automatic switch stage
 
+                minerals.mExtendHoriz.setPower(0);
+                minerals.mExtendVert.setPower(0);
                 minerals.mCollect.setPower(0);
 
                 servos.sCollectionRot.setPosition(COLLECTION_INIT);
@@ -149,7 +154,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 while (opModeIsActive() && sensors.horizTouch.getState() && !manualOverrideH) {
 
-                    isDriveOpposite = false;
+                    isDriveOpposite = true;
 
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                     double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -190,9 +195,33 @@ public class TeleOpAdvanced extends TeleOpOpMode {
                 servos.setBackstopColOpen(true);
                 servos.setBackstopDepOpen(true);
 
-                sleep(1000);
+                boolean doneTransferring = false;
 
-                minerals.mExtendHoriz.setPower(.2);
+                while(opModeIsActive() && !doneTransferring){
+
+                    doneTransferring = gamepad1.a;
+
+                    double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
+                    double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
+                    double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
+
+                    if (isDriveOpposite) {
+                        if (isSlow) {
+                            drive.driveArcade(-x1, -y1, x2, 2);
+                        } else {
+                            drive.driveArcade(-x1, -y1, x2, 1);
+                        }
+                    } else {
+                        if (isSlow) {
+                            drive.driveArcade(x1, y1, x2, 2);
+                        } else {
+                            drive.driveArcade(x1, y1, x2, 1);
+                        }
+                    }
+
+                }
+
+                minerals.mExtendHoriz.setPower(.4);
                 servos.setBackstopDepOpen(false);
 
                 minerals.isEncoderModeVert(true);
@@ -255,13 +284,13 @@ public class TeleOpAdvanced extends TeleOpOpMode {
 
                 if (isDriveOpposite) {
                     if (isSlow) {
-                        drive.driveArcade(-x1, -y1, x2, 2);
+                        drive.driveArcade(-x1, -y1, x2, 1.5);
                     } else {
                         drive.driveArcade(-x1, -y1, x2, 1);
                     }
                 } else {
                     if (isSlow) {
-                        drive.driveArcade(x1, y1, x2, 2);
+                        drive.driveArcade(x1, y1, x2, 1.5);
                     } else {
                         drive.driveArcade(x1, y1, x2, 1);
                     }
@@ -290,7 +319,7 @@ public class TeleOpAdvanced extends TeleOpOpMode {
             } else if (stage == 5) { // switch stage auto
 
                 servos.setBackstopDepOpen(false);
-                servos.setDepositDump(false);
+                servos.sDepositRot.setPosition(DEPOSIT_INIT);
                 servos.setBackstopColOpen(false);
                 servos.setCollectionCollect(false);
 

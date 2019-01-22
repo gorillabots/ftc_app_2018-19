@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.DepotAutos;
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "DEPOT UTICA", group = "Autonomous")
+@Autonomous(name = "DEPOT", group = "Autonomous")
 public class DEPOT_UTICA extends DepotAutos {
 
     @Override

@@ -24,10 +24,11 @@ public class Servos {
     public static final double COLLECTION_INIT = .73;
     public static final double COLLECTION_COLLECT = .15; //.16
     public static final double COLLECTION_DUMP = .4;
+    public static final double COLLECTION_LONGRANGE = .2;
 
-    public static final double DEPOSIT_INIT = .55; //goooood
-    public static final double DEPOSIT_COLLECT = .64;
-    public static final double DEPOSIT_SCORE = .13;
+    public static final double DEPOSIT_INIT = .54; //goooood
+    public static final double DEPOSIT_COLLECT = .63;
+    public static final double DEPOSIT_SCORE = .09;
     public static final double DEPOSIT_HALFWAY = .3;
     public static final double DEPOSIT_AIM = .2;
 
@@ -75,6 +76,9 @@ public class Servos {
         } else {
             sCollectionRot.setPosition(COLLECTION_DUMP);
         }
+    }
+    public void setCollectionLongrange(){
+        sCollectionRot.setPosition(COLLECTION_LONGRANGE);
     }
 
     public void setDepositHalfway(){
