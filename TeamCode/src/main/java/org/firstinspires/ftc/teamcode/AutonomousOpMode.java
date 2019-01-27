@@ -29,6 +29,7 @@ import java.util.List;
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
 import static org.firstinspires.ftc.teamcode.TeleOpOpMode.ENCODER_TO_DEPOSITUP;
+import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
 
 public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
@@ -371,7 +372,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     public void setVertExtentionUp() {
 
-        minerals.isEncoderModeVert(false);
         minerals.isEncoderModeVert(true);
 
         int start = minerals.mExtendVert.getCurrentPosition();
@@ -381,23 +381,79 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         minerals.mExtendVert.setTargetPosition(end);
 
-        while (minerals.mExtendVert.isBusy() && opModeIsActive()) {
+        timer.reset();
+
+        timer.startTime();
+
+        while (opModeIsActive() && minerals.mExtendVert.isBusy() && timer.seconds() < 3) {
 
         }
-        minerals.mExtendVert.setPower(0);
-        minerals.isEncoderModeVert(false);
+
+        minerals.mExtendVert.setPower(-.2);
     }
 
     public void setVertExtensionDown() {
 
         minerals.isEncoderModeVert(false);
 
-        minerals.mExtendVert.setPower(.5);
+        timer.reset();
 
-        while (sensors.vertTouch.getState() && opModeIsActive()) {
+        timer.startTime();
+
+        while (opModeIsActive() && sensors.vertTouch.getState() && timer.seconds() < 3) {
+
+            minerals.mExtendVert.setPower(.6);
+
         }
 
         minerals.mExtendVert.setPower(0);
+
+
+    }
+
+    public void depositSequence(){
+
+        servos.setDepositDump(false);
+        servos.setCollectionCollect(false);
+
+        sleep(300);
+
+        minerals.mCollect.setPower(-1);
+
+        servos.setBackstopColOpen(true);
+        servos.setBackstopDepOpen(true);
+
+        sleep(1000);
+
+        minerals.mExtendHoriz.setPower(.4);
+        servos.setBackstopDepOpen(false);
+
+        setVertExtentionUp();
+
+        minerals.mExtendHoriz.setPower(0);
+
+        servos.setBackstopDepOpen(true);
+        servos.setDepositDump(true);
+
+        sleep(500);
+
+        servos.setBackstopDepOpen(false);
+        servos.sDepositRot.setPosition(DEPOSIT_INIT);
+        servos.setBackstopColOpen(false);
+        servos.setCollectionCollect(false);
+
+        minerals.mExtendHoriz.setPower(0);
+
+        setVertExtensionDown();
+
+
+
+
+
+
+
+
+
 
     }
 

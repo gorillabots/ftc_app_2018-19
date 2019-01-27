@@ -4,15 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.subsystems.Servos;
+
+import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
 
 
 @TeleOp(name = "servoTestDepositRot", group = "a")
 public class ServoTest3 extends AutonomousOpMode {
 
 
-Servo sCollectionRot;
-Servo sDepositRot;
-Servo sTeamMarkerRot;
+    Servo sCollectionRot;
+    Servo sDepositRot;
+    Servo sTeamMarkerRot;
+    Servos servos;
 
     @Override
     public void runOpMode() { //.64 around test
@@ -21,7 +25,7 @@ Servo sTeamMarkerRot;
         sCollectionRot = hardwareMap.servo.get("sCollectionRot");
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
-
+        servos = new Servos(hardwareMap, telemetry);
 
 
         double position;
@@ -51,7 +55,7 @@ Servo sTeamMarkerRot;
                 sDepositRot.setPosition(.38);
             }
             if (gamepad1.dpad_right) {
-              sDepositRot.setPosition(.63);
+                sDepositRot.setPosition(.63);
             }
             if (gamepad1.right_bumper) {
                 sDepositRot.setPosition(.88);
@@ -65,6 +69,8 @@ Servo sTeamMarkerRot;
             if (gamepad1.left_trigger > .5) {
                 sDepositRot.setPosition(.60);
             }
+
+
 
             if (gamepad2.a) {
                 sDepositRot.setPosition(.44);
@@ -91,16 +97,16 @@ Servo sTeamMarkerRot;
                 sDepositRot.setPosition(.55);
             }
             if (gamepad2.right_bumper) {
-                sDepositRot.setPosition(.56);
+                servos.sDepositRot.setPosition(.22);
             }
             if (gamepad2.right_trigger > .5) {
-                sDepositRot.setPosition(.57);
+                servos.setDepositDump(true);
             }
             if (gamepad2.left_bumper) {
-                sDepositRot.setPosition(.59);
+                servos.setDepositDump(false);
             }
             if (gamepad2.left_trigger > .5) {
-                sDepositRot.setPosition(.58);
+                servos.sDepositRot.setPosition(DEPOSIT_INIT);
             }
 
             position = sDepositRot.getPosition();
