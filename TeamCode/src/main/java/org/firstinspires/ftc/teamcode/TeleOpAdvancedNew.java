@@ -33,6 +33,8 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
         int intakeStage = 2;
         boolean intakeStageWatch = false;
 
+        boolean isCollecting = false;
+
         int depositStage = 1;
         boolean depositStageWatch = false;
 
@@ -114,17 +116,29 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
                 if (intakeStage == 1) { //intake config
                     minerals.mCollect.setPower(-1);
+                    isCollecting = true;
                 } else if (intakeStage == 2) {
                     minerals.mCollect.setPower(0);
+                    isCollecting = false;
                 } else {
                 }
                 if (gamepad1.left_trigger > .5) {
                     minerals.mCollect.setPower(1);
+                    isCollecting = true;
                 }
 
                 minerals.mExtendHoriz.setPower(-gamepad1.right_stick_y);
 
-                servos.setCollectionCollect(collectionToggle);
+
+                if (collectionToggle && isCollecting) {
+                    servos.setCollectionCollect(true);
+                } else if (collectionToggle && !isCollecting) {
+                    servos.setCollectionAlmostCollect();
+                } else {
+                    servos.setCollectionCollect(false);
+                }
+
+                // servos.setCollectionCollect(collectionToggle);
 
                 minerals.mExtendVert.setPower(gamepad2.right_stick_y * .5);
 

@@ -3,17 +3,17 @@ package org.firstinspires.ftc.teamcode;
 public abstract class DepotAutos extends AutonomousOpMode {
 
     public void scoreLeftDepot(){
-//exit hook
+        //exit hook
         TurnFaster(-20);
         hanging.setHangingPower(-.5);
         TurnAbsolute(25);
         hanging.setHangingPower(0);
 
-        servos.setCollectionCollect(true); //score and collect mineral
+        servos.setCollectionAlmostCollect(); //score and collect mineral
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
+        servos.setCollectionCollect(true);
         sleep(1000);
-
 
         TurnFaster(10);
         TurnFaster(-20);
@@ -62,7 +62,7 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         hanging.setHangingPower(0);
 
-        servos.setCollectionLongrange();
+        servos.setCollectionAlmostCollect();
         minerals.mCollect.setPower(-1);
 
         MoveAndExtend(13.5, 180, .9, 1200 , 5);
@@ -96,11 +96,11 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         TurnAbsolute(-28); //exit hook
 
-        servos.setCollectionCollect(true); //score and collect mineral
+        servos.setCollectionAlmostCollect(); //score and collect mineral
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
+        servos.setCollectionCollect(true);
         sleep(1000);
-
 
         TurnFaster(10);
         TurnFaster(-20);
