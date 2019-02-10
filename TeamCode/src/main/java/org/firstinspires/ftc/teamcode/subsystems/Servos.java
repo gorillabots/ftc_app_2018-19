@@ -21,14 +21,16 @@ public class Servos {
     public static final double BACKSTOPDEP_CLOSED = 0.31;
     public static final double BACKSTOPDEP_OPEN = 0;
 
-    public static final double COLLECTION_INIT = .73;
-    public static final double COLLECTION_COLLECT = .15; //.16
-    public static final double COLLECTION_DUMP = .4;
-    public static final double COLLECTION_LONGRANGE = .2;
+    public static final double COLLECTION_INIT = .75;
+    public static final double COLLECTION_COLLECT = .17; //.16
+    public static final double COLLECTION_ALMOST_COLLECT = .25;
+    public static final double COLLECTION_DUMP = .42;
+    public static final double COLLECTION_LONGRANGE = .22;
 
-    public static final double DEPOSIT_INIT = .57; //goooood
-    public static final double DEPOSIT_COLLECT = .72;
-    public static final double DEPOSIT_SCORE = .22;
+    public static final double DEPOSIT_INIT = .46; //goooood
+    public static final double DEPOSIT_COLLECT = .64;
+    public static final double DEPOSIT_SCORE = .13;
+    public static final double DEPOSIT_COMING_DOWN = .5;
 
     public static final double TEAMMARKER_INIT = 0; //
     public static final double TEAMMARKER_DEPOSIT = .75;
@@ -79,12 +81,19 @@ public class Servos {
         sCollectionRot.setPosition(COLLECTION_LONGRANGE);
     }
 
+    public void setCollectionAlmostCollect(){
+        sCollectionRot.setPosition(COLLECTION_ALMOST_COLLECT);
+    }
     public void setDepositDump(boolean dump) {
         if (dump) {
             sDepositRot.setPosition(DEPOSIT_SCORE);
         } else {
             sDepositRot.setPosition(DEPOSIT_COLLECT);
         }
+    }
+
+    public void setDepositComingDown(){
+        sDepositRot.setPosition(DEPOSIT_COMING_DOWN);
     }
 
     public void setTeamMarkerFree(boolean dump){

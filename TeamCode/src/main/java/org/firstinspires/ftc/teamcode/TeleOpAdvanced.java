@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
 import org.firstinspires.ftc.teamcode.subsystems.Servos;
 
@@ -10,7 +12,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
 /**
  * Created by xiax on 4/23/2018.
  */
-
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleopAdvanced", group = "yes")
 public class TeleOpAdvanced extends TeleOpOpMode {
 

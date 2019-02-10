@@ -105,7 +105,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 1100;
-    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 700;
+    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 750;
     public static final int ENCODER_TO_EXTEND_HORIZ_MID_MINERAL = 600;
 
 
@@ -298,8 +298,18 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         hanging.mHang.setTargetPosition(end);
 
-        while (hanging.mHang.isBusy() && opModeIsActive()) {
+        boolean firstTime = true;
 
+        while (hanging.mHang.isBusy() && opModeIsActive()) {
+            if (firstTime){
+                minerals.mCollect.setPower(-1);
+
+                sleep(500);
+
+                minerals.mCollect.setPower(0);
+
+                firstTime = false;
+            }
         }
         hanging.setHangingPower(0);
         hanging.isEncoderMode(false);
@@ -446,15 +456,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         setVertExtensionDown();
 
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -559,15 +560,13 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         timer.reset();
         timer.startTime();
 
-        while (mfl.isBusy() && opModeIsActive() && timer.seconds() < time) {
-
-            if (!minerals.mExtendHoriz.isBusy()) {
-                minerals.mExtendHoriz.setPower(0);
-            }
+        while ((mfl.isBusy() || minerals.mExtendHoriz.isBusy()) && opModeIsActive() && timer.seconds() < time) {
 
             telemetry.addData("within", "true");
             telemetry.addData("mfl.busy", mfl.isBusy());
+            telemetry.addData("mExtendHoriz.busy",minerals.mExtendHoriz.isBusy());
             telemetry.update();
+
         }
         /*|| mfl.isBusy() || mbr.isBusy() || mbl.isBusy())*/
         stopMotors();

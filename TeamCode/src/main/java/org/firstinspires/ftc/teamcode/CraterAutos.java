@@ -43,7 +43,13 @@ public abstract class CraterAutos extends AutonomousOpMode {
     public void scoreRightCrater() {
         craterBeginning(3);
 
-        maneuverToHalfwayPositionC();
+
+        TurnAbsolute(0);
+        MoveUntilEncoder(11.5, 180, .9);
+        TurnAbsolute(87);
+        MoveUntilEncoder(36, 180, 1);
+        TurnAbsolute(135);
+        MoveUntilTime(1500, 270, .6);
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
@@ -64,7 +70,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
 
     //DOUBLE CRATER ------------------------------------------------------------------------------------------------------
 
-    public void scoreLeftDouble(){
+    public void scoreLeftDouble() {
 
         TurnFaster(-20);
         hanging.setHangingPower(-.5);
@@ -92,10 +98,10 @@ public abstract class CraterAutos extends AutonomousOpMode {
 
         dumpTeamMarker();
 
-        sleep(500);
+        sleep(1500);
 
         TurnAbsolute(-135);
-        MoveUntilTime(100, 0,1);
+        MoveUntilTime(100, 0, 1);
         servos.setCollectionLongrange();
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(850);
@@ -107,14 +113,15 @@ public abstract class CraterAutos extends AutonomousOpMode {
         retractHoriz();
 
         TurnAbsolute(-45);
-        MoveUntilTime(200,90 ,.5 );
+        MoveUntilTime(200, 90, .5);
 
-        MoveAndExtend(55, 180, 1,600 ,10 );
+        MoveAndExtend(55, 180, 1, 600, 10);
 
 
         sleep(10000);
     }
-    public void scoreMiddleDouble(){
+
+    public void scoreMiddleDouble() {
 
         TurnFaster(-22.5);
         hanging.setHangingPower(-.5);
@@ -138,11 +145,11 @@ public abstract class CraterAutos extends AutonomousOpMode {
 
         MoveUntilEncoder(46, 184, 1);
 
-        MoveUntilTime(400, 180, .4);
+        MoveUntilTime(1500, 180, .8);
 
         MoveUntilEncoder(10, 0, 1);
         dumpTeamMarker();
-        MoveUntilEncoder(10, 0,1 );
+        MoveUntilEncoder(10, 0, 1);
         TurnFaster(90);
 
         minerals.mCollect.setPower(-1);
@@ -157,12 +164,13 @@ public abstract class CraterAutos extends AutonomousOpMode {
         TurnFaster(90);
         MoveUntilTime(300, 90, .6);
         MoveUntilTime(100, 270, 1);
-        MoveAndExtend(40,180 ,1 ,600 ,10 );
+        MoveAndExtend(40, 180, 1, 600, 10);
 
         sleep(10000);
 
     }
-    public void scoreRightDouble(){
+
+    public void scoreRightDouble() {
 
         TurnAbsolute(-28);
 
@@ -194,7 +202,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
         MoveUntilEncoder(20, 0, 1);
         retractHoriz();
         TurnFaster(180);
-        MoveAndExtend(30,180 ,1 ,600 ,10 );
+        MoveAndExtend(30, 180, 1, 600, 10);
 
         sleep(10000);
 
@@ -208,14 +216,24 @@ public abstract class CraterAutos extends AutonomousOpMode {
 
     public void scoreLeftCraterNoTeam() {
         craterBeginning(1);
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+
+        sleep(20000);
+
     }
 
     public void scoreMiddleCraterNoTeam() {
         craterBeginning(2);
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+
+        sleep(20000);
     }
 
     public void scoreRightCraterNoTeam() {
         craterBeginning(3);
+        extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+
+        sleep(20000 );
     }
 
 
@@ -287,7 +305,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
     private void maneuverToHalfwayPositionC() {
 
         TurnAbsolute(0);
-        MoveUntilEncoder(13, 180, 1);
+        MoveUntilEncoder(13, 180, .9);
         TurnAbsolute(87);
         MoveUntilEncoder(36, 180, 1);
         TurnAbsolute(135);

@@ -37,7 +37,7 @@ public class ServoTest3 extends AutonomousOpMode {
                 sDepositRot.setPosition(0);
             }
             if (gamepad1.b) {
-                sDepositRot.setPosition(0.5);
+                sDepositRot.setPosition(0.5); //0.5 going down
             }
             if (gamepad1.y) {
                 sDepositRot.setPosition(1);
@@ -49,7 +49,7 @@ public class ServoTest3 extends AutonomousOpMode {
                 sDepositRot.setPosition(.75);
             }
             if (gamepad1.dpad_left) {
-                sDepositRot.setPosition(.13);
+                sDepositRot.setPosition(.13); //.13 deposit angle
             }
             if (gamepad1.dpad_down) {
                 sDepositRot.setPosition(.38);
@@ -73,7 +73,7 @@ public class ServoTest3 extends AutonomousOpMode {
 
 
             if (gamepad2.a) {
-                sDepositRot.setPosition(.44);
+                sDepositRot.setPosition(.44); //.46 init
             }
             if (gamepad2.b) {
                 sDepositRot.setPosition(.56);
@@ -88,7 +88,7 @@ public class ServoTest3 extends AutonomousOpMode {
                 sDepositRot.setPosition(.63);
             }
             if (gamepad2.dpad_left) {
-                sDepositRot.setPosition(.64);
+                sDepositRot.setPosition(.64); //collection
             }
             if (gamepad2.dpad_down) {
                 sDepositRot.setPosition(.54);

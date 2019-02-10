@@ -172,12 +172,15 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                     telemetry.update();
 
                     manualOverrideH = gamepad1.a;
+
+                    minerals.mExtendVert.setPower(gamepad2.right_stick_y * .5);
                 }
+
+                minerals.mExtendVert.setPower(0);
 
                 servos.setDepositDump(false);
 
                 servos.setCollectionCollect(false);
-
 
                 sleep(300);
 
@@ -210,7 +213,11 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                         }
                     }
 
+                    minerals.mExtendVert.setPower(gamepad2.right_stick_y);
+
                 }
+
+                minerals.mExtendVert.setPower(0);
 
                 minerals.mExtendHoriz.setPower(.4);
                 servos.setBackstopDepOpen(false);
@@ -320,7 +327,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
             } else if (stage == 7) { // switch stage auto
 
                 servos.setBackstopDepOpen(false);
-                servos.setDepositDump(false);
+                servos.setDepositComingDown();
                 servos.setBackstopColOpen(false);
                 servos.setCollectionCollect(false);
 
@@ -359,9 +366,9 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
                     minerals.mExtendVert.setPower(.4);
 
-                    minerals.mExtendHoriz.setPower(-gamepad1.right_stick_y * .5);
+                    minerals.mExtendHoriz.setPower(-gamepad1.right_stick_y * 1);
 
-                    manualOverrideV = gamepad1.a;
+                    manualOverrideV = (gamepad1.a || gamepad2.a);
 
                     minerals.mCollect.setPower(-1);
 

@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems2.Collector2;
 import org.firstinspires.ftc.teamcode.subsystems2.Drivebase2;
-
+@Disabled
 @TeleOp(group="yes", name="Simplified TeleOp")
 public class TeleOpSimple extends LinearOpMode
 {

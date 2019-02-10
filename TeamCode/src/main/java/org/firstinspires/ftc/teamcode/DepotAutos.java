@@ -28,11 +28,13 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         MoveAndExtend(13, 180, .8 , 1100 , 5);
 
+        minerals.mCollect.setPower(1);
         sleep(300);
 
         dumpTeamMarker();
 
         sleep(500);
+        minerals.mCollect.setPower(0);
 
         retractHoriz();
 
@@ -60,19 +62,21 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         hanging.setHangingPower(0);
 
-        servos.setCollectionCollect(true);
+        servos.setCollectionLongrange();
         minerals.mCollect.setPower(-1);
 
-        MoveAndExtend(13, 180, .9, 1100 , 5);
+        MoveAndExtend(13.5, 180, .9, 1200 , 5);
 
         servos.setCollectionCollect(false);
         minerals.mCollect.setPower(0);
 
         TurnSuperFast(-2);
+        minerals.mCollect.setPower(1);
         dumpTeamMarker();
         sleep(1000);
-        retractHoriz();
         minerals.mCollect.setPower(0);
+        retractHoriz();
+
 
         TurnAbsolute(87);
 
@@ -110,11 +114,13 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         MoveAndExtend(9, 180, .8 , 1100 , 5);
 
+        minerals.mCollect.setPower(1);
         sleep(300);
 
         dumpTeamMarker();
 
         sleep(500);
+        minerals.mCollect.setPower(0);
 
         retractHoriz();
 

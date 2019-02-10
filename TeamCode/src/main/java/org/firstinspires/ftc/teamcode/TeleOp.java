@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Servos;
 /**
  * Created by xiax on 4/23/2018.
  */
-
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Teleop", group = "yes")
 public class TeleOp extends TeleOpOpMode {
 
