@@ -22,9 +22,9 @@ public class Servos {
     public static final double BACKSTOPDEP_OPEN = 0;
 
     public static final double COLLECTION_INIT = .75;
-    public static final double COLLECTION_COLLECT = .17; //.16
+    public static final double COLLECTION_COLLECT = .19; //.16
     public static final double COLLECTION_ALMOST_COLLECT = .25;
-    public static final double COLLECTION_DUMP = .42;
+    public static final double COLLECTION_DUMP = .46;
     public static final double COLLECTION_LONGRANGE = .22;
 
     public static final double DEPOSIT_INIT = .46; //goooood

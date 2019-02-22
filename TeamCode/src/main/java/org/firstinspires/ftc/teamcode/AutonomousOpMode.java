@@ -325,6 +325,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public void dumpTeamMarker() {
         servos.setTeamMarkerFree(true);
     }
+    public void raiseTeamMarker(){
+        servos.setTeamMarkerFree(false);
+    }
 
     public void extendHorizToEncoder(int encoder) {
 

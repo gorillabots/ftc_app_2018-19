@@ -21,7 +21,7 @@ public class BlueDepot1 extends AutonomousOpMode {
 
         waitForStart();
 
-        unHangWithEncoder();
+       dumpTeamMarker();
 
     //    scorePoints(yellow, true,false);
 

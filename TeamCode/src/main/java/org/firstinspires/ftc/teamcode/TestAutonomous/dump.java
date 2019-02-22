@@ -19,7 +19,5 @@ public class dump extends AutonomousOpMode {
         initializeAutonomous();
 
         waitForStart();
-
-
     }
 }

@@ -6,14 +6,21 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.AutonomousOpMode;
 
 
-@TeleOp(name = "servoTestTBackstopDep", group = "a")
-public class ServoTest4 extends AutonomousOpMode {
+@TeleOp(name = "servoTestReImagined", group = "a")
+public class ServoTestReimagined extends AutonomousOpMode {
 
-    Servo sBackstopDep;
+Servo sBackstop;
+Servo sCollectionRot;
+Servo sDepositRot;
+Servo sTeamMarkerRot;
 
     @Override
     public void runOpMode() {
-initializeAutonomous();
+
+        sBackstop = hardwareMap.servo.get("sBackstopCol");
+        sCollectionRot = hardwareMap.servo.get("sCollectionRot");
+        sDepositRot = hardwareMap.servo.get("sDepositRot");
+        sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
 
         double position;
 
@@ -22,83 +29,85 @@ initializeAutonomous();
         while (opModeIsActive()) {
 
             if (gamepad1.a) {
-                sBackstopDep.setPosition(0); //release position .0 init / open
+                sBackstop.setPosition(0);
             }
             if (gamepad1.b) {
-               dumpTeamMarker();
+                sBackstop.setPosition(0.5);
             }
             if (gamepad1.y) {
-                raiseTeamMarker();
+                sBackstop.setPosition(1);
             }
             if (gamepad1.x) {
-                sBackstopDep.setPosition(.25);
+                sBackstop.setPosition(.25);
             }
             if (gamepad1.dpad_up) {
-                sBackstopDep.setPosition(.75);
+                sBackstop.setPosition(.75);
             }
             if (gamepad1.dpad_left) {
-                sBackstopDep.setPosition(.13);
+                sBackstop.setPosition(.13);
             }
             if (gamepad1.dpad_down) {
-                sBackstopDep.setPosition(.38);
+                sBackstop.setPosition(.38);
             }
             if (gamepad1.dpad_right) {
-              sBackstopDep.setPosition(.63);
+              sBackstop.setPosition(.63);
             }
             if (gamepad1.right_bumper) {
-                sBackstopDep.setPosition(.88);
+                sBackstop.setPosition(.88);
             }
             if (gamepad1.right_trigger > .5) {
-                sBackstopDep.setPosition(.06);
+                sBackstop.setPosition(.06);
             }
             if (gamepad1.left_bumper) {
-                sBackstopDep.setPosition(.19);
+                sBackstop.setPosition(.19);
             }
             if (gamepad1.left_trigger > .5) {
-                sBackstopDep.setPosition(.31); //.31 closed
+                sBackstop.setPosition(.31);
             }
 
             if (gamepad2.a) {
-                sBackstopDep.setPosition(.44);
+                sBackstop.setPosition(.44);
             }
             if (gamepad2.b) {
-                sBackstopDep.setPosition(.56);
+                sBackstop.setPosition(.56);
             }
             if (gamepad2.y) {
-                sBackstopDep.setPosition(.69); //.69 dump
+                sBackstop.setPosition(.69);
             }
             if (gamepad2.x) {
-                sBackstopDep.setPosition(.81);
+                sBackstop.setPosition(.81);
             }
             if (gamepad2.dpad_up) {
-                sBackstopDep.setPosition(.94);
+                sBackstop.setPosition(.94);
             }
             if (gamepad2.dpad_left) {
-                sBackstopDep.setPosition(.3);
+                sBackstop.setPosition(.16);
             }
             if (gamepad2.dpad_down) {
-                sBackstopDep.setPosition(.29);
+                sBackstop.setPosition(.17);
             }
             if (gamepad2.dpad_right) {
-                sBackstopDep.setPosition(.28);
+                sBackstop.setPosition(.18);
             }
             if (gamepad2.right_bumper) {
-                sBackstopDep.setPosition(.27);
+                sBackstop.setPosition(.19);
             }
             if (gamepad2.right_trigger > .5) {
-                sBackstopDep.setPosition(.20);
+                sBackstop.setPosition(.20);
             }
             if (gamepad2.left_bumper) {
-                sBackstopDep.setPosition(.21);
+                sBackstop.setPosition(.21);
             }
             if (gamepad2.left_trigger > .5) {
-                sBackstopDep.setPosition(.22);
+                sBackstop.setPosition(.22);
             }
 
-            position = sBackstopDep.getPosition();
+            position = sBackstop.getPosition();
 
             telemetry.addData("position", position);
             telemetry.update();
         }
+
+
     }
 }
