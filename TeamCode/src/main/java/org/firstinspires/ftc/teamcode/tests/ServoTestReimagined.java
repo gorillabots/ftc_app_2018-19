@@ -59,7 +59,7 @@ public class ServoTestReimagined extends AutonomousOpMode {
             if (position < -1) {
                 position = -1;
             }
-            
+
             sDepositRot.setPosition(position);
 
 

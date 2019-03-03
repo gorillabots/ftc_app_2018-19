@@ -21,6 +21,7 @@ public abstract class TeleOpOpMode extends LinearOpMode {
     public ElapsedTime timer;
 
     public static final int ENCODER_TO_DEPOSITUP = 3675;
+    public static final int ENCODER_TO_DEPOSITUP_MORE = 3800;
 
     public static final int ENCODER_HORIZ_CRATERWALL = 0;
     public static final int ENCODER_HORIZ_FOUR_IN = 0; //interval

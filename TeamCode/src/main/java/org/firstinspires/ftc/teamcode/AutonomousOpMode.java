@@ -96,7 +96,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
 
     public static final int degreeCorrection = 180;
-    public static final int ENCODER_TO_EXTEND_UP = 7500; //5.7 inches from the top
+    public static final int ENCODER_TO_EXTEND_UP = 7400; //5.7 inches from the top
 
     public static final double COUNTS_PER_MOTOR_REV = 576;     //20:1
     public static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -133,6 +133,8 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         sensors = new Sensors(hardwareMap, telemetry);
         minerals = new MineralCollectionMechanism(hardwareMap, telemetry);
         timer = new ElapsedTime();
+
+        minerals.mExtendHoriz.setPower(.1);
 
         servos.initializeServos();
 
@@ -334,9 +336,9 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         minerals.isEncoderModeHoriz(true);
 
         int start = minerals.mExtendHoriz.getCurrentPosition();
-        int end = start + encoder;
+        int end = start - encoder;
 
-        minerals.mExtendHoriz.setPower(1);
+        minerals.mExtendHoriz.setPower(-1);
 
         minerals.mExtendHoriz.setTargetPosition(end);
         timer.reset();
@@ -354,12 +356,12 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
         servos.servoReadyToRetract();
 
-        minerals.mExtendHoriz.setPower(-1);
+        minerals.mExtendHoriz.setPower(.66);
 
         timer.reset();
         timer.startTime();
 
-        while (opModeIsActive() && sensors.horizTouch.getState() && timer.seconds() < 2) {
+        while (opModeIsActive() && sensors.horizTouch.getState() && timer.seconds() < 3) {
 
         }
         minerals.mExtendHoriz.setPower(0);
@@ -525,7 +527,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         minerals.isEncoderModeHoriz(true);
 
         int start = minerals.mExtendHoriz.getCurrentPosition();
-        int end = start + encoder;
+        int end = start - encoder;
 
         int rightFrontStartPos = mfr.getCurrentPosition();
         int rightRearStartPos = mbr.getCurrentPosition();
@@ -551,7 +553,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         mbr.setPower(rightRearPower);
         mbl.setPower(leftRearPower);
 
-        minerals.mExtendHoriz.setPower(1);
+        minerals.mExtendHoriz.setPower(-1);
 
         mfr.setTargetPosition(rightFrontEndPos);
         mfl.setTargetPosition(leftFrontEndPos);
@@ -623,7 +625,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         mbl.setTargetPosition(leftRearEndPos);
 
 
-        minerals.mExtendHoriz.setPower(-1);
+        minerals.mExtendHoriz.setPower(1);
 
         timer.reset();
         timer.startTime();

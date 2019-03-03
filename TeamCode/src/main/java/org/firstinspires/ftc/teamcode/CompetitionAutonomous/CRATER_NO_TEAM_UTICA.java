@@ -5,13 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.AutonomousProgramsOpMode;
 import org.firstinspires.ftc.teamcode.CraterAutos;
+import org.firstinspires.ftc.teamcode.CraterAutosWithMineral;
 
 /**
  * Created by xiax on 4/23/2018.
  */
 
 @Autonomous(name = "CRATER UTICA WITHOUT TEAM", group = "Autonomous")
-public class CRATER_NO_TEAM_UTICA extends CraterAutos {
+public class CRATER_NO_TEAM_UTICA extends CraterAutosWithMineral {
 
     @Override
     public void runOpMode() {
@@ -24,11 +25,11 @@ public class CRATER_NO_TEAM_UTICA extends CraterAutos {
 
         switch(yellow) {
             case 1:
-                scoreLeftCraterNoTeam();
+                scoreLeftCraterTwoCycle();
             case 2:
-                scoreMiddleCraterNoTeam();
+                scoreMiddleCraterTwoCycle();
             case 3:
-                scoreRightCraterNoTeam();
+                scoreRightCraterTwoCycle();
         }
 
     }
