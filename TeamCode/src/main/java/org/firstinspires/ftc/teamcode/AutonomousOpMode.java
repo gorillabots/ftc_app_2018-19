@@ -96,7 +96,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
 
     public static final int degreeCorrection = 180;
-    public static final int ENCODER_TO_EXTEND_UP = 7400; //5.7 inches from the top
+    public static final int ENCODER_TO_EXTEND_UP = 7350; //5.7 inches from the top
 
     public static final double COUNTS_PER_MOTOR_REV = 576;     //20:1
     public static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
@@ -105,7 +105,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 1100;
-    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 750;
+    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 710;
     public static final int ENCODER_TO_EXTEND_HORIZ_MID_MINERAL = 600;
 
 

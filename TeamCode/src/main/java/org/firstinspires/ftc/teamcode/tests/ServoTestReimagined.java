@@ -32,7 +32,7 @@ public class ServoTestReimagined extends AutonomousOpMode {
 
         waitForStart();
 
-        sDepositRot.setPosition(0);
+        sCollectionRot.setPosition(0.5);
 
         while (opModeIsActive()) {
 
@@ -60,7 +60,7 @@ public class ServoTestReimagined extends AutonomousOpMode {
                 position = -1;
             }
 
-            sDepositRot.setPosition(position);
+            sCollectionRot.setPosition(position);
 
 
             telemetry.addData("position", position);

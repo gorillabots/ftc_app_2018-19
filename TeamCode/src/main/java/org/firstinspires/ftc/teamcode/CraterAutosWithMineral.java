@@ -40,7 +40,6 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
         servos.setBackstopColOpen(true);
         minerals.mCollect.setPower(-1);
 
-
         TurnFaster(-30);
 
         minerals.mCollect.setPower(0);
@@ -61,9 +60,9 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         minerals.mExtendHoriz.setPower(0);
 
-        MoveUntilEncoder(12,90 ,1 );
+        MoveUntilEncoder(11, 90, 1);
 
-        MoveUntilTime(750,0 ,.6);
+        MoveUntilTime(750, 0, .6);
 
         minerals.mExtendVert.setPower(-.2);
 
@@ -88,17 +87,18 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         extendHorizToEncoder(700);
 
-        while(opModeIsActive() && sensors.vertTouch.getState()){}
+        while (opModeIsActive() && sensors.vertTouch.getState()) {
+        }
 
         minerals.mExtendVert.setPower(0);
         minerals.mExtendHoriz.setPower(0);
 
-        MoveUntilEncoder(10,180 ,.5 );
+        MoveUntilEncoder(10, 180, .5);
         minerals.mCollect.setPower(-1);
         servos.setCollectionCollect(true);
 
-        MoveUntilEncoder(5,0 ,.5 );
-        MoveUntilEncoder(10,180 ,.5 );
+        MoveUntilEncoder(5, 0, .5);
+        MoveUntilEncoder(10, 180, .5);
         minerals.mCollect.setPower(-1);
 
         TurnFaster(5);
@@ -118,7 +118,7 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
         servos.setDepositComingDown();
         servos.setBackstopColOpen(false);
         minerals.mExtendHoriz.setPower(-.1);
-        superSpecialEncoder(14,0 ,.5);
+        superSpecialEncoder(14, 0, .5);
 
         servos.setDepositDump(true);
         sleep(1200);
@@ -132,7 +132,8 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         extendHorizToEncoder(1100);
 
-        while(opModeIsActive() && sensors.vertTouch.getState()){}
+        while (opModeIsActive() && sensors.vertTouch.getState()) {
+        }
 
         minerals.mExtendVert.setPower(0);
         minerals.mExtendHoriz.setPower(0);
@@ -153,6 +154,80 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void scoreLeftCraterOneCycle() {
+        craterBeginningWithMineral(1);
+
+        servos.setDepositDump(false);
+        servos.setCollectionCollect(false);
+
+        servos.setBackstopColOpen(true);
+        minerals.mCollect.setPower(-1);
+
+        TurnAbsolute(0);
+
+        minerals.mCollect.setPower(0);
+        servos.setDepositComingDown();
+
+        minerals.mExtendHoriz.setPower(-.15);
+
+        sleep(500);
+        minerals.mExtendHoriz.setPower(0);
+        minerals.isEncoderModeVert(true);
+
+        int start = minerals.mExtendVert.getCurrentPosition();
+        int end = start - ENCODER_TO_DEPOSITUP;
+
+
+        minerals.mExtendVert.setPower(-1);
+
+        minerals.mExtendVert.setTargetPosition(end);
+
+        MoveUntilEncoder(11, 90, 1);
+
+        MoveUntilTime(750, 0, .6);
+
+        minerals.mExtendVert.setPower(-.2);
+        servos.setDepositDump(true);
+
+        sleep(1500);
+
+        servos.setDepositComingDown();
+
+        sleep(100);
+
+        minerals.isEncoderModeVert(false);
+
+        minerals.mExtendVert.setPower(.55);
+
+        servos.setCollectionCollect(false);
+
+        minerals.isEncoderModeHoriz(true);
+        servos.setBackstopColOpen(false);
+    }
+
+
+    public void scoreMiddleCraterOneCycle() {
+        craterBeginningWithMineral(2);
+    }
+
+    public void scoreRightCraterOneCycle() {
+        craterBeginningWithMineral(3);
+    }
+
+
     private void craterBeginningWithMineral(int side) {
         if (side == 1) {
 
@@ -167,13 +242,15 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
             minerals.mCollect.setPower(-1);
             extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
             servos.setCollectionCollect(true);
-            sleep(1000);
-
+            sleep(500);
 
             TurnFaster(10);
             TurnFaster(-20);
             minerals.mCollect.setPower(0);
             servos.setCollectionCollect(false);
+
+            servos.sCollectionRot.setPosition(COLLECTION_INIT);
+            servos.sDepositRot.setPosition(DEPOSIT_INIT);
 
             retractHoriz();
         } else if (side == 2) {
@@ -292,7 +369,6 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
         /*|| mfl.isBusy() || mbr.isBusy() || mbl.isBusy())*/
         stopMotors();
     }
-
 
 
 }

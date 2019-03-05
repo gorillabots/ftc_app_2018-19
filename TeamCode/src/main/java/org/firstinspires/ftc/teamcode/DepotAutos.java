@@ -12,7 +12,7 @@ public abstract class DepotAutos extends AutonomousOpMode {
         TurnAbsolute(25);
         hanging.setHangingPower(0);
 
-        servos.setCollectionAlmostCollect(); //score and collect mineral
+        servos.setCollectionLongrange(); //score and collect mineral
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
         servos.setCollectionCollect(true);
@@ -59,6 +59,9 @@ public abstract class DepotAutos extends AutonomousOpMode {
         minerals.mCollect.setPower(-1);
 
         servos.setCollectionCollect(true);
+
+        MoveUntilEncoder(8, 180, .4);
+
         sleep(10000);
 
     }
@@ -77,7 +80,7 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         hanging.setHangingPower(0);
 
-        servos.setCollectionAlmostCollect();
+        servos.setCollectionLongrange();
         minerals.mCollect.setPower(-1);
 
         MoveAndExtend(13.5, 180, .9, 1200 , 5);
@@ -107,6 +110,8 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         servos.setCollectionCollect(true);
 
+        MoveUntilEncoder(8, 180, .4);
+
         sleep(15000);
     }
 
@@ -115,7 +120,7 @@ public abstract class DepotAutos extends AutonomousOpMode {
         minerals.mExtendHoriz.setPower(.3);
         TurnAbsolute(-28); //exit hook
         minerals.mExtendHoriz.setPower(0);
-        servos.setCollectionAlmostCollect(); //score and collect mineral
+        servos.setCollectionLongrange(); //score and collect mineral
         minerals.mCollect.setPower(-1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
 
@@ -134,12 +139,16 @@ public abstract class DepotAutos extends AutonomousOpMode {
         MoveAndExtend(9, 180, .8 , 1100 , 5);
 
         minerals.mCollect.setPower(1);
+        servos.setCollectionCollect(true);
         sleep(300);
 
         dumpTeamMarker();
 
         sleep(500);
+        servos.setCollectionCollect(false);
         minerals.mCollect.setPower(0);
+
+        sleep(200);
 
         retractHoriz();
 
@@ -156,6 +165,8 @@ public abstract class DepotAutos extends AutonomousOpMode {
         minerals.mCollect.setPower(-1);
 
         servos.setCollectionCollect(true);
+
+        MoveUntilEncoder(8, 180, .4);
 
         sleep(10000);
 

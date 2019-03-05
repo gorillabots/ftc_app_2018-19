@@ -21,19 +21,19 @@ public class Servos {
     public static final double BACKSTOPDEP_CLOSED = 0.31;
     public static final double BACKSTOPDEP_OPEN = 0;
 
-    public static final double COLLECTION_INIT = .75;
-    public static final double COLLECTION_COLLECT = .19; //.16
-    public static final double COLLECTION_ALMOST_COLLECT = .26;
-    public static final double COLLECTION_DUMP = .50;//.48
-    public static final double COLLECTION_LONGRANGE = .22;
+    public static final double COLLECTION_INIT = .79;
+    public static final double COLLECTION_COLLECT = .24; //.16
+    public static final double COLLECTION_ALMOST_COLLECT = .30;
+    public static final double COLLECTION_DUMP = .53;//.48
+    public static final double COLLECTION_LONGRANGE = .26;
 
-    public static final double DEPOSIT_INIT = .49; //goooood  //.4
-    public static final double DEPOSIT_COLLECT = .36; //.56
+    public static final double DEPOSIT_INIT = .56; //goooood  //.4
+    public static final double DEPOSIT_COLLECT = .39; //.56
     public static final double DEPOSIT_SCORE = 1; //0
-    public static final double DEPOSIT_COMING_DOWN = .38; //.44
+    public static final double DEPOSIT_COMING_DOWN = .43; //.44
 
     public static final double TEAMMARKER_INIT = 0; //
-    public static final double TEAMMARKER_TELEOP = .4;
+    public static final double TEAMMARKER_TELEOP = 0;
     public static final double TEAMMARKER_DEPOSIT = .75;
 
 

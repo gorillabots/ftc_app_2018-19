@@ -94,7 +94,7 @@ public class ServoTest2 extends AutonomousOpMode {
                 sCollectionRot.setPosition(.19);
             }
             if (gamepad2.right_trigger > .5) {
-                sCollectionRot.setPosition(.20);
+                sCollectionRot .setPosition(.20);
             }
             if (gamepad2.left_bumper) {
                 sCollectionRot.setPosition(.21);
