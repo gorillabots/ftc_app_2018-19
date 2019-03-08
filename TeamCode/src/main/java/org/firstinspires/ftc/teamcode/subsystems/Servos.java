@@ -21,11 +21,11 @@ public class Servos {
     public static final double BACKSTOPDEP_CLOSED = 0.31;
     public static final double BACKSTOPDEP_OPEN = 0;
 
-    public static final double COLLECTION_INIT = .79;
-    public static final double COLLECTION_COLLECT = .24; //.16
-    public static final double COLLECTION_ALMOST_COLLECT = .30;
-    public static final double COLLECTION_DUMP = .52;//.48
-    public static final double COLLECTION_LONGRANGE = .26;
+    public static final double COLLECTION_INIT = .06;
+    public static final double COLLECTION_COLLECT = .85; //.16
+    public static final double COLLECTION_ALMOST_COLLECT = .78;
+    public static final double COLLECTION_DUMP = .46;//.48
+    public static final double COLLECTION_LONGRANGE = .80;
 
     public static final double DEPOSIT_INIT = .28; //goooood  //.4
     public static final double DEPOSIT_COLLECT = .08; //.56

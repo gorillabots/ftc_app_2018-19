@@ -81,6 +81,8 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
             if (stage == 1) {
 
+                servos.setBackstopColOpen(false);
+
                 if (gamepad1.y && !endgameRetractWatch){
                     endgameRetract = !endgameRetract;
                 }
