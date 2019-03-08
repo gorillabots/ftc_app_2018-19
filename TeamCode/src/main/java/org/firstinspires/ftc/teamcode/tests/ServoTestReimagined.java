@@ -22,7 +22,7 @@ public class ServoTestReimagined extends AutonomousOpMode {
         sDepositRot = hardwareMap.servo.get("sDepositRot");
         sTeamMarkerRot = hardwareMap.servo.get("sTeamMarkerRot");
 
-        double position = 0;
+        double position = 0.5;
 
         boolean increase = false;
         boolean increaseWatch = false;
@@ -32,7 +32,7 @@ public class ServoTestReimagined extends AutonomousOpMode {
 
         waitForStart();
 
-        sCollectionRot.setPosition(0.5);
+        sDepositRot.setPosition(0.5);
 
         while (opModeIsActive()) {
 
@@ -56,11 +56,11 @@ public class ServoTestReimagined extends AutonomousOpMode {
             if (position > 1) {
                 position = 1;
             }
-            if (position < -1) {
-                position = -1;
+            if (position < 0) {
+                position = 0;
             }
 
-            sCollectionRot.setPosition(position);
+            sDepositRot.setPosition(position);
 
 
             telemetry.addData("position", position);

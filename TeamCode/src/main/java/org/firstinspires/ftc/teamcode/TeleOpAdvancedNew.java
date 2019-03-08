@@ -30,6 +30,9 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
         boolean collectionToggle = true;
         boolean collectionToggleWatch = false;
 
+        boolean endgameRetract = false;
+        boolean endgameRetractWatch = false;
+
         int intakeStage = 2;
         boolean intakeStageWatch = false;
 
@@ -77,6 +80,15 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
             }
 
             if (stage == 1) {
+
+                if (gamepad1.y && !endgameRetractWatch){
+                    endgameRetract = !endgameRetract;
+                }
+                endgameRetractWatch = gamepad1.y;
+
+                if (endgameRetract){
+                    minerals.mExtendHoriz.setPower( .3);
+                }
 
                 //picking up stuff --- will go through many times --- use switch stage
                 isDriveOpposite = true;

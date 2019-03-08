@@ -105,7 +105,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     public static final int ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER = 1100;
-    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 710;
+    public static final int ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL = 680;
     public static final int ENCODER_TO_EXTEND_HORIZ_MID_MINERAL = 600;
 
 
@@ -134,7 +134,7 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
         minerals = new MineralCollectionMechanism(hardwareMap, telemetry);
         timer = new ElapsedTime();
 
-        minerals.mExtendHoriz.setPower(.1);
+        minerals.mExtendHoriz.setPower(.18);
 
         servos.initializeServos();
 

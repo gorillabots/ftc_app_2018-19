@@ -24,13 +24,13 @@ public class Servos {
     public static final double COLLECTION_INIT = .79;
     public static final double COLLECTION_COLLECT = .24; //.16
     public static final double COLLECTION_ALMOST_COLLECT = .30;
-    public static final double COLLECTION_DUMP = .53;//.48
+    public static final double COLLECTION_DUMP = .52;//.48
     public static final double COLLECTION_LONGRANGE = .26;
 
-    public static final double DEPOSIT_INIT = .56; //goooood  //.4
-    public static final double DEPOSIT_COLLECT = .39; //.56
-    public static final double DEPOSIT_SCORE = 1; //0
-    public static final double DEPOSIT_COMING_DOWN = .43; //.44
+    public static final double DEPOSIT_INIT = .28; //goooood  //.4
+    public static final double DEPOSIT_COLLECT = .08; //.56
+    public static final double DEPOSIT_SCORE = .76; //0
+    public static final double DEPOSIT_COMING_DOWN = .20; //.44
 
     public static final double TEAMMARKER_INIT = 0; //
     public static final double TEAMMARKER_TELEOP = 0;

@@ -216,15 +216,202 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         minerals.isEncoderModeHoriz(true);
         servos.setBackstopColOpen(false);
+
+        minerals.isEncoderModeVert(false);
+
+        TurnAbsolute(28);
+
+        minerals.mExtendHoriz.setPower(-.8);
+
+        extendHorizToEncoder(700);
+
+        timer.reset();
+        timer.startTime();
+
+        while (opModeIsActive() && sensors.vertTouch.getState() && timer.seconds() < 2.5) {
+        }
+
+        minerals.mExtendVert.setPower(0);
+        minerals.mExtendHoriz.setPower(0);
+
+        MoveUntilEncoder(10,180 ,.8);
+
+        minerals.mCollect.setPower(-1);
+
+        servos.setCollectionCollect(true);
+
+        MoveUntilEncoder(8, 180, .4);
+
+        sleep(15000);
+
     }
 
 
     public void scoreMiddleCraterOneCycle() {
-        craterBeginningWithMineral(2);
+        minerals.mExtendHoriz.setPower(.3);
+        sleep(300);
+        minerals.mExtendHoriz.setPower(0);
+        servos.setCollectionAlmostCollect(); //score and collect mineral
+        minerals.mCollect.setPower(-1);
+        extendHorizToEncoder(700);
+        servos.setCollectionCollect(true);
+        sleep(1000);
+        minerals.mCollect.setPower(0);
+
+        servos.sCollectionRot.setPosition(COLLECTION_INIT);
+        servos.sDepositRot.setPosition(DEPOSIT_INIT);
+
+        retractHoriz();
+
+        servos.setDepositDump(false);
+        servos.setCollectionCollect(false);
+
+        servos.setBackstopColOpen(true);
+        minerals.mCollect.setPower(-1);
+
+        TurnFaster(-30);
+
+        minerals.mCollect.setPower(0);
+        servos.setDepositComingDown();
+
+        minerals.mExtendHoriz.setPower(-.15);
+        minerals.isEncoderModeVert(true);
+
+        int start = minerals.mExtendVert.getCurrentPosition();
+        int end = start - ENCODER_TO_DEPOSITUP;
+
+
+        minerals.mExtendVert.setPower(-1);
+
+        minerals.mExtendVert.setTargetPosition(end);
+
+        TurnAbsolute(0);
+
+        minerals.mExtendHoriz.setPower(0);
+
+        MoveUntilEncoder(11, 90, 1);
+
+        MoveUntilTime(750, 0, .6);
+
+        minerals.mExtendVert.setPower(-.2);
+
+        servos.setDepositDump(true);
+
+        sleep(1500);
+
+        servos.setDepositComingDown();
+
+        sleep(100);
+
+        minerals.isEncoderModeVert(false);
+
+        minerals.mExtendVert.setPower(.55);
+
+        servos.setCollectionCollect(false);
+
+        minerals.isEncoderModeHoriz(true);
+        servos.setBackstopColOpen(false);
+
+        minerals.mExtendHoriz.setPower(-.8);
+
+        extendHorizToEncoder(700);
+
+        timer.reset();
+        timer.startTime();
+        while (opModeIsActive() && sensors.vertTouch.getState() && timer.seconds() < 2.5) {
+        }
+
+        minerals.mExtendVert.setPower(0);
+        minerals.mExtendHoriz.setPower(0);
+
+
+        MoveUntilEncoder(10,180 ,.8);
+
+        minerals.mCollect.setPower(-1);
+
+        servos.setCollectionCollect(true);
+
+        MoveUntilEncoder(8, 180, .4);
+
+        sleep(15000);
     }
 
     public void scoreRightCraterOneCycle() {
         craterBeginningWithMineral(3);
+
+        servos.setDepositDump(false);
+        servos.setCollectionCollect(false);
+
+        servos.setBackstopColOpen(true);
+        minerals.mCollect.setPower(-1);
+
+        TurnAbsolute(0);
+
+        minerals.mCollect.setPower(0);
+        servos.setDepositComingDown();
+
+        minerals.mExtendHoriz.setPower(-.15);
+
+        sleep(500);
+        minerals.mExtendHoriz.setPower(0);
+        minerals.isEncoderModeVert(true);
+
+        int start = minerals.mExtendVert.getCurrentPosition();
+        int end = start - ENCODER_TO_DEPOSITUP;
+
+
+        minerals.mExtendVert.setPower(-1);
+
+        minerals.mExtendVert.setTargetPosition(end);
+
+        MoveUntilEncoder(11, 90, 1);
+
+        MoveUntilTime(750, 0, .6);
+
+        minerals.mExtendVert.setPower(-.2);
+        servos.setDepositDump(true);
+
+        sleep(1500);
+
+        servos.setDepositComingDown();
+
+        sleep(100);
+
+        minerals.isEncoderModeVert(false);
+
+        minerals.mExtendVert.setPower(.55);
+
+        servos.setCollectionCollect(false);
+
+        minerals.isEncoderModeHoriz(true);
+        servos.setBackstopColOpen(false);
+
+        minerals.isEncoderModeVert(false);
+
+        TurnAbsolute(-28);
+
+        minerals.mExtendHoriz.setPower(-.8);
+
+        extendHorizToEncoder(700);
+
+        timer.reset();
+        timer.startTime();
+
+        while (opModeIsActive() && sensors.vertTouch.getState() && timer.seconds() < 2.5) {
+        }
+
+        minerals.mExtendVert.setPower(0);
+        minerals.mExtendHoriz.setPower(0);
+
+        MoveUntilEncoder(10,180 ,.8);
+
+        minerals.mCollect.setPower(-1);
+
+        servos.setCollectionCollect(true);
+
+        MoveUntilEncoder(8, 180, .4);
+
+        sleep(15000);
     }
 
 
@@ -275,7 +462,7 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         } else if (side == 3) {
             minerals.mExtendHoriz.setPower(.3);
-            TurnAbsolute(-28);
+            TurnAbsolute(-27);
             minerals.mExtendHoriz.setPower(0);
             servos.setCollectionAlmostCollect(); //score and collect mineral
             minerals.mCollect.setPower(-1);
@@ -288,11 +475,14 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
             hanging.setHangingPower(-.5);
             TurnFaster(-20);
             hanging.setHangingPower(0);
+
             minerals.mCollect.setPower(0);
 
-            servos.setCollectionCollect(false);
+            servos.sCollectionRot.setPosition(COLLECTION_INIT);
+            servos.sDepositRot.setPosition(DEPOSIT_INIT);
 
             retractHoriz();
+
 
         } else {
             sleep(1);

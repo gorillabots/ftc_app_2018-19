@@ -41,11 +41,11 @@ public abstract class DepotAutos extends AutonomousOpMode {
 
         sleep(500);
         minerals.mCollect.setPower(0);
-
+        servos.setTeamMarkerFree(false);
 
         retractHoriz();
 
-        TurnAbsolute(80);                      //maneuver to crater
+        TurnAbsolute(76);                      //maneuver to crater
         MoveUntilEncoder(36, 180, 1);
         TurnAbsolute(135);
 
@@ -92,6 +92,7 @@ public abstract class DepotAutos extends AutonomousOpMode {
         dumpTeamMarker();
         sleep(1000);
         minerals.mCollect.setPower(0);
+        servos.setTeamMarkerFree(false);
         retractHoriz();
 
 
@@ -147,7 +148,7 @@ public abstract class DepotAutos extends AutonomousOpMode {
         sleep(500);
         servos.setCollectionCollect(false);
         minerals.mCollect.setPower(0);
-
+        servos.setTeamMarkerFree(false);
         sleep(200);
 
         retractHoriz();

@@ -21,6 +21,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
         sleep(1000);
 
         servos.setCollectionCollect(false);
+        servos.setTeamMarkerFree(false);
         minerals.mCollect.setPower(0);
         sleep(750);
         retractHoriz();
@@ -53,6 +54,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
         sleep(1000);
 
         servos.setCollectionCollect(false);
+        servos.setTeamMarkerFree(false);
         minerals.mCollect.setPower(0);
         sleep(750);
 
@@ -91,6 +93,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
         sleep(1000);
 
         servos.setCollectionCollect(false);
+        servos.setTeamMarkerFree(false);
         minerals.mCollect.setPower(0);
         sleep(750);
 
@@ -302,7 +305,7 @@ public abstract class CraterAutos extends AutonomousOpMode {
 
         } else if (side == 3) {
             minerals.mExtendHoriz.setPower(.3);
-            TurnAbsolute(-28);
+            TurnAbsolute(-27);
             minerals.mExtendHoriz.setPower(0);
             servos.setCollectionLongrange(); //score and collect mineral
             minerals.mCollect.setPower(-1);
