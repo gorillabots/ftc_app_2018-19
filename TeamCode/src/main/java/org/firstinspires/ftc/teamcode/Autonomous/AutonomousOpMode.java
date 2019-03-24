@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.tests.Vision.Detector;
+import org.firstinspires.ftc.teamcode.tests.VisionArray.Detector;
 import org.firstinspires.ftc.teamcode.subsystems.old.OldGyro;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
