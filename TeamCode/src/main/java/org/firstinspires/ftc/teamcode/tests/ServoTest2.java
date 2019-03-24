@@ -3,9 +3,7 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.AutonomousOpMode;
-
-import static org.firstinspires.ftc.teamcode.subsystems.Servos.COLLECTION_INIT;
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 
 
 @TeleOp(name = "servoTestCollectRot", group = "a")

@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.AutonomousOpMode;
-import org.firstinspires.ftc.teamcode.subsystems.Servos;
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 
 
 @TeleOp(name = "servoTestBackstop", group = "a")

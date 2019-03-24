@@ -32,7 +32,7 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCamera;
-import org.firstinspires.ftc.teamcode.Vision.Detector;
+import org.firstinspires.ftc.teamcode.tests.Vision.Detector;
 
 
 @TeleOp(name="Detect from Crater", group ="Concept")
