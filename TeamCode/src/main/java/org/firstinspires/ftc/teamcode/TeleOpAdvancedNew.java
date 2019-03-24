@@ -38,7 +38,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
         boolean isCollecting = false;
 
-        int depositStage = 1;
+        boolean depositHalfway = false;
         boolean depositStageWatch = false;
 
         boolean didWeReset = false;
@@ -394,7 +394,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                 }
             } else if (stage == 3) { // auto switch stage
 
-                servos.setDepositDump(false);
+                servos.setDepositHalfway();
                 minerals.mCollect.setPower(0);
 
                 stage = stage + 1;
@@ -426,6 +426,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                 minerals.mExtendHoriz.setPower(gamepad1.right_stick_y);
 
             } else if (stage == 5) {
+                depositHalfway = false;
                 servos.setDepositDump(true);
                 sleep(10);
                 stage = 6;
@@ -455,6 +456,21 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                         drive.driveArcade(x1, y1, x2, 1);
                     }
                 }
+
+
+                if (gamepad1.right_bumper && !depositStageWatch) {
+                    depositHalfway = !depositHalfway;
+                }
+                depositStageWatch = gamepad1.right_bumper;
+                telemetry.addData("dep", depositHalfway);
+
+                if (depositHalfway){
+                    servos.setDepositHalfway();
+                }
+                else {
+                    servos.setDepositDump(true);
+                }
+
 
 
             } else if (stage == 7) { // switch stage auto

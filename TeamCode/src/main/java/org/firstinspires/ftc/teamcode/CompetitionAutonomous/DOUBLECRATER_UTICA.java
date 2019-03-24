@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.CraterAutos;
 /**
  * Created by xiax on 4/23/2018.
  */
-
+@Disabled
 @Autonomous(name = "DOUBLE CRATER", group = "Autonomous")
 public class DOUBLECRATER_UTICA extends CraterAutos {
 

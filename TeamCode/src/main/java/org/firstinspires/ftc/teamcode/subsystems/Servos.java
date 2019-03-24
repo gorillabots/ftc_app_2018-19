@@ -22,7 +22,7 @@ public class Servos {
     public static final double BACKSTOPDEP_OPEN = 0;
 
     public static final double COLLECTION_INIT = .06;
-    public static final double COLLECTION_COLLECT = .85; //.16
+    public static final double COLLECTION_COLLECT = .89; //.85
     public static final double COLLECTION_ALMOST_COLLECT = .78;
     public static final double COLLECTION_DUMP = .46;//.48
     public static final double COLLECTION_LONGRANGE = .80;
@@ -31,6 +31,7 @@ public class Servos {
     public static final double DEPOSIT_COLLECT = .08; //.56
     public static final double DEPOSIT_SCORE = .76; //0
     public static final double DEPOSIT_COMING_DOWN = .20; //.44
+    public static final double DEPOSIT_HALFWAY = .45;
 
     public static final double TEAMMARKER_INIT = 0; //
     public static final double TEAMMARKER_TELEOP = 0;
@@ -96,6 +97,8 @@ public class Servos {
     public void setDepositComingDown(){
         sDepositRot.setPosition(DEPOSIT_COMING_DOWN);
     }
+
+    public void setDepositHalfway(){sDepositRot.setPosition(DEPOSIT_HALFWAY);}
 
     public void setTeamMarkerFree(boolean dump){
         if (dump){

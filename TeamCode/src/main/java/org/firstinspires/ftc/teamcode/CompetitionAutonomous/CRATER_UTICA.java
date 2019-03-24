@@ -29,7 +29,9 @@ public class CRATER_UTICA extends CraterAutos {
                 scoreMiddleCrater();
             case 3:
                 scoreRightCrater();
-
         }
+
+
+        sleep(10000);
     }
 }

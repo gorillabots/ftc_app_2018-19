@@ -236,12 +236,6 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         MoveUntilEncoder(10,180 ,.8);
 
-        minerals.mCollect.setPower(-1);
-
-        servos.setCollectionCollect(true);
-
-        MoveUntilEncoder(8, 180, .4);
-
         sleep(15000);
 
     }
@@ -327,12 +321,6 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         MoveUntilEncoder(10,180 ,.8);
 
-        minerals.mCollect.setPower(-1);
-
-        servos.setCollectionCollect(true);
-
-        MoveUntilEncoder(8, 180, .4);
-
         sleep(15000);
     }
 
@@ -405,12 +393,6 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         MoveUntilEncoder(10,180 ,.8);
 
-        minerals.mCollect.setPower(-1);
-
-        servos.setCollectionCollect(true);
-
-        MoveUntilEncoder(8, 180, .4);
-
         sleep(15000);
     }
 
@@ -462,7 +444,7 @@ public abstract class CraterAutosWithMineral extends AutonomousOpMode {
 
         } else if (side == 3) {
             minerals.mExtendHoriz.setPower(.3);
-            TurnAbsolute(-27);
+            TurnAbsolute(-25);
             minerals.mExtendHoriz.setPower(0);
             servos.setCollectionAlmostCollect(); //score and collect mineral
             minerals.mCollect.setPower(-1);
