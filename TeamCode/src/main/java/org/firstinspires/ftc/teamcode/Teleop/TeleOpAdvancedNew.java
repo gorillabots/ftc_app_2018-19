@@ -200,6 +200,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                         servos.setCollectionCollect(collectionToggle);
 
                         didWeReset = true;
+                        intakeStage = 1;
                     }
 
                 }
@@ -239,6 +240,8 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                         telemetry.addData("collectionToggle", collectionToggle);
 
                         servos.setCollectionCollect(collectionToggle);
+
+                        intakeStage = 1;
 
                     }
                 }
