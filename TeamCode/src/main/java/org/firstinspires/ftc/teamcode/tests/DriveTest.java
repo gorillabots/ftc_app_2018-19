@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
  * Created by xiax on 4/23/2018.
  */
 
-@TeleOp(name = "Drive Test", group = "test")
+@TeleOp(name = "Drive Test.", group = "test")
 public class DriveTest extends AutonomousOpMode {
 
     @Override

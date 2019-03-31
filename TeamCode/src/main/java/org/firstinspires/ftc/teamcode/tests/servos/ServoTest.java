@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 
 
-@TeleOp(name = "servoTestBackstop", group = "a")
+@TeleOp(name = "servoTestBackstop.", group = "a")
 public class ServoTest extends AutonomousOpMode {
 
 Servo sBackstop;

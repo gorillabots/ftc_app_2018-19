@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
  * Created by xiax on 4/23/2018.
  */
 
-@TeleOp(name = "touch test", group = "test")
+@TeleOp(name = "touch test.", group = "test")
 public class touchTest extends AutonomousOpMode {
 
     @Override
