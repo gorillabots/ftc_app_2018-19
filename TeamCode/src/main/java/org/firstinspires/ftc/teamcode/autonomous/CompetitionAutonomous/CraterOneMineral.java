@@ -1,15 +1,15 @@
-package org.firstinspires.ftc.teamcode.Autonomous.CompetitionAutonomous;
+package org.firstinspires.ftc.teamcode.autonomous.CompetitionAutonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
 /**
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "Crater: One Mineral", group = "Autonomous")
+@Autonomous(name = "Crater: One Mineral", group = "aAutonomous")
 public class CraterOneMineral extends AutonomousOpMode {
 
     @Override

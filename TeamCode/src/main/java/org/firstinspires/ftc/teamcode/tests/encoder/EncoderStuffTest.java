@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode.tests.encoder;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
 /**
  * Created by xiax on 4/23/2018.
  */
 
-@TeleOp(name = "Encoder Test", group = "test")
+@TeleOp(name = "Horizontal Encoder Test", group = "test")
 public class EncoderStuffTest extends AutonomousOpMode {
 
     @Override

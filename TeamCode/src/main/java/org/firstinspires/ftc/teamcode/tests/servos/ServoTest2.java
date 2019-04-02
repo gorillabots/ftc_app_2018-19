@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.tests.servos;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
 
-@TeleOp(name = "servoTestCollectRot", group = "a")
+@TeleOp(name = "servoTestCollectRot", group = "Servo")
 public class ServoTest2 extends AutonomousOpMode {
 
     Servo sCollectionRot;

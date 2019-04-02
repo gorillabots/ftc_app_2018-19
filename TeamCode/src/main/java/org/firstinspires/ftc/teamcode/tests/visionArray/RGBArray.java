@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tests.VisionArray;
+package org.firstinspires.ftc.teamcode.tests.visionArray;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

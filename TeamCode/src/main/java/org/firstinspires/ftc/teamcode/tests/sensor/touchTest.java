@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.tests.sensor;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
 /**
  * Created by xiax on 4/23/2018.

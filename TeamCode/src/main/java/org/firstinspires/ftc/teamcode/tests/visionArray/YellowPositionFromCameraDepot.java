@@ -27,12 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.tests.VisionArray;
+package org.firstinspires.ftc.teamcode.tests.visionArray;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCamera;
-import org.firstinspires.ftc.teamcode.tests.VisionArray.Detector;
 
 
 @TeleOp(name="Detect from Depot", group ="Concept")

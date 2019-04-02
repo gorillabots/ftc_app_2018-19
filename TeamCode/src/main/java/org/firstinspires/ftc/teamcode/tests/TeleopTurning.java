@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
-import org.firstinspires.ftc.teamcode.Teleop.TeleOpOpMode;
+import org.firstinspires.ftc.teamcode.teleop.TeleOpOpMode;
 
 /**
  * Created by xiax on 4/23/2018.
@@ -22,7 +21,7 @@ public class TeleopTurning extends TeleOpOpMode {
 
         int operations = 0; //0-a,1-b,2-x,3-y
 
-        /*.nknkn
+        /*
         * 0: front left
         * 1: front right
         * 2: back right

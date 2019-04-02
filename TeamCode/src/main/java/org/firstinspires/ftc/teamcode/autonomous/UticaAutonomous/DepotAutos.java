@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Autonomous.UticaAutonomous;
+package org.firstinspires.ftc.teamcode.autonomous.UticaAutonomous;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
 public abstract class DepotAutos extends AutonomousOpMode {
 

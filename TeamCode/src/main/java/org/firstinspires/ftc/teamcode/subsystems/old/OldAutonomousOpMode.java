@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcontroller.for_camera_opmodes.LinearOpModeCame
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static java.lang.Math.abs;
-import static org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode.degreeCorrection;
+import static org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode.degreeCorrection;
 //unused
 public abstract class OldAutonomousOpMode extends LinearOpModeCamera {
 

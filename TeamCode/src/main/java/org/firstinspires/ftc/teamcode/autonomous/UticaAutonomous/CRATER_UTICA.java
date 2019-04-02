@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.UticaAutonomous;
+package org.firstinspires.ftc.teamcode.autonomous.UticaAutonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,9 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  * Created by xiax on 4/23/2018.
  */
 @Disabled
-@Autonomous(name = "DOUBLE CRATER", group = "Autonomous")
-public class DOUBLECRATER_UTICA extends CraterAutos {
-
+@Autonomous(name = "CRATER", group = "Autonomous")
+public class CRATER_UTICA extends CraterAutos {
 
     @Override
     public void runOpMode() {
@@ -23,12 +22,14 @@ public class DOUBLECRATER_UTICA extends CraterAutos {
 
         switch(yellow) {
             case 1:
-                scoreLeftDouble();
+                scoreLeftCrater();
             case 2:
-                scoreMiddleDouble();
+                scoreMiddleCrater();
             case 3:
-                scoreRightDouble();
-
+                scoreRightCrater();
         }
+
+
+        sleep(10000);
     }
 }

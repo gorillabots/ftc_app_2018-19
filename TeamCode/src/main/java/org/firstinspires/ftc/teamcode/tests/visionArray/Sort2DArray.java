@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tests.VisionArray;
+package org.firstinspires.ftc.teamcode.tests.visionArray;
 
 public class Sort2DArray {
 

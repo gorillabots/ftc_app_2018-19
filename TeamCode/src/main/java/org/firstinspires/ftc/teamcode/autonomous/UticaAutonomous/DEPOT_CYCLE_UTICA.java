@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.UticaAutonomous;
+package org.firstinspires.ftc.teamcode.autonomous.UticaAutonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  * Created by xiax on 4/23/2018.
  */
 @Disabled
-@Autonomous(name = "DEPOT", group = "Autonomous")
-public class DEPOT_UTICA extends DepotAutos {
+@Autonomous(name = "DEPOT 1 CYCLE", group = "Autonomous")
+public class DEPOT_CYCLE_UTICA extends DepotAutosWithMineral {
 
     @Override
     public void runOpMode() {
@@ -22,11 +22,11 @@ public class DEPOT_UTICA extends DepotAutos {
 
         switch(yellow) {
             case 1:
-                scoreLeftDepot();
+                scoreLeftDepotMin();
             case 2:
-                scoreMiddleDepot();
+                scoreMiddleDepotMin();
             case 3:
-                scoreRightDepot();
+                scoreRightDepotMin();
 
         }
     }

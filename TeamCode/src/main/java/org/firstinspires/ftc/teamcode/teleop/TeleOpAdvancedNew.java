@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Teleop;
+package org.firstinspires.ftc.teamcode.teleop;
 
 
 import static org.firstinspires.ftc.teamcode.subsystems.Servos.COLLECTION_INIT;
@@ -8,7 +8,7 @@ import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
  * Created by xiax on 4/23/2018.
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleopAdvancedNew", group = "yes")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleopAdvancedNew", group = "aaaaa")
 public class TeleOpAdvancedNew extends TeleOpOpMode {
 
     @Override

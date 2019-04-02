@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 import android.content.res.AssetManager;
 
@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.tests.VisionArray.Detector;
+import org.firstinspires.ftc.teamcode.tests.visionArray.Detector;
 import org.firstinspires.ftc.teamcode.subsystems.old.OldGyro;
 import org.firstinspires.ftc.teamcode.subsystems.Hanging;
 import org.firstinspires.ftc.teamcode.subsystems.MineralCollectionMechanism;
@@ -28,7 +28,7 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
-import static org.firstinspires.ftc.teamcode.Teleop.TeleOpOpMode.ENCODER_TO_DEPOSITUP;
+import static org.firstinspires.ftc.teamcode.teleop.TeleOpOpMode.ENCODER_TO_DEPOSITUP;
 import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
 
 public abstract class AutonomousOpMode extends LinearOpModeCamera {

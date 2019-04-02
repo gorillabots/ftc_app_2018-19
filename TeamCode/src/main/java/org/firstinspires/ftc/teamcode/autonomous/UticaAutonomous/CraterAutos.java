@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.Autonomous.UticaAutonomous;
+package org.firstinspires.ftc.teamcode.autonomous.UticaAutonomous;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
-import static org.firstinspires.ftc.teamcode.Teleop.TeleOpOpMode.ENCODER_TO_DEPOSITUP;
+import static org.firstinspires.ftc.teamcode.teleop.TeleOpOpMode.ENCODER_TO_DEPOSITUP;
 
 public abstract class CraterAutos extends AutonomousOpMode {
 
