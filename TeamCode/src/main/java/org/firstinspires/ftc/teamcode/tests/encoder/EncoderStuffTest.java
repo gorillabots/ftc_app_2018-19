@@ -37,7 +37,7 @@ public class EncoderStuffTest extends AutonomousOpMode {
                 extendHorizToEncoder(add);
             }
 
-            runWatch  =gamepad1.y;
+            runWatch  = gamepad1.y;
             if (gamepad1.b){
                 retractHoriz();
             }

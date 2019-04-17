@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
  * Created by xiax on 4/23/2018.
  */
 
-@Autonomous(name = "Depot: One Minerals", group = "aAutonomous")
+@Autonomous(name = "Depot: One Mineral", group = "aAutonomous")
 public class DepotOneMineral extends AutonomousOpMode {
 
     @Override

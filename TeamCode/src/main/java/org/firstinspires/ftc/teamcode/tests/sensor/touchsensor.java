@@ -23,10 +23,9 @@ public class touchsensor extends AutonomousOpMode {
         while (opModeIsActive()) {
 
 
-
             telemetry.addData("hello", "hello");
-            telemetry.addData("isPressed", sensors.horizTouch.getState());
-            telemetry.addData("getValue", sensors.horizTouch.getState());
+            telemetry.addData("isPressed", sensors.horizSlowTouch.getState());
+            telemetry.addData("getValue", sensors.horizSlowTouch.getState());
             telemetry.update();
 
         }

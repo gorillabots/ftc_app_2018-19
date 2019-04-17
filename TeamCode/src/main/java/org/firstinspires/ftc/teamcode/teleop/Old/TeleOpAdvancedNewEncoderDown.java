@@ -1,15 +1,16 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode.teleop.Old;
 
 
-import static org.firstinspires.ftc.teamcode.subsystems.Servos.COLLECTION_INIT;
-import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+import org.firstinspires.ftc.teamcode.teleop.TeleOpOpMode;
 
 /**
  * Created by xiax on 4/23/2018.
  */
-
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleopAdvancedNew", group = "aaaaa")
-public class TeleOpAdvancedNew extends TeleOpOpMode {
+@Disabled
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleopAdvancedNewED", group = "zzza")
+public class TeleOpAdvancedNewEncoderDown extends TeleOpOpMode {
 
     @Override
     public void runOpMode() {
@@ -164,6 +165,8 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
                     boolean manualA = false;
 
+                    minerals.isEncoderModeVert(false);
+
                     while (opModeIsActive() && sensors.vertTouch.getState() && !manualA) {
                         x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                         y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -183,7 +186,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                             }
                         }
 
-                        minerals.mExtendVert.setPower(-.4);
+                        minerals.mExtendVert.setPower(-.2);
 
                         minerals.mExtendHoriz.setPower(gamepad1.right_stick_y * 1);
 
@@ -206,6 +209,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                 }
                 if (gamepad1.b) {//PROBLEM IS PROBLEMATIC
                     boolean manualB = false;
+                    minerals.isEncoderModeVert(false);
                     while (opModeIsActive() && sensors.vertTouch.getState() && !manualB) {
                         x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                         y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
@@ -225,7 +229,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                             }
                         }
 
-                        minerals.mExtendVert.setPower(.4);
+                        minerals.mExtendVert.setPower(.16);
 
                         minerals.mExtendHoriz.setPower(gamepad1.right_stick_y * 1);
 
@@ -254,8 +258,8 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                 minerals.mExtendVert.setPower(0);
                 minerals.mCollect.setPower(0);
 
-                servos.sCollectionRot.setPosition(COLLECTION_INIT);
-                servos.sDepositRot.setPosition(DEPOSIT_INIT);
+                servos.setCollectionComingIn();
+                servos.setDepositDump(false);
 
                 minerals.isEncoderModeHoriz(false);
 
@@ -345,7 +349,7 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
                     servos.setDepositComingDown();
 
-                    minerals.mExtendHoriz.setPower(-.2);
+                    minerals.mExtendHoriz.setPower(-.0);
                     sleep(75);
                     servos.setBackstopDepOpen(false);
 
@@ -495,11 +499,26 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
 
                 minerals.mExtendHoriz.setPower(0);
 
-                minerals.isEncoderModeVert(false);
+                minerals.isEncoderModeVert(true);
+
+                int start = minerals.mExtendVert.getCurrentPosition();
+                int end;
+                if (didWeReset) {
+                    end = start + ENCODER_TO_DEPOSITUP;
+                } else {
+                    end = start + ENCODER_TO_DEPOSITUP_MORE;
+                }
+
+
+                minerals.mExtendVert.setTargetPosition(end);
+
+                timer.reset();
+
+                timer.startTime();
 
                 boolean manualOverrideV = false;
 
-                while (opModeIsActive() && sensors.vertTouch.getState() && !manualOverrideV) {
+                while (opModeIsActive() && sensors.vertTouch.getState() && !manualOverrideV && minerals.mExtendVert.isBusy()) {
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
                     double y1 = Math.copySign(Math.pow(gamepad1.left_stick_y, 1), gamepad1.left_stick_y);
                     double x2 = Math.copySign(Math.pow(gamepad1.right_stick_x, 1), -gamepad1.right_stick_x);
@@ -526,11 +545,11 @@ public class TeleOpAdvancedNew extends TeleOpOpMode {
                         hang.setHangingPower(0);
                     }
 
-                    minerals.mExtendVert.setPower(.55);
+                    minerals.mExtendVert.setPower(.3);
 
                     minerals.mExtendHoriz.setPower(gamepad1.right_stick_y * 1);
 
-                    manualOverrideV = (gamepad1.a || gamepad2.a);
+                    manualOverrideV = (gamepad1.b || gamepad2.b);
 
                     minerals.mCollect.setPower(-1);
 

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Servos;
 import static org.firstinspires.ftc.teamcode.subsystems.Servos.DEPOSIT_INIT;
 
 
-@TeleOp(name = "servoTestDepositRot", group = "Servo")
+@TeleOp(name = "sesklfnpositRot", group = "Servo")
 public class ServoTest3 extends AutonomousOpMode {
 
 

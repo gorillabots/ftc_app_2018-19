@@ -13,9 +13,9 @@ public class Servos {
     public Servo sTeamMarkerRot;
     public Servo sBackstopDep;
 
-    public static final double BACKSTOPCOL_INIT = .72;
-    public static final double BACKSTOPCOL_CLOSED = 0.72;
-    public static final double BACKSTOPCOL_OPEN = 0.3;
+    public static final double BACKSTOPCOL_INIT = .34;
+    public static final double BACKSTOPCOL_CLOSED = 0.34;
+    public static final double BACKSTOPCOL_OPEN = 0.68;
 
     public static final double BACKSTOPDEP_INIT = 0;
     public static final double BACKSTOPDEP_CLOSED = 0.31;
@@ -24,14 +24,15 @@ public class Servos {
     public static final double COLLECTION_INIT = .06;
     public static final double COLLECTION_COLLECT = .89; //.85
     public static final double COLLECTION_ALMOST_COLLECT = .78;
-    public static final double COLLECTION_DUMP = .46;//.48
+    public static final double COLLECTION_DUMP = .43;//.48
+    public static final double COLLECTION_COMINGIN = .6;
     public static final double COLLECTION_LONGRANGE = .80;
 
-    public static final double DEPOSIT_INIT = .28; //goooood  //.4
-    public static final double DEPOSIT_COLLECT = .08; //.56
-    public static final double DEPOSIT_SCORE = .76; //0
-    public static final double DEPOSIT_COMING_DOWN = .20; //.44
-    public static final double DEPOSIT_HALFWAY = .45;
+    public static final double DEPOSIT_INIT = .32; //goooood  //.4
+    public static final double DEPOSIT_COLLECT = .32; //.56
+    public static final double DEPOSIT_SCORE = 1; //0
+    public static final double DEPOSIT_COMING_DOWN = .37; //.44
+    public static final double DEPOSIT_HALFWAY = .8;
 
     public static final double TEAMMARKER_INIT = 0; //
     public static final double TEAMMARKER_TELEOP = 0;
@@ -82,6 +83,8 @@ public class Servos {
     public void setCollectionLongrange(){
         sCollectionRot.setPosition(COLLECTION_LONGRANGE);
     }
+
+    public void setCollectionComingIn(){sCollectionRot.setPosition(COLLECTION_COMINGIN);}
 
     public void setCollectionAlmostCollect(){
         sCollectionRot.setPosition(COLLECTION_ALMOST_COLLECT);

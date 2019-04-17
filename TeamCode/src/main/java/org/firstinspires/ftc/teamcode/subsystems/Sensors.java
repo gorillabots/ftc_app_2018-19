@@ -13,12 +13,27 @@ public class Sensors {
     public DigitalChannel horizTouch;
     public DigitalChannel vertTouch;
 
+    public DigitalChannel hangTouch;
+
+    public DigitalChannel horizSlowTouch;
+    public DigitalChannel vertSlowTouch;
+
     public Sensors(HardwareMap hardwareMap, Telemetry telemetry) {
         horizTouch = hardwareMap.get(DigitalChannel.class, "horizTouch");
         vertTouch = hardwareMap.get(DigitalChannel.class , "vertTouch");
 
+        hangTouch = hardwareMap.get(DigitalChannel.class, "hangTouch");
+
+        horizSlowTouch = hardwareMap.get(DigitalChannel.class, "horizSlowTouch");
+        vertSlowTouch = hardwareMap.get(DigitalChannel.class, "vertSlowTouch");
+
         horizTouch.setMode(DigitalChannel.Mode.INPUT);
         vertTouch.setMode(DigitalChannel.Mode.INPUT);
+
+        hangTouch.setMode(DigitalChannel.Mode.INPUT);
+
+        horizSlowTouch.setMode(DigitalChannel.Mode.INPUT);
+        vertSlowTouch.setMode(DigitalChannel.Mode.INPUT);
     }
 
 
