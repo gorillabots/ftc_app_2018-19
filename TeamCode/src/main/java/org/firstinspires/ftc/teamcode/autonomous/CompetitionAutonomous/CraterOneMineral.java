@@ -19,7 +19,7 @@ public class CraterOneMineral extends AutonomousOpMode {
 
         int yellow = detectYellowTensor();
 
-        unHangWithEncoder();
+        unhangWithTouch();
 
         switch(yellow) {
             case 1:

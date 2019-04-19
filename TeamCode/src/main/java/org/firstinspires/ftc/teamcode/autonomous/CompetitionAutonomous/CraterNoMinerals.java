@@ -19,7 +19,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
 
         int yellow = detectYellowTensor(); //detect where yellow is
 
-        unHangWithEncoder(); //detach from lander
+        unhangWithTouch(); //detach from lander
 
         switch (yellow) {
             case 1:
@@ -49,7 +49,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
         hanging.setHangingPower(0);
 
         servos.setCollectionLongrange(); //score and collect mineral
-        minerals.mCollect.setPower(-1);
+        minerals.mCollect.setPower(1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
         servos.setCollectionCollect(true);
         sleep(1000);
@@ -76,7 +76,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
         servos.setCollectionCollect(true); //deposit mineral into depot
-        minerals.mCollect.setPower(1);
+        minerals.mCollect.setPower(-1);
 
         dumpTeamMarker(); //deposit team marker into depot
         sleep(1000);
@@ -91,6 +91,8 @@ public class CraterNoMinerals extends AutonomousOpMode {
         TurnFaster(180); //park into crater
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
+
+        sleep(10000);
     }
 
     private void scoreCenter() {
@@ -100,7 +102,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
         minerals.mExtendHoriz.setPower(0);
 
         servos.setCollectionLongrange(); //score and collect mineral
-        minerals.mCollect.setPower(-1);
+        minerals.mCollect.setPower(1);
         extendHorizToEncoder(700);
         servos.setCollectionCollect(true);
         sleep(1000);
@@ -127,7 +129,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);//deposit team marker and mineral into depot
 
         servos.setCollectionCollect(true);
-        minerals.mCollect.setPower(1);
+        minerals.mCollect.setPower(-1);
 
         dumpTeamMarker();
         sleep(1000);
@@ -151,7 +153,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
         TurnAbsolute(-25);
         minerals.mExtendHoriz.setPower(0);
         servos.setCollectionLongrange(); //score and collect mineral
-        minerals.mCollect.setPower(-1);
+        minerals.mCollect.setPower(1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
         servos.setCollectionCollect(true);
         sleep(1000);
@@ -180,7 +182,7 @@ public class CraterNoMinerals extends AutonomousOpMode {
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
         servos.setCollectionCollect(true);
-        minerals.mCollect.setPower(1);
+        minerals.mCollect.setPower(-1);
 
         dumpTeamMarker();
         sleep(1000);
@@ -196,5 +198,6 @@ public class CraterNoMinerals extends AutonomousOpMode {
 
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_TEAM_MARKER);
 
+        sleep(10000);
     }
 }

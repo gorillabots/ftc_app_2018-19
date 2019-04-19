@@ -28,7 +28,7 @@ public class Servos {
     public static final double COLLECTION_COMINGIN = .6;
     public static final double COLLECTION_LONGRANGE = .80;
 
-    public static final double DEPOSIT_INIT = .32; //goooood  //.4
+    public static final double DEPOSIT_INIT = .39; //goooood  //.4
     public static final double DEPOSIT_COLLECT = .32; //.56
     public static final double DEPOSIT_SCORE = 1; //0
     public static final double DEPOSIT_COMING_DOWN = .37; //.44

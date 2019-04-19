@@ -324,6 +324,17 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
 
     }
 
+    public void unhangWithTouch(){
+        hanging.isEncoderMode(false);
+        hanging.setHangingPower(1);
+        timer.reset();
+        timer.startTime();
+        while (opModeIsActive() && sensors.hangTouch.getState() && timer.seconds() < 5)
+        {}
+        hanging.setHangingPower(0);
+        gyro.ResetAngle();
+    }
+
     public void dumpTeamMarker() {
         servos.setTeamMarkerFree(true);
     }

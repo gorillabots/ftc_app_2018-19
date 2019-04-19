@@ -386,8 +386,8 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
 
                     servos.setDepositComingDown();
 
-                    minerals.mExtendHoriz.setPower(-.0);
-                    sleep(75);
+                   // minerals.mExtendHoriz.setPower(-.0);
+                    //sleep(75);
                     servos.setBackstopDepOpen(false);
 
                     minerals.isEncoderModeVert(true);
@@ -546,7 +546,6 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                     end = start + ENCODER_TO_DEPOSITUP_MORE;
                 }
 
-
                 minerals.mExtendVert.setTargetPosition(end);
 
                 timer.reset();
@@ -554,6 +553,8 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                 timer.startTime();
 
                 boolean manualOverrideV = false;
+
+                isSlow = false;
 
                 while (opModeIsActive() && sensors.vertTouch.getState() && !manualOverrideV && minerals.mExtendVert.isBusy()) {
                     double x1 = Math.copySign(Math.pow(gamepad1.left_stick_x, 1), -gamepad1.left_stick_x);
@@ -574,7 +575,7 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                         }
                     }
 
-                    if (gamepad2.dpad_up || gamepad1.dpad_up) {
+                    if ((gamepad2.dpad_up || gamepad1.dpad_up) && sensors.hangTouch.getState()) {
                         hang.setHangingPower(1);
                     } else if (gamepad2.dpad_down || gamepad1.dpad_down) {
                         hang.setHangingPower(-1);

@@ -19,7 +19,7 @@ public class DepotNoMinerals extends AutonomousOpMode {
 
         int yellow = detectYellowTensor();
 
-        unHangWithEncoder();
+        unhangWithTouch();
 
         switch(yellow) {
             case 1:
@@ -42,7 +42,7 @@ public class DepotNoMinerals extends AutonomousOpMode {
         hanging.setHangingPower(0);
 
         servos.setCollectionLongrange(); //score and collect mineral
-        minerals.mCollect.setPower(-1);
+        minerals.mCollect.setPower(1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
         servos.setCollectionCollect(true);
         sleep(1000);
@@ -62,7 +62,7 @@ public class DepotNoMinerals extends AutonomousOpMode {
 
         servos.setCollectionCollect(true);
 
-        minerals.mCollect.setPower(1);
+        minerals.mCollect.setPower(-1);
         sleep(300);
 
         dumpTeamMarker();
@@ -83,6 +83,8 @@ public class DepotNoMinerals extends AutonomousOpMode {
         servos.setCollectionCollect(false);
 
         extendHorizToEncoder(600);
+
+        sleep(20000);
     }
     private void scoreCenter(){
         minerals.mExtendHoriz.setPower(.3);
@@ -98,14 +100,14 @@ public class DepotNoMinerals extends AutonomousOpMode {
         hanging.setHangingPower(0);
 
         servos.setCollectionLongrange();
-        minerals.mCollect.setPower(-1);
+        minerals.mCollect.setPower(1);
 
         MoveAndExtend(13.5, 180, .9, 1200 , 5);
 
         minerals.mCollect.setPower(0);
 
 
-        minerals.mCollect.setPower(1);
+        minerals.mCollect.setPower(-1);
         dumpTeamMarker();
         sleep(1000);
         minerals.mCollect.setPower(0);
@@ -123,13 +125,15 @@ public class DepotNoMinerals extends AutonomousOpMode {
         servos.setCollectionCollect(false);
 
         extendHorizToEncoder(600);
+
+        sleep(20000);
     }
     private void scoreRight(){
         minerals.mExtendHoriz.setPower(.3);
         TurnAbsolute(-28); //exit hook
         minerals.mExtendHoriz.setPower(0);
         servos.setCollectionLongrange(); //score and collect mineral
-        minerals.mCollect.setPower(-1);
+        minerals.mCollect.setPower(1);
         extendHorizToEncoder(ENCODER_TO_EXTEND_HORIZ_SIDE_MINERAL);
 
         sleep(1000);
@@ -146,7 +150,7 @@ public class DepotNoMinerals extends AutonomousOpMode {
 
         MoveAndExtend(9, 180, .8 , 1100 , 5);
 
-        minerals.mCollect.setPower(1);
+        minerals.mCollect.setPower(-1);
         servos.setCollectionCollect(true);
         sleep(300);
 
@@ -169,5 +173,7 @@ public class DepotNoMinerals extends AutonomousOpMode {
         servos.setCollectionCollect(false);
 
         extendHorizToEncoder(600);
+
+        sleep(20000);
     }
 }
