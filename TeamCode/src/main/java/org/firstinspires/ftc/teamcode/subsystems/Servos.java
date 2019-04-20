@@ -21,7 +21,7 @@ public class Servos {
     public static final double BACKSTOPDEP_CLOSED = 0.31;
     public static final double BACKSTOPDEP_OPEN = 0;
 
-    public static final double COLLECTION_INIT = .06;
+    public static final double COLLECTION_INIT = .5;
     public static final double COLLECTION_COLLECT = .89; //.85
     public static final double COLLECTION_ALMOST_COLLECT = .78;
     public static final double COLLECTION_DUMP = .43;//.48

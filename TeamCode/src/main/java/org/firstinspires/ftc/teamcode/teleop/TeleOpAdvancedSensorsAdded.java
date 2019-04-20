@@ -300,10 +300,6 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                     minerals.mExtendVert.setPower(gamepad2.right_stick_y * .5);
                 }
 
-                minerals.mExtendHoriz.setPower(.2);
-
-                sleep(200);
-
                 while (opModeIsActive() && sensors.horizTouch.getState() && !manualOverrideH) {
 
                     isDriveOpposite = true;
@@ -343,8 +339,6 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
 
                 servos.setCollectionCollect(false);
 
-                minerals.mCollect.setPower(1);
-
                 servos.setBackstopColOpen(true);
                 servos.setBackstopDepOpen(true);
 
@@ -375,6 +369,13 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                     }
 
                     minerals.mExtendVert.setPower(gamepad2.right_stick_y);
+
+                    if (gamepad1.right_bumper){
+                        minerals.mCollect.setPower(-.5);
+                    }
+                    else{
+                        minerals.mCollect.setPower(1);
+                    }
 
                 }
 
