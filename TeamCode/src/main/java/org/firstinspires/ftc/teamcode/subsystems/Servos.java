@@ -34,9 +34,9 @@ public class Servos {
     public static final double DEPOSIT_COMING_DOWN = .37; //.44
     public static final double DEPOSIT_HALFWAY = .8;
 
-    public static final double TEAMMARKER_INIT = 0; //
-    public static final double TEAMMARKER_TELEOP = 0;
-    public static final double TEAMMARKER_DEPOSIT = .75;
+    public static final double TEAMMARKER_INIT = .88; //
+    public static final double TEAMMARKER_TELEOP = .88;
+    public static final double TEAMMARKER_DEPOSIT = .1;
 
 
 

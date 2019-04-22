@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode.autonomous.CompetitionAutonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
 
 /**
  * Created by xiax on 4/23/2018.
  */
-
+@Disabled
 @Autonomous(name = "Depot: No Minerals", group = "aAutonomous")
 public class DepotNoMinerals extends AutonomousOpMode {
 

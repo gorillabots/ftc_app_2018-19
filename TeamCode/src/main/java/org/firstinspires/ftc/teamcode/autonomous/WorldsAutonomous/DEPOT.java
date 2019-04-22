@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.autonomous.CompetitionAutonomous;
+package org.firstinspires.ftc.teamcode.autonomous.WorldsAutonomous;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.autonomous.AutonomousOpMode;
@@ -12,9 +11,9 @@ import static org.firstinspires.ftc.teamcode.teleop.TeleOpOpMode.ENCODER_TO_DEPO
 /**
  * Created by xiax on 4/23/2018.
  */
-@Disabled
-@Autonomous(name = "Depot: One Mineral", group = "aAutonomous")
-public class DepotOneMineral extends AutonomousOpMode {
+
+@Autonomous(name = "DEPOT", group = "aAutonomous")
+public class DEPOT extends AutonomousOpMode {
 
     @Override
     public void runOpMode() {
@@ -247,9 +246,12 @@ public class DepotOneMineral extends AutonomousOpMode {
 
         MoveUntilEncoder(14, 0, .7);
 
+        TurnFaster(10);
         servos.setDepositDump(true);
 
-        sleep(1200);
+        sleep(300);
+
+        TurnAbsolute(0);
 
         servos.setDepositComingDown();
         servos.setBackstopColOpen(false);

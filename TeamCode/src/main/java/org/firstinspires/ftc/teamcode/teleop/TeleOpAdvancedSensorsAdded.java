@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 /**
  * Created by xiax on 4/23/2018.
  */
@@ -264,6 +266,7 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                 servos.setDepositDump(false);
 
                 minerals.isEncoderModeHoriz(false);
+                minerals.mExtendVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
                 boolean manualOverrideH = false;
 
@@ -295,7 +298,7 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                     telemetry.addData("stage", "2 loop 1");
                     telemetry.update();
 
-                    manualOverrideH = gamepad1.a;
+                    manualOverrideH = gamepad1.b;
 
                     minerals.mExtendVert.setPower(gamepad2.right_stick_y * .5);
                 }
@@ -328,7 +331,7 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                     telemetry.addData("stage", "2 loop 1");
                     telemetry.update();
 
-                    manualOverrideH = gamepad1.a;
+                    manualOverrideH = gamepad1.b;
 
                     minerals.mExtendVert.setPower(gamepad2.right_stick_y * .5);
                 }
@@ -538,6 +541,7 @@ public class TeleOpAdvancedSensorsAdded extends TeleOpOpMode {
                 minerals.mExtendHoriz.setPower(0);
 
                 minerals.isEncoderModeVert(true);
+                minerals.mExtendVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
                 int start = minerals.mExtendVert.getCurrentPosition();
                 int end;
