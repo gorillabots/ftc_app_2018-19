@@ -227,7 +227,7 @@ public class CRATER extends AutonomousOpMode {
 
         TurnFaster(10);
 
-        hanging.setHangingPower(-.5);
+        hanging.setHangingPower(-.65);
         TurnFaster(-20);
         hanging.setHangingPower(0);
         minerals.mCollect.setPower(0);
@@ -237,9 +237,10 @@ public class CRATER extends AutonomousOpMode {
         retractHoriz();
 
         TurnAbsolute(0);
-        MoveUntilEncoder(10.5, 180, .9);
+        MoveUntilTime(600,0 ,.5); //new
+        MoveUntilEncoder(11, 180, .9);//10.5
         TurnAbsolute(84);
-        MoveUntilEncoder(36, 180, 1);
+        MoveUntilEncoder(36,180, 1);
         TurnAbsolute(135);
         minerals.mExtendHoriz.setPower(.3);
         MoveUntilTime(1500, 270, .6);
