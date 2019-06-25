@@ -41,7 +41,6 @@ public abstract class AutonomousOpMode extends LinearOpModeCamera {
     public MineralCollectionMechanism minerals;
     public ElapsedTime timer;
 
-
     public DcMotor mfr;
     public DcMotor mfl;
     public DcMotor mbr;
